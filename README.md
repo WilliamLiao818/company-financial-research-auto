@@ -2,6 +2,8 @@
 
 一个面向美国 SEC 公开申报数据的可追溯研究工具。使用者可以从冻结 Demo、在线 ticker/CIK、上传的 SEC Company Facts JSON，或同结构财务 CSV 开始，得到申报事实账本、透明派生指标、用户选择的公司比较、假设驱动的 MOIC/IRR 情景，以及可下载报告。
 
+**在线体验：** [打开 Streamlit 应用](https://company-financial-research-auto.streamlit.app/)
+
 > 本项目不宣称支持全球任意公司。缺失或不兼容的 XBRL 事实保持缺失，不自动猜数；输出不构成投资建议、证券估值或目标价。
 
 ```mermaid
