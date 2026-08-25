@@ -4,6 +4,8 @@
 
 **在线体验：** [打开 Streamlit 应用](https://company-financial-research-auto.streamlit.app/)
 
+**项目总览：** [Research Systems 统一入口](https://research-systems-lab.william-liao818.chatgpt.site/)
+
 > 本项目不宣称支持全球任意公司。缺失或不兼容的 XBRL 事实保持缺失，不自动猜数；输出不构成投资建议、证券估值或目标价。
 
 ```mermaid
