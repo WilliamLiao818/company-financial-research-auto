@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import hashlib
+import json
+from collections.abc import Mapping
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
@@ -7,6 +11,32 @@ import pandas as pd
 
 
 DATA_PATH = Path(__file__).parent / "data" / "financials.csv"
+
+SCHEMA_VERSION = "1.0.0"
+FORMULA_VERSION = "1.0.0"
+
+REPORTED_FACT_FIELDS = [
+    "revenue",
+    "gross_profit",
+    "cost_of_revenue",
+    "operating_income",
+    "net_income",
+    "operating_cash_flow",
+    "capex",
+    "assets",
+    "liabilities",
+    "equity",
+]
+
+REQUIRED_FINANCIAL_COLUMNS = {
+    "ticker",
+    "company",
+    "fiscal_year",
+    "fiscal_year_end",
+    "filed",
+    "source_url",
+    *REPORTED_FACT_FIELDS,
+}
 
 
 FORMULA_DEFINITIONS = {
@@ -24,6 +54,11 @@ FORMULA_DEFINITIONS = {
         "label": "Operating margin / 营业利润率",
         "formula": "Operating income / Revenue",
         "purpose": "Observe operating profitability before financing and tax items.",
+    },
+    "net_margin": {
+        "label": "Net margin / 净利率",
+        "formula": "Net income / Revenue",
+        "purpose": "Observe reported bottom-line profitability; one-off and financing items require filing review.",
     },
     "free_cash_flow": {
         "label": "Free cash flow / 自由现金流",
@@ -69,24 +104,57 @@ VALUATION_METRICS = {
 }
 
 
+def validate_financials(frame: pd.DataFrame) -> list[str]:
+    """Validate the public-research CSV contract without inventing missing fields."""
+    errors: list[str] = []
+    missing = REQUIRED_FINANCIAL_COLUMNS.difference(frame.columns)
+    if missing:
+        return ["Missing required financial columns: " + ", ".join(sorted(missing))]
+    if frame.empty:
+        return ["The financial dataset is empty."]
+    if frame["ticker"].fillna("").astype(str).str.strip().eq("").any():
+        errors.append("Every row must include a ticker or CIK-based identifier.")
+    if frame["company"].fillna("").astype(str).str.strip().eq("").any():
+        errors.append("Every row must include a company name.")
+    fiscal_year = pd.to_numeric(frame["fiscal_year"], errors="coerce")
+    if fiscal_year.isna().any():
+        errors.append("Every fiscal_year must be numeric.")
+    if not frame["fiscal_year_end"].fillna("").astype(str).str.fullmatch(r"\d{4}-\d{2}-\d{2}").all():
+        errors.append("Every fiscal_year_end must use YYYY-MM-DD.")
+    urls = frame["source_url"].fillna("").astype(str)
+    if not urls.str.startswith(("https://", "http://")).all():
+        errors.append("Every row must include an HTTP(S) public source URL.")
+    if frame.duplicated(["ticker", "fiscal_year", "fiscal_year_end"]).any():
+        errors.append("Duplicate ticker/fiscal_year/fiscal_year_end rows are not allowed.")
+    return errors
+
+
+def prepare_financials(frame: pd.DataFrame, *, input_source: str = "uploaded_csv") -> pd.DataFrame:
+    errors = validate_financials(frame)
+    if errors:
+        raise ValueError("; ".join(errors))
+    result = frame.copy()
+    result["ticker"] = result["ticker"].astype(str).str.strip().str.upper()
+    result["company"] = result["company"].astype(str).str.strip()
+    result["fiscal_year"] = pd.to_numeric(result["fiscal_year"], errors="raise").astype(int)
+    for column in REPORTED_FACT_FIELDS:
+        result[column] = pd.to_numeric(result[column], errors="coerce")
+    result["input_source"] = input_source
+    return add_metrics(result)
+
+
 def load_financials(path: Path | str = DATA_PATH) -> pd.DataFrame:
     """Load the frozen SEC snapshot and calculate transparent research metrics."""
-    frame = pd.read_csv(path)
-    numeric = [
-        "revenue",
-        "gross_profit",
-        "cost_of_revenue",
-        "operating_income",
-        "net_income",
-        "operating_cash_flow",
-        "capex",
-        "assets",
-        "liabilities",
-        "equity",
-    ]
-    for column in numeric:
-        frame[column] = pd.to_numeric(frame[column], errors="coerce")
-    return add_metrics(frame)
+    return prepare_financials(pd.read_csv(path), input_source="frozen_demo")
+
+
+def filter_year_range(frame: pd.DataFrame, start_year: int, end_year: int) -> pd.DataFrame:
+    if start_year > end_year:
+        raise ValueError("Start year cannot be after end year.")
+    filtered = frame.loc[frame["fiscal_year"].between(start_year, end_year)].copy()
+    if filtered.empty:
+        raise ValueError(f"No fiscal-year rows are available between {start_year} and {end_year}.")
+    return add_metrics(filtered.drop(columns=[column for column in FORMULA_DEFINITIONS if column in filtered], errors="ignore"))
 
 
 def safe_ratio(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
@@ -341,3 +409,231 @@ def scenario_sensitivity(
                 }
             )
     return pd.DataFrame(rows)
+
+
+def source_ledger(frame: pd.DataFrame) -> pd.DataFrame:
+    """Return one source record per company-year without fetching uploaded URLs."""
+    columns = [
+        "ticker",
+        "company",
+        "cik",
+        "fiscal_year",
+        "fiscal_year_end",
+        "filed",
+        "form",
+        "accession",
+        "input_source",
+        "source_url",
+    ]
+    ledger = frame[[column for column in columns if column in frame.columns]].copy()
+    return ledger.drop_duplicates().sort_values(["ticker", "fiscal_year"]).reset_index(drop=True)
+
+
+def evidence_ledger(frame: pd.DataFrame) -> pd.DataFrame:
+    """Separate reported facts from derived metrics and preserve metric-level SEC provenance when present."""
+    rows: list[dict[str, object]] = []
+    for row in frame.itertuples(index=False):
+        values = row._asdict()
+        for field in REPORTED_FACT_FIELDS:
+            value = values.get(field)
+            if pd.isna(value):
+                continue
+            rows.append(
+                {
+                    "ticker": values.get("ticker"),
+                    "company": values.get("company"),
+                    "fiscal_year": values.get("fiscal_year"),
+                    "fiscal_year_end": values.get("fiscal_year_end"),
+                    "record_type": "reported_fact",
+                    "field": field,
+                    "value": value,
+                    "unit": "USD",
+                    "xbrl_tag": values.get(f"{field}_xbrl_tag", ""),
+                    "accession": values.get(f"{field}_accession", values.get("accession", "")),
+                    "filed": values.get("filed", ""),
+                    "source_url": values.get("source_url", ""),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def assumption_ledger(assumptions: Mapping[str, object] | None) -> pd.DataFrame:
+    return pd.DataFrame(
+        [
+            {
+                "name": name,
+                "value": str(value),
+                "record_type": "user_assumption",
+                "source": "user_input",
+            }
+            for name, value in (assumptions or {}).items()
+        ]
+    )
+
+
+def _markdown_text(value: object) -> str:
+    return str(value).replace("|", "\\|").replace("\n", " ").strip()
+
+
+def _percent(value: object) -> str:
+    return "—" if value is None or pd.isna(value) else f"{float(value):.1%}"
+
+
+def _money(value: object) -> str:
+    return "—" if value is None or pd.isna(value) else f"${float(value) / 1e9:,.1f}B"
+
+
+def render_research_report(
+    frame: pd.DataFrame,
+    *,
+    primary_ticker: str,
+    peer_tickers: Iterable[str],
+    assumptions: Mapping[str, object] | None = None,
+    scenario: Mapping[str, object] | None = None,
+) -> str:
+    peers = list(dict.fromkeys([primary_ticker, *peer_tickers]))
+    scoped = frame.loc[frame["ticker"].isin(peers)].copy()
+    if scoped.empty or primary_ticker not in set(scoped["ticker"]):
+        raise ValueError(f"No data available for primary ticker {primary_ticker}.")
+    summary = latest_company_summary(scoped, primary_ticker)
+    comparison = latest_peer_comparison(scoped)
+    sources = source_ledger(scoped)
+    primary = scoped.loc[scoped["ticker"] == primary_ticker].sort_values("fiscal_year")
+
+    lines = [
+        f"# Company financial research report: {_markdown_text(summary['company'])}",
+        "",
+        "> Public-source research aid. Reported facts, deterministic derived metrics and user assumptions are separated below. Not investment advice.",
+        "",
+        "## Scope",
+        "",
+        f"- Primary identifier: `{_markdown_text(primary_ticker)}`",
+        f"- Fiscal years: {int(primary['fiscal_year'].min())}–{int(primary['fiscal_year'].max())}",
+        f"- User-selected comparison set: {', '.join(f'`{_markdown_text(item)}`' for item in peers)}",
+        "",
+        "## Reported facts",
+        "",
+        "| Fiscal year | Revenue | Operating income | Net income | Operating cash flow | Capex | Source |",
+        "|---:|---:|---:|---:|---:|---:|---|",
+    ]
+    for row in primary.itertuples(index=False):
+        lines.append(
+            f"| {row.fiscal_year} | {_money(row.revenue)} | {_money(row.operating_income)} | "
+            f"{_money(row.net_income)} | {_money(row.operating_cash_flow)} | {_money(row.capex)} | "
+            f"[SEC/public source]({_markdown_text(row.source_url)}) |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Deterministic derived metrics",
+            "",
+            "| Ticker | FY end | Revenue growth | Gross margin | Operating margin | FCF margin | Capex intensity |",
+            "|---|---|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for row in comparison.itertuples(index=False):
+        lines.append(
+            f"| {_markdown_text(row.ticker)} | {_markdown_text(row.fiscal_year_end)} | "
+            f"{_percent(row.revenue_growth)} | {_percent(row.gross_margin)} | "
+            f"{_percent(row.operating_margin)} | {_percent(row.fcf_margin)} | {_percent(row.capex_intensity)} |"
+        )
+    lines.extend(["", "Formulas are deterministic and listed in the application formula catalog."])
+
+    lines.extend(["", "## User assumptions", ""])
+    if assumptions:
+        for name, value in assumptions.items():
+            lines.append(f"- **{_markdown_text(name)}:** {_markdown_text(value)}")
+    else:
+        lines.append("- No valuation/return assumptions were supplied for this report.")
+
+    lines.extend(["", "## Scenario result", ""])
+    if scenario:
+        lines.extend(
+            [
+                f"- Entry equity value: ${float(scenario['entry_equity_value']):,.2f}B",
+                f"- Exit equity value: ${float(scenario['exit_equity_value']):,.2f}B",
+                f"- MOIC: {float(scenario['moic']):.2f}x",
+                f"- IRR: {float(scenario['irr']):.1%}",
+            ]
+        )
+    else:
+        lines.append("- No valid scenario was calculated.")
+
+    lines.extend(["", "## Source ledger", "", "| Ticker | FY end | Filed | Accession | Source |", "|---|---|---|---|---|"])
+    for row in sources.itertuples(index=False):
+        values = row._asdict()
+        lines.append(
+            f"| {_markdown_text(values.get('ticker', ''))} | {_markdown_text(values.get('fiscal_year_end', ''))} | "
+            f"{_markdown_text(values.get('filed', ''))} | {_markdown_text(values.get('accession', '')) or '—'} | "
+            f"[open source]({_markdown_text(values.get('source_url', ''))}) |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Boundaries",
+            "",
+            "- The tool supports public U.S. SEC Company Facts and a documented same-schema CSV; it does not claim global-company coverage.",
+            "- Missing or incompatible XBRL facts remain missing and must be checked against the original filing.",
+            "- User-selected companies are not automatically validated as strict valuation comparables.",
+            "- Scenario outputs are assumption-driven teaching calculations, not a DCF, target price or investment recommendation.",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def build_run_manifest(
+    frame: pd.DataFrame,
+    *,
+    input_mode: str,
+    start_year: int,
+    end_year: int,
+    primary_ticker: str,
+    peer_tickers: Iterable[str],
+    assumptions: Mapping[str, object] | None = None,
+    generated_at: str | None = None,
+) -> dict[str, object]:
+    input_columns = [
+        column
+        for column in frame.columns
+        if column in REQUIRED_FINANCIAL_COLUMNS
+        or column
+        in {
+            "cik",
+            "form",
+            "accession",
+            "input_source",
+        }
+        or column.endswith("_xbrl_tag")
+        or column.endswith("_accession")
+    ]
+    canonical = (
+        frame[input_columns]
+        .sort_values(["ticker", "fiscal_year", "fiscal_year_end"])
+        .to_csv(index=False)
+    )
+    sources = sorted(set(frame["source_url"].dropna().astype(str)))
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "formula_version": FORMULA_VERSION,
+        "generated_at": generated_at or datetime.now(timezone.utc).isoformat(),
+        "input_mode": input_mode,
+        "year_range": {"start": start_year, "end": end_year},
+        "primary_ticker": primary_ticker,
+        "peer_tickers": list(dict.fromkeys(peer_tickers)),
+        "record_count": int(len(frame)),
+        "tickers": sorted(frame["ticker"].unique().tolist()),
+        "source_urls": sources,
+        "reported_fact_fields": REPORTED_FACT_FIELDS,
+        "derived_metrics": list(FORMULA_DEFINITIONS),
+        "user_assumptions": dict(assumptions or {}),
+        "input_sha256": hashlib.sha256(canonical.encode("utf-8")).hexdigest(),
+        "uploads_persisted": False,
+        "coverage_boundary": "Public U.S. SEC Company Facts or same-schema uploaded CSV only",
+        "warning": "Missing data is not guessed; outputs are not investment advice.",
+    }
+
+
+def manifest_json(manifest: Mapping[str, object]) -> str:
+    return json.dumps(manifest, ensure_ascii=False, indent=2, default=str) + "\n"

@@ -4,9 +4,15 @@ import pandas as pd
 
 from research import (
     add_metrics,
+    build_run_manifest,
+    evidence_ledger,
+    filter_year_range,
     financial_health_prompts,
     latest_peer_comparison,
+    manifest_json,
+    prepare_financials,
     quality_flags,
+    render_research_report,
     scenario_sensitivity,
     valuation_scenario,
 )
@@ -117,6 +123,62 @@ class ResearchTests(unittest.TestCase):
         )
         self.assertEqual(len(result), 9)
         self.assertTrue({"annual_growth_rate", "exit_multiple", "moic", "irr"}.issubset(result.columns))
+
+    def test_upload_contract_fails_loudly_and_year_filter_is_explicit(self) -> None:
+        with self.assertRaisesRegex(ValueError, "Missing required financial columns"):
+            prepare_financials(sample_frame())
+
+        full = sample_frame().assign(
+            company="Test Company",
+            fiscal_year_end=["2025-12-31", "2026-12-31"],
+            filed=["2026-02-01", "2027-02-01"],
+            source_url="https://example.com/filing",
+            cost_of_revenue=[60.0, 72.0],
+        )
+        prepared = prepare_financials(full)
+        filtered = filter_year_range(prepared, 2026, 2026)
+        self.assertEqual(filtered["fiscal_year"].tolist(), [2026])
+        with self.assertRaisesRegex(ValueError, "No fiscal-year rows"):
+            filter_year_range(prepared, 2020, 2021)
+
+    def test_report_and_manifest_separate_facts_assumptions_and_formulas(self) -> None:
+        frame = sample_frame().assign(
+            company="Test Company",
+            fiscal_year_end=["2025-12-31", "2026-12-31"],
+            filed=["2026-02-01", "2027-02-01"],
+            source_url="https://example.com/filing",
+            cost_of_revenue=[60.0, 72.0],
+        )
+        prepared = prepare_financials(frame)
+        assumptions = {"annual_growth_rate": 0.1, "holding_period_years": 5}
+        report = render_research_report(
+            prepared,
+            primary_ticker="TEST",
+            peer_tickers=[],
+            assumptions=assumptions,
+        )
+        self.assertIn("## Reported facts", report)
+        self.assertIn("## Deterministic derived metrics", report)
+        self.assertIn("## User assumptions", report)
+        self.assertIn("https://example.com/filing", report)
+
+        facts = evidence_ledger(prepared)
+        self.assertEqual(set(facts["record_type"]), {"reported_fact"})
+        self.assertNotIn("free_cash_flow", set(facts["field"]))
+
+        manifest = build_run_manifest(
+            prepared,
+            input_mode="uploaded_csv",
+            start_year=2025,
+            end_year=2026,
+            primary_ticker="TEST",
+            peer_tickers=[],
+            assumptions=assumptions,
+            generated_at="2026-08-25T00:00:00+00:00",
+        )
+        self.assertFalse(manifest["uploads_persisted"])
+        self.assertEqual(len(manifest["input_sha256"]), 64)
+        self.assertIn('"input_mode": "uploaded_csv"', manifest_json(manifest))
 
 
 if __name__ == "__main__":

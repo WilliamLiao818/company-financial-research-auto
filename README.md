@@ -1,54 +1,81 @@
 # 公司财务研究自动化
 
-一个来源可追溯的财务研究 MVP：把 Microsoft、Oracle 和 NVIDIA 的冻结 SEC XBRL 示例数据转化为五年趋势、示例公司比较、规则化观察提示，以及由使用者自行输入假设的 MOIC/IRR 情景。
+一个面向美国 SEC 公开申报数据的可追溯研究工具。使用者可以从冻结 Demo、在线 ticker/CIK、上传的 SEC Company Facts JSON，或同结构财务 CSV 开始，得到申报事实账本、透明派生指标、用户选择的公司比较、假设驱动的 MOIC/IRR 情景，以及可下载报告。
 
-> 当前版本只支持仓库内预设的三个示例公司，不支持任意公司查询或文件上传。输出不构成投资建议、证券估值或目标价。
+> 本项目不宣称支持全球任意公司。缺失或不兼容的 XBRL 事实保持缺失，不自动猜数；输出不构成投资建议、证券估值或目标价。
 
 ```mermaid
 flowchart LR
-    A[SEC Company Facts] --> B[冻结并标准化财务事实]
-    B --> C[趋势与透明公式]
-    C --> D[同业比较与规则提示]
-    C --> E[用户输入估值假设]
-    E --> F[MOIC / IRR 敏感性]
-    D --> G[交互页面与静态简报]
+    A[Demo / Ticker或CIK / JSON / CSV] --> B[输入与Schema校验]
+    B --> C[申报事实与来源账本]
+    C --> D[透明派生指标]
+    D --> E[用户选择的比较公司]
+    D --> F[用户输入情景假设]
+    E --> G[Markdown研究报告]
     F --> G
+    C --> H[run_manifest.json]
+    D --> H
+    F --> H
 ```
 
-## 用途
+## 输入模式
 
-公司研究经常先花时间抄录财务数据，再做口径统一、趋势分析和风险检查。本项目自动化可重复部分，同时让每个数字回到 SEC 来源，让每个计算回到公开公式。
+### 1. 冻结 Demo
 
-适合用于：复核年度财务趋势、检查派生指标公式、比较预设示例公司，以及观察不同增长、倍数和净债务假设如何改变数学结果。不适合用于实时交易、自动选股或替代原始申报文件。
+内置 Microsoft、Oracle 和 NVIDIA 的五年 SEC Company Facts 快照。完全离线运行，不需要环境变量或 API key。
 
-## 当前输入与输出
+### 2. 在线 SEC：ticker 或 CIK
 
-输入：
+页面接受最多五个以逗号或换行分隔的美国上市公司 ticker/CIK，并按使用者选择的财年区间展示结果。
 
-- 仓库内 `data/financials.csv` 的冻结年度财务事实；
-- 页面中由使用者输入的增长率、进场/退出倍数、持有期和净债务假设；
-- 可选的 SEC 刷新脚本。公司清单目前固定在脚本中。
+在线请求不需要 API key，但 SEC 要求自动访问者使用可识别的 User-Agent。运行前在本地设置自己的真实姓名和公开联系邮箱：
 
-输出：
+```bash
+export SEC_USER_AGENT="<your name> <your public contact email>"
+streamlit run app.py
+```
 
-- 营收增长、利润率、简化自由现金流、资本开支强度、现金转化和负债资产比；
-- 三个预设公司的最新已申报年度比较；
-- 只提出后续核查问题的规则化提示，不输出评级；
-- MOIC、IRR 和增长率/退出倍数敏感性表；
-- 带 SEC 来源链接的交互页面和静态简报。
+若 `SEC_USER_AGENT` 未配置、网络不可用、ticker 不存在或标准标签不匹配，页面会显示错误并停止，不生成替代数字。
+
+### 3. 上传 SEC Company Facts JSON
+
+上传从 SEC Company Facts 保存的 JSON。系统读取 `facts.us-gaap` 中受支持的标准年度 USD 标签，并保留 XBRL tag、accession、申报日期和来源 URL。可选 ticker 只作为显示标签，不会覆盖 JSON 内的 CIK、公司名或财务事实。
+
+### 4. 上传同结构财务 CSV
+
+页面提供结构示例下载。必填字段包括：
+
+```text
+ticker, company, fiscal_year, fiscal_year_end, filed, source_url,
+revenue, gross_profit, cost_of_revenue, operating_income, net_income,
+operating_cash_flow, capex, assets, liabilities, equity
+```
+
+财务字段可以为空，但不能缺少列；日期、来源 URL、重复公司年度和数值类型会被校验。上传来源由使用者负责核验。
+
+## 输出
+
+- **申报事实：** 收入、利润、现金流、资本开支、资产、负债与权益，只保留输入或 SEC 返回的值；
+- **派生指标：** 营收增长、利润率、简化自由现金流、资本开支强度、现金转化和负债资产比；
+- **用户选择的比较：** 只比较当前数据集中由使用者勾选的公司，不自动认定为严格可比公司；
+- **用户假设情景：** 增长、进场/退出倍数、持有期与净债务和事实分开记录；
+- **来源账本：** 公司年度、申报日期、accession、输入模式及公开来源；
+- **下载：** Markdown 研究报告、申报事实 CSV 和 `run_manifest.json`。
+
+`run_manifest.json` 保存输入模式、财年区间、公司范围、来源 URL、公式版本、用户假设、输入 SHA-256 和 `uploads_persisted=false`，用于复核本次运行的范围与方法。
 
 ## 情景公式
 
 ```text
 退出指标 = 基期指标 × (1 + 年增长率) ^ 持有期
-进入企业价值 = 基期指标 × 进入倍数
+进场企业价值 = 基期指标 × 进场倍数
 退出企业价值 = 退出指标 × 退出倍数
 股权价值 = 企业价值 - 净债务
-MOIC = 退出股权价值 ÷ 进入股权价值
+MOIC = 退出股权价值 ÷ 进场股权价值
 IRR = MOIC ^ (1 ÷ 持有期) - 1
 ```
 
-公式透明不等于假设正确。当前情景忽略分红、稀释、交易费用、税务、中途现金流和复杂资本结构，也不会自动取得市场价格或净债务。
+该情景没有计入分红、稀释、税、交易费用、优先权、追加投资、中途现金流或复杂债务结构，也不会自动取得市场价格或真实净债务。
 
 ## 快速运行
 
@@ -59,54 +86,46 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-运行测试并生成静态简报：
+运行测试并生成仓库内冻结 Demo 的静态简报：
 
 ```bash
 python -m unittest discover -s tests -v
 python scripts/generate_report.py
 ```
 
-刷新 SEC 快照：
+配置 `SEC_USER_AGENT` 后，也可以从命令行构建新的公开快照：
 
 ```bash
-export SEC_USER_AGENT="<your name> <your public contact email>"
-python scripts/build_snapshot.py
+python scripts/build_snapshot.py --identifier MSFT --identifier CIK0001341439 --years 5 --output refreshed/financials.csv
 ```
 
-SEC 要求自动访问者使用可识别的 User-Agent。冻结样例本身不需要配置；刷新时必须由运行者提供自己的真实、可公开联系信息。不要提交邮箱密码、API key 或其他密钥。GitHub Actions 会在仓库变量 `SEC_CONTACT_EMAIL` 已配置时才刷新，并在运行时组装 `SEC_USER_AGENT`；未配置时只运行测试。
+使用 `--raw-dir` 时，脚本读取本地 `IDENTIFIER.json`，不会联网；输出路径由运行者显式指定，不会自动覆盖冻结 Demo。
 
-## 数据来源与隐私边界
+## 事实、公式与假设边界
 
-- 冻结示例来自美国 SEC `data.sec.gov` Company Facts API，范围和截取日期见 [DATA_CARD.md](DATA_CARD.md)；
-- 本项目没有登录、用户账户、遥测或分析代码；本地运行时不会上传冻结 CSV；
-- 在线刷新只向 SEC 发起请求，并发送运行者配置的 `SEC_USER_AGENT`；
-- 当前版本没有文件上传功能，也不读取内部资料；不要把保密、个人或未公开数据加入仓库；
-- 静态 CSV 和输出文件会保留在本地或 GitHub Actions artifact 中，发布前应自行检查内容。
+- `reported_fact` 只表示 SEC XBRL 或上传 CSV 中的原始值；
+- 派生指标由版本化公开公式确定性计算，不写回为申报事实；
+- 增长、倍数、持有期和净债务明确标记为 `user_assumption`；
+- 规则化财务提示只提出需核查的问题，不是健康评级；
+- 重要结论必须回到原始 SEC 申报文件核验。
 
-## 自动化与人工判断的边界
+## 数据与隐私边界
 
-自动化部分包括：读取与标准化公开事实、计算公式、同业表、规则提示、假设敏感性、数据校验、静态报告及 GitHub Actions 测试。
-
-人工部分包括：会计口径复核、业务分部分析、同业选择、增长和倍数假设、净债务与交易结构、风险判断及最终投资决策。
+- 文件上传只通过 Streamlit 内存对象解析，应用代码不把上传内容写入仓库或磁盘；
+- 冻结 Demo 本地运行不会联网；在线模式只请求 SEC 官方域名；
+- `SEC_USER_AGENT` 由运行者在环境中配置，不写入报告或下载文件；
+- 不要上传保密、个人、客户、未公开交易或付费数据库数据；
+- 本项目没有账户、访问控制或长期保留机制，因此不适合作为私有文件系统；
+- 部署平台自身的日志和会话策略仍需由部署者单独核查。
 
 ## 已知限制
 
-- 三家公司业务结构不同，不能因为放在同一表中就视为严格可比；
-- 财年截止日不同，XBRL 标准标签不能覆盖所有公司特有披露；
-- 简化自由现金流为经营现金流减资本开支，不等同于完整的 unlevered FCF；
-- 总负债/总资产不是净债务，也不是信用评级；
-- 情景模型不是 DCF、可比公司估值或真实 PE 回报模型；
-- 公开公司示例不能替代私募项目的尽调、条款、稀释和退出路径分析；
-- 重要结论必须回到原始申报文件核验。
+- 当前连接器只面向美国 SEC Company Facts，不覆盖其他司法辖区或私营公司；
+- 标准 XBRL 标签不能覆盖所有公司特有披露、分部信息或重述语境；
+- ticker 解析依赖 SEC ticker 文件，CIK 可直接定位申报主体；
+- 财年截止日、会计分类和业务结构差异会影响横向比较；
+- 简化自由现金流不是完整 unlevered FCF，总负债/总资产也不是净债务；
+- 页面不提供实时股价、市场价值、分析师一致预期、DCF、自动可比公司选择或目标价；
+- 上传 CSV 的真实性和会计口径无法由本工具自动证明。
 
-## 尚未实现的通用化能力
-
-- 页面中输入任意 CIK/ticker 并动态下载数据；
-- 上传并映射用户自备 CSV；
-- 自动识别公司特有 XBRL 标签和分部披露；
-- 实时市场价格、净债务、可比倍数或目标价；
-- 针对不同业务模型自动选择严格可比公司。
-
-这些是未来扩展方向，不是当前功能。
-
-数据范围见 [DATA_CARD.md](DATA_CARD.md)，静态样例见 [output/company_brief.md](output/company_brief.md)，AI 协作边界见 [AI_USAGE.md](AI_USAGE.md)。
+详细数据口径见 [DATA_CARD.md](DATA_CARD.md)，AI 协作边界见 [AI_USAGE.md](AI_USAGE.md)。
