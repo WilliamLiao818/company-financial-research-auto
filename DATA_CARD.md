@@ -1,7 +1,7 @@
 # Data card
 
 - Supported source family: U.S. Securities and Exchange Commission Company Facts, plus a documented same-schema CSV supplied by the user.
-- Frozen demo coverage: Microsoft, Oracle and NVIDIA; five fiscal years available in the repository snapshot.
+- Prebuilt coverage: Microsoft and Oracle; five fiscal years are available in the repository snapshot.
 - Frozen demo capture date: 2026-08-24.
 - Unit: U.S. dollars, as filed in XBRL.
 - Input modes: frozen demo, online ticker/CIK, in-memory SEC Company Facts JSON upload, and in-memory financial CSV upload.

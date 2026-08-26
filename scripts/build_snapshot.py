@@ -14,7 +14,7 @@ from input_pipeline import parse_identifiers  # noqa: E402
 from sec_connector import company_facts_to_frame, fetch_company_facts  # noqa: E402
 
 
-DEFAULT_IDENTIFIERS = ["MSFT", "ORCL", "NVDA"]
+DEFAULT_IDENTIFIERS = ["MSFT", "ORCL"]
 
 
 def main() -> None:

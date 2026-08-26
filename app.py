@@ -2,18 +2,22 @@ from datetime import date
 
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
+from company_profiles import accounting_quality_signals, fcf_bridge, profile_for
 from input_pipeline import (
     company_facts_json_from_bytes,
     financial_csv_from_bytes,
     online_company_facts,
     parse_identifiers,
 )
+from pdf_export import markdown_to_pdf
 from research import (
     DATA_PATH,
     VALUATION_METRICS,
     assumption_ledger,
+    build_research_audit,
     build_run_manifest,
     evidence_ledger,
     filter_year_range,
@@ -25,6 +29,7 @@ from research import (
     manifest_json,
     quality_flags,
     render_research_report,
+    review_queue,
     scenario_sensitivity,
     source_ledger,
     valuation_scenario,
@@ -32,12 +37,34 @@ from research import (
 from sec_connector import SecConfigurationError, SecConnectionError, SecInputError
 
 
-st.set_page_config(page_title="Company Financial Research Auto", page_icon="📊", layout="wide")
-st.title("Company Financial Research Auto")
-st.caption(
-    "美国SEC公开年度财务研究：用户输入 → 申报事实 → 透明公式 → 用户选择的比较与情景 → 可下载报告。"
+st.set_page_config(page_title="The Company · Version 2.0", page_icon="C", layout="wide")
+st.markdown(
+    """
+    <style>
+    :root { --green:#087f5b; --ink:#10241c; --soft:#e8f5ef; --line:#dce7e1; }
+    .stApp { background:#fbfdfc; color:var(--ink); }
+    [data-testid="stHeader"] { background:rgba(251,253,252,.88); backdrop-filter:blur(16px); }
+    [data-testid="stSidebar"] { background:#f1f7f4; border-right:1px solid var(--line); }
+    h1,h2,h3 { letter-spacing:-.025em; }
+    h1 { font-family:Georgia,serif!important; font-weight:400!important; }
+    h2 { color:var(--ink); }
+    div[data-testid="stMetric"] { padding:18px; background:white; border:1px solid var(--line); border-radius:16px; box-shadow:0 8px 24px rgba(16,36,28,.04); animation:rise .55s cubic-bezier(.22,1,.36,1) both; }
+    div[data-testid="stMetricValue"] { color:var(--green); }
+    .stButton>button,.stDownloadButton>button,.stLinkButton>a { border:0!important; border-radius:11px!important; color:white!important; background:var(--green)!important; font-weight:650!important; }
+    .stButton>button:hover,.stDownloadButton>button:hover,.stLinkButton>a:hover { background:#065f46!important; transform:translateY(-1px); }
+    div[data-baseweb="tab-list"] { gap:4px; border-bottom:1px solid var(--line); }
+    button[data-baseweb="tab"] { padding:12px 16px; }
+    button[data-baseweb="tab"][aria-selected="true"] { color:var(--green); }
+    .thesis-card { min-height:170px; padding:22px; border:1px solid var(--line); border-radius:16px; background:white; }
+    .thesis-card strong { display:block; margin-bottom:12px; color:var(--green); font-size:11px; letter-spacing:.12em; }
+    .thesis-card p { margin:0; font-size:15px; line-height:1.65; }
+    .scope-note { padding:15px 18px; border-left:3px solid var(--green); background:var(--soft); border-radius:0 12px 12px 0; color:#365448; font-size:13px; }
+    @keyframes rise { from { transform:translateY(10px); opacity:0; } to { transform:none; opacity:1; } }
+    @media (prefers-reduced-motion:reduce) { * { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
-st.warning("不支持全球任意公司；缺失或不兼容的XBRL事实保持缺失，系统不会猜数，也不提供投资建议。")
 
 
 def percent(value) -> str:
@@ -48,199 +75,226 @@ def usd_billions(value) -> str:
     return "—" if value is None or pd.isna(value) else f"${value / 1e9:,.1f}B"
 
 
-MODE_BY_LABEL = {
-    "冻结Demo（离线）": "frozen_demo",
-    "在线SEC：Ticker/CIK": "online_sec",
-    "上传SEC Company Facts JSON": "uploaded_sec_json",
-    "上传同结构财务CSV": "uploaded_csv",
-}
+def safe_file_name(value: str) -> str:
+    return "".join(character.lower() for character in value if character.isalnum() or character in "-_")
 
-st.sidebar.header("输入")
-mode_label = st.sidebar.radio("数据模式", list(MODE_BY_LABEL), index=0)
-input_mode = MODE_BY_LABEL[mode_label]
+
+def enriched_report(
+    frame: pd.DataFrame,
+    ticker: str,
+    peer_tickers: list[str],
+    assumptions: dict[str, object],
+    scenario: dict[str, object] | None,
+    signals: pd.DataFrame,
+) -> str:
+    profile = profile_for(ticker)
+    base = render_research_report(
+        frame,
+        primary_ticker=ticker,
+        peer_tickers=peer_tickers,
+        assumptions=assumptions,
+        scenario=scenario,
+    )
+    sections = [
+        f"# The Company: {ticker}",
+        "",
+        "> Fundamentals & Accounting Quality · Version 2.0. Public-source research support; not an investment recommendation.",
+        "",
+        "## Executive view",
+        "",
+        f"- **Business model:** {profile['business_model']}",
+        f"- **Research thesis:** {profile['research_thesis']}",
+        f"- **Counter-thesis:** {profile['counter_thesis']}",
+        "",
+        "## Business-model-specific indicators",
+        "",
+        *[f"- {item}" for item in profile["key_kpis"]],
+        "",
+        "## Priority diligence questions",
+        "",
+        *[f"- {item}" for item in profile["diligence_questions"]],
+        "",
+        "## Accounting quality and normalization",
+        "",
+    ]
+    if signals.empty:
+        sections.append("- No deterministic accounting-quality signal was triggered. This does not establish accounting quality.")
+    else:
+        sections.extend(
+            [
+                "| Signal | Category | Observation | Analytical implication | Required review | Confidence |",
+                "|---|---|---|---|---|---|",
+            ]
+        )
+        for row in signals.itertuples(index=False):
+            sections.append(
+                f"| {row.signal} | {row.category} | {row.observation} | {row.analytical_implication} | {row.required_review} | {row.confidence} |"
+            )
+    sections.extend(["", "---", "", base])
+    return "\n".join(sections)
+
+
+query_ticker = str(st.query_params.get("ticker", "MSFT")).upper()
+showcase_tickers = ["MSFT", "ORCL"]
+default_showcase = query_ticker if query_ticker in showcase_tickers else "MSFT"
+
+st.sidebar.caption("THE COMPANY · VERSION 2.0")
+mode = st.sidebar.radio(
+    "Research mode",
+    ["Prebuilt research pack", "Live SEC company · Beta", "Upload SEC Company Facts", "Upload financial CSV"],
+    index=0 if query_ticker in showcase_tickers else 1,
+)
 current_year = date.today().year
-year_columns = st.sidebar.columns(2)
-start_year = int(
-    year_columns[0].number_input("起始财年", min_value=2000, max_value=current_year + 1, value=current_year - 4)
-)
-end_year = int(
-    year_columns[1].number_input("结束财年", min_value=2000, max_value=current_year + 1, value=current_year)
-)
-if start_year > end_year:
-    st.error("起始财年不能晚于结束财年。")
-    st.stop()
+start_year, end_year = current_year - 4, current_year
 
 data: pd.DataFrame | None = None
 try:
-    if input_mode == "frozen_demo":
+    if mode == "Prebuilt research pack":
+        selected_showcase = st.sidebar.selectbox(
+            "Company",
+            showcase_tickers,
+            index=showcase_tickers.index(default_showcase),
+            format_func=lambda value: f"{value} · {'Microsoft' if value == 'MSFT' else 'Oracle'}",
+        )
         data = load_financials()
-        st.sidebar.caption("内置Microsoft、Oracle、NVIDIA冻结样例；无需联网或密钥。")
-
-    elif input_mode == "online_sec":
-        raw_identifiers = st.sidebar.text_area(
-            "Ticker/CIK（逗号或换行分隔，最多5个）",
-            value="MSFT, ORCL, NVDA",
-            help="Ticker需要在线读取SEC ticker映射；纯数字或CIK前缀会直接按CIK读取。",
-        )
-        request_key = (raw_identifiers, start_year, end_year)
-        if st.sidebar.button("从SEC加载", type="primary"):
-            identifiers = parse_identifiers(raw_identifiers)
-            with st.spinner("正在读取SEC Company Facts…"):
-                loaded = online_company_facts(identifiers, years=20)
-            st.session_state["online_sec_request"] = request_key
-            st.session_state["online_sec_data"] = loaded
-        if st.session_state.get("online_sec_request") == request_key:
-            data = st.session_state.get("online_sec_data")
+        ticker_hint = selected_showcase
+        st.sidebar.success("Verified snapshot · No API key required")
+    elif mode == "Live SEC company · Beta":
+        identifier = st.sidebar.text_input("U.S. ticker or CIK", value=query_ticker if query_ticker not in showcase_tickers else "AAPL")
+        year_count = st.sidebar.slider("Annual periods", 3, 10, 5)
+        st.sidebar.caption("The SEC connector does not require an API key. Availability depends on the public SEC endpoint and request identification.")
+        if st.sidebar.button("Load SEC data", type="primary"):
+            with st.spinner("Loading public SEC Company Facts…"):
+                loaded = online_company_facts(parse_identifiers(identifier), years=year_count)
+            st.session_state["live_company_data"] = loaded
+            st.session_state["live_company_identifier"] = identifier
+        if st.session_state.get("live_company_identifier") == identifier:
+            data = st.session_state.get("live_company_data")
         if data is None:
-            st.info(
-                "在线模式需要先点击“从SEC加载”。若环境未配置SEC_USER_AGENT或无法联网，"
-                "请使用冻结Demo或上传已保存的SEC JSON/财务CSV。"
-            )
+            st.info("Enter a U.S. ticker and select **Load SEC data**. No figures are generated until the public filing data is returned.")
             st.stop()
-
-    elif input_mode == "uploaded_sec_json":
-        uploaded_json = st.sidebar.file_uploader("SEC Company Facts JSON", type=["json"])
-        ticker_override = st.sidebar.text_input(
-            "可选Ticker标签",
-            help="只改变页面显示标签，不改变JSON内CIK、公司名或财务事实。",
-        )
-        st.sidebar.caption("文件仅在当前Streamlit会话内解析，不写入仓库或磁盘。")
-        if uploaded_json is None:
-            st.info("请选择一份从SEC Company Facts保存的JSON文件。")
+        ticker_hint = str(data.iloc[0]["ticker"])
+    elif mode == "Upload SEC Company Facts":
+        uploaded = st.sidebar.file_uploader("Company Facts JSON", type=["json"])
+        ticker_override = st.sidebar.text_input("Optional display ticker")
+        st.sidebar.caption("The file is parsed in session memory and is not written by this application.")
+        if uploaded is None:
+            st.info("Upload a saved SEC Company Facts JSON file to continue.")
             st.stop()
-        data = company_facts_json_from_bytes(
-            uploaded_json.getvalue(), ticker=ticker_override.strip() or None, years=20
-        )
-
+        data = company_facts_json_from_bytes(uploaded.getvalue(), ticker=ticker_override.strip() or None, years=20)
+        ticker_hint = str(data.iloc[0]["ticker"])
     else:
-        uploaded_csv = st.sidebar.file_uploader("财务CSV", type=["csv"])
-        st.sidebar.download_button(
-            "下载CSV结构示例",
-            DATA_PATH.read_bytes(),
-            file_name="financials-template.csv",
-            mime="text/csv",
-        )
-        st.sidebar.caption("文件仅在当前Streamlit会话内解析，不写入仓库或磁盘。")
-        if uploaded_csv is None:
-            st.info("请上传与示例字段一致的财务CSV；来源URL和日期字段为必填。")
+        uploaded = st.sidebar.file_uploader("Financial CSV", type=["csv"])
+        st.sidebar.download_button("Download CSV template", DATA_PATH.read_bytes(), "financials-template.csv", "text/csv")
+        st.sidebar.caption("The file is parsed in session memory and is not written by this application.")
+        if uploaded is None:
+            st.info("Upload a file matching the documented schema to continue.")
             st.stop()
-        data = financial_csv_from_bytes(uploaded_csv.getvalue())
+        data = financial_csv_from_bytes(uploaded.getvalue())
+        ticker_hint = str(data.iloc[0]["ticker"])
 
+    available_years = pd.to_numeric(data["fiscal_year"], errors="coerce").dropna().astype(int)
+    start_year = int(available_years.min())
+    end_year = int(available_years.max())
     data = filter_year_range(data, start_year, end_year)
 except (ValueError, SecInputError, SecConfigurationError, SecConnectionError) as error:
     st.error(str(error))
-    st.caption("没有生成替代数字。请检查输入、年份、网络或SEC_USER_AGENT后重试。")
+    st.caption("No substitute figures were generated. Use a prebuilt pack or provide a valid source file.")
     st.stop()
 
 available_tickers = sorted(data["ticker"].unique())
-st.sidebar.header("研究范围")
-ticker = st.sidebar.selectbox("主要公司", available_tickers)
+ticker_index = available_tickers.index(ticker_hint) if ticker_hint in available_tickers else 0
+ticker = st.sidebar.selectbox("Primary company", available_tickers, index=ticker_index)
 peer_options = [item for item in available_tickers if item != ticker]
-peer_tickers = st.sidebar.multiselect("比较公司（由用户选择）", peer_options, default=peer_options)
-scope_tickers = [ticker, *peer_tickers]
-scope_data = data.loc[data["ticker"].isin(scope_tickers)].copy()
+default_peers = peer_options if mode == "Prebuilt research pack" else []
+peer_tickers = st.sidebar.multiselect("Comparison set", peer_options, default=default_peers)
+scope_data = data.loc[data["ticker"].isin([ticker, *peer_tickers])].copy()
 company = scope_data.loc[scope_data["ticker"] == ticker].sort_values("fiscal_year")
 latest = company.iloc[-1]
 summary = latest_company_summary(scope_data, ticker)
+profile = profile_for(ticker)
+signals = accounting_quality_signals(scope_data, ticker)
 
-scenario = None
-assumptions: dict[str, object] = {}
-
-overview_tab, peers_tab, scenario_tab, sources_tab = st.tabs(
-    [
-        "1. 财务趋势与提示",
-        "2. 用户选择的年度比较",
-        "3. 估值与回报情景",
-        "4. 证据、公式与报告",
-    ]
+st.caption("THE COMPANY / FUNDAMENTALS & ACCOUNTING QUALITY")
+st.title(f"{summary['company']}")
+st.markdown(
+    f"<div class='scope-note'><strong>{ticker}</strong> · FY{summary['fiscal_year']} · Public SEC facts · "
+    "Facts, calculations, interpretations and assumptions remain separate.</div>",
+    unsafe_allow_html=True,
 )
 
-with overview_tab:
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("最新年度营收", usd_billions(summary["revenue"]), percent(summary["revenue_growth"]))
-    col2.metric("营业利润率", percent(summary["operating_margin"]))
-    col3.metric("简化自由现金流", usd_billions(summary["free_cash_flow"]))
-    col4.metric("资本开支/营收", percent(summary["capex_intensity"]))
+metrics = st.columns(5)
+metrics[0].metric("Revenue", usd_billions(summary["revenue"]), percent(summary["revenue_growth"]))
+metrics[1].metric("Operating margin", percent(summary["operating_margin"]))
+metrics[2].metric("Simple FCF", usd_billions(summary["free_cash_flow"]))
+metrics[3].metric("Capex / revenue", percent(summary["capex_intensity"]))
+metrics[4].metric("Cash conversion", "—" if pd.isna(summary["cash_conversion"]) else f"{summary['cash_conversion']:.2f}x")
 
+executive_tab, financial_tab, accounting_tab, scenario_tab, evidence_tab = st.tabs(
+    ["Executive View", "Financial Diagnostics", "Accounting Quality", "Valuation & Scenarios", "Evidence & PDF"]
+)
+
+with executive_tab:
+    thesis_col, counter_col = st.columns(2)
+    thesis_col.markdown(
+        f"<div class='thesis-card'><strong>RESEARCH THESIS</strong><p>{profile['research_thesis']}</p></div>",
+        unsafe_allow_html=True,
+    )
+    counter_col.markdown(
+        f"<div class='thesis-card'><strong>COUNTER-THESIS</strong><p>{profile['counter_thesis']}</p></div>",
+        unsafe_allow_html=True,
+    )
+    st.subheader("Business economics")
+    st.write(profile["business_model"])
+    left, right = st.columns(2)
+    with left:
+        st.markdown("**Growth engines**")
+        for item in profile["growth_engines"]:
+            st.write(f"- {item}")
+        st.markdown("**Business-model-specific indicators**")
+        for item in profile["key_kpis"]:
+            st.write(f"- {item}")
+    with right:
+        st.markdown("**Priority diligence questions**")
+        for item in profile["diligence_questions"]:
+            st.write(f"- {item}")
+    st.caption(f"Profile context: {profile['source_url']}")
+
+with financial_tab:
     trend = company.melt(
         id_vars=["fiscal_year"],
         value_vars=["revenue", "operating_income", "net_income", "free_cash_flow"],
         var_name="metric",
         value_name="value",
     )
-    trend["value_usd_billions"] = trend["value"] / 1e9
-    chart = px.line(
+    trend["USD billions"] = trend["value"] / 1e9
+    figure = px.line(
         trend,
         x="fiscal_year",
-        y="value_usd_billions",
+        y="USD billions",
         color="metric",
         markers=True,
-        labels={"fiscal_year": "Fiscal year", "value_usd_billions": "USD billions"},
+        color_discrete_sequence=["#087f5b", "#35a77c", "#7bc5a5", "#173f32"],
     )
-    st.plotly_chart(chart, width="stretch")
+    figure.update_layout(
+        title="Scale and cash generation are reviewed on the same fiscal-year basis",
+        plot_bgcolor="white",
+        paper_bgcolor="white",
+        legend_title_text="",
+        transition_duration=550,
+        margin={"l": 10, "r": 10, "t": 70, "b": 10},
+    )
+    figure.update_xaxes(dtick=1, gridcolor="#eef3f0")
+    figure.update_yaxes(gridcolor="#eef3f0")
+    st.plotly_chart(figure, width="stretch")
 
-    display_columns = [
-        "fiscal_year",
-        "fiscal_year_end",
-        "revenue_growth",
-        "gross_margin",
-        "operating_margin",
-        "net_margin",
-        "fcf_margin",
-        "capex_intensity",
-        "cash_conversion",
-        "debt_to_assets_proxy",
-    ]
+    display = company[
+        ["fiscal_year", "revenue_growth", "operating_margin", "net_margin", "fcf_margin", "capex_intensity", "cash_conversion", "debt_to_assets_proxy"]
+    ].copy()
     st.dataframe(
-        company[display_columns].style.format(
+        display.style.format(
             {
                 "revenue_growth": "{:.1%}",
-                "gross_margin": "{:.1%}",
-                "operating_margin": "{:.1%}",
-                "net_margin": "{:.1%}",
-                "fcf_margin": "{:.1%}",
-                "capex_intensity": "{:.1%}",
-                "cash_conversion": "{:.2f}x",
-                "debt_to_assets_proxy": "{:.1%}",
-            },
-            na_rep="—",
-        ),
-        width="stretch",
-    )
-    left, right = st.columns(2)
-    with left:
-        st.subheader("规则化财务观察点")
-        st.caption("规则只提出核查问题，不构成公司评级。")
-        for item in financial_health_prompts(scope_data, ticker):
-            st.write(f"- {item}")
-    with right:
-        st.subheader("数据质量检查")
-        for item in quality_flags(scope_data, ticker):
-            st.write(f"- {item}")
-
-with peers_tab:
-    st.info(
-        "比较集合完全由用户选择。财年截止日和业务结构可能不同，本表不是自动识别的严格可比公司组。"
-    )
-    peers = latest_peer_comparison(scope_data)
-    peer_columns = [
-        "ticker",
-        "company",
-        "fiscal_year_end",
-        "revenue_growth",
-        "gross_margin",
-        "operating_margin",
-        "net_margin",
-        "fcf_margin",
-        "capex_intensity",
-        "cash_conversion",
-        "debt_to_assets_proxy",
-    ]
-    st.dataframe(
-        peers[peer_columns].style.format(
-            {
-                "revenue_growth": "{:.1%}",
-                "gross_margin": "{:.1%}",
                 "operating_margin": "{:.1%}",
                 "net_margin": "{:.1%}",
                 "fcf_margin": "{:.1%}",
@@ -253,36 +307,82 @@ with peers_tab:
         hide_index=True,
         width="stretch",
     )
+    left, right = st.columns(2)
+    with left:
+        st.subheader("Deterministic research prompts")
+        for item in financial_health_prompts(scope_data, ticker):
+            st.write(f"- {item}")
+    with right:
+        st.subheader("Data quality")
+        for item in quality_flags(scope_data, ticker):
+            st.write(f"- {item}")
 
-with scenario_tab:
-    st.warning(
-        "公开申报事实只提供基期指标；增长率、进出场倍数、持有期和净债务均为用户假设。"
-        "情景不是实时市场估值、DCF、目标价或投资建议。"
-    )
-    available_metrics = [
-        name
-        for name in VALUATION_METRICS
-        if name in latest.index and pd.notna(latest[name]) and latest[name] > 0
-    ]
-    if not available_metrics:
-        st.error("当前公司没有可用于正值倍数情景的基期指标。")
+    if peer_tickers:
+        st.subheader("User-selected comparison")
+        st.caption("Fiscal year ends and business models may differ. Selection does not establish strict comparability.")
+        st.dataframe(latest_peer_comparison(scope_data), hide_index=True, width="stretch")
+
+with accounting_tab:
+    st.subheader("Accounting Quality & Normalization")
+    st.caption("Signals identify review work. They do not allege misconduct and do not replace the original filing.")
+    if signals.empty:
+        st.success("No deterministic signal was triggered. This does not establish accounting quality.")
     else:
-        metric = st.selectbox(
-            "估值基准指标",
-            available_metrics,
-            format_func=lambda name: VALUATION_METRICS[name]["label"],
+        st.dataframe(
+            signals,
+            column_config={"source_url": st.column_config.LinkColumn("Source")},
+            hide_index=True,
+            width="stretch",
         )
+
+    bridge = fcf_bridge(scope_data, ticker)
+    st.subheader("Reported-to-analytical cash-flow bridge")
+    if len(bridge) > 1:
+        waterfall = go.Figure(
+            go.Waterfall(
+                x=bridge["step"],
+                y=bridge["amount_usd_billions"],
+                measure=bridge["kind"],
+                connector={"line": {"color": "#9db8ac"}},
+                increasing={"marker": {"color": "#087f5b"}},
+                decreasing={"marker": {"color": "#d97706"}},
+                totals={"marker": {"color": "#173f32"}},
+                text=[f"${value:,.1f}B" for value in bridge["amount_usd_billions"]],
+                textposition="outside",
+            )
+        )
+        waterfall.update_layout(
+            title="An economic outflow can sit outside conventional CFO-minus-capex FCF",
+            showlegend=False,
+            plot_bgcolor="white",
+            paper_bgcolor="white",
+            transition_duration=550,
+            margin={"l": 10, "r": 10, "t": 70, "b": 10},
+        )
+        waterfall.update_yaxes(title="USD billions", gridcolor="#eef3f0")
+        st.plotly_chart(waterfall, width="stretch")
+        st.info("The adjustment is an analytical view, not a restatement of reported cash flow. Confirm the lease note and use a consistent definition across periods and peers.")
+    else:
+        st.info("No sourced normalization adjustment is preloaded for this company. Reported simple FCF remains unchanged and any new adjustment requires source evidence.")
+
+scenario = None
+assumptions: dict[str, object] = {}
+with scenario_tab:
+    st.caption("Scenario outputs are transparent user assumptions—not market data, a target price or a recommendation.")
+    available_metrics = [name for name in VALUATION_METRICS if name in latest.index and pd.notna(latest[name]) and latest[name] > 0]
+    if not available_metrics:
+        st.error("No positive base metric is available for the scenario model.")
+    else:
+        metric = st.selectbox("Base metric", available_metrics, format_func=lambda name: VALUATION_METRICS[name]["label"].split(" / ")[0])
         base_value = float(latest[metric] / 1e9)
-        st.metric("公开事实：基期指标", f"${base_value:,.1f}B")
-        col1, col2, col3 = st.columns(3)
-        years = int(col1.number_input("持有期（年）", 1, 10, 5, 1))
-        growth_pct = col2.number_input("指标年增长假设（%）", -50.0, 100.0, 10.0, 1.0)
-        entry_multiple = col3.number_input("进场倍数", min_value=0.1, value=10.0, step=0.5)
-        col4, col5, col6 = st.columns(3)
-        exit_multiple = col4.number_input("退出倍数", min_value=0.1, value=10.0, step=0.5)
-        entry_net_debt = col5.number_input("进场净债务（USD B）", value=0.0, step=1.0)
-        exit_net_debt = col6.number_input("退出净债务（USD B）", value=0.0, step=1.0)
-        growth_rate = growth_pct / 100
+        cols = st.columns(3)
+        years = int(cols[0].number_input("Holding period · years", 1, 10, 5, 1))
+        growth_rate = cols[1].number_input("Annual metric growth · %", -50.0, 100.0, 10.0, 1.0) / 100
+        entry_multiple = cols[2].number_input("Entry multiple", min_value=.1, value=10.0, step=.5)
+        cols = st.columns(3)
+        exit_multiple = cols[0].number_input("Exit multiple", min_value=.1, value=10.0, step=.5)
+        entry_net_debt = cols[1].number_input("Entry net debt · USD B", value=0.0, step=1.0)
+        exit_net_debt = cols[2].number_input("Exit net debt · USD B", value=0.0, step=1.0)
         assumptions = {
             "valuation_metric": metric,
             "base_metric_usd_billions": base_value,
@@ -305,94 +405,76 @@ with scenario_tab:
                 exit_net_debt=exit_net_debt,
             )
         except ValueError as error:
-            st.error(f"当前用户假设无法计算：{error}")
-
-        st.subheader("用户假设账本")
+            st.error(str(error))
         st.dataframe(assumption_ledger(assumptions), hide_index=True, width="stretch")
         if scenario:
-            result1, result2, result3, result4 = st.columns(4)
-            result1.metric("进场股权价值", f"${scenario['entry_equity_value']:,.1f}B")
-            result2.metric("退出股权价值", f"${scenario['exit_equity_value']:,.1f}B")
-            result3.metric("MOIC", f"{scenario['moic']:.2f}x")
-            result4.metric("IRR", f"{scenario['irr']:.1%}")
-            growth_points = sorted({max(-0.99, growth_rate - 0.05), growth_rate, growth_rate + 0.05})
-            multiple_points = sorted({max(0.1, exit_multiple - 2), exit_multiple, exit_multiple + 2})
+            results = st.columns(4)
+            results[0].metric("Entry equity value", f"${scenario['entry_equity_value']:,.1f}B")
+            results[1].metric("Exit equity value", f"${scenario['exit_equity_value']:,.1f}B")
+            results[2].metric("MOIC", f"{scenario['moic']:.2f}x")
+            results[3].metric("IRR", f"{scenario['irr']:.1%}")
             sensitivity = scenario_sensitivity(
                 base_metric_value=base_value,
                 metric=metric,
-                annual_growth_rates=growth_points,
+                annual_growth_rates=[max(-.99, growth_rate - .05), growth_rate, growth_rate + .05],
                 holding_period_years=years,
                 entry_multiple=entry_multiple,
-                exit_multiples=multiple_points,
+                exit_multiples=[max(.1, exit_multiple - 2), exit_multiple, exit_multiple + 2],
                 entry_net_debt=entry_net_debt,
                 exit_net_debt=exit_net_debt,
             )
-            irr_table = sensitivity.pivot(
-                index="annual_growth_rate", columns="exit_multiple", values="irr"
-            )
-            irr_table.index = [f"{value:.1%}" for value in irr_table.index]
-            irr_table.columns = [f"{value:.1f}x" for value in irr_table.columns]
-            st.subheader("IRR敏感性：增长假设 × 退出倍数")
-            st.dataframe(irr_table.style.format("{:.1%}", na_rep="—"), width="stretch")
+            table = sensitivity.pivot(index="annual_growth_rate", columns="exit_multiple", values="irr")
+            table.index = [f"{value:.1%}" for value in table.index]
+            table.columns = [f"{value:.1f}x" for value in table.columns]
+            st.subheader("IRR sensitivity · growth × exit multiple")
+            st.dataframe(table.style.format("{:.1%}", na_rep="—"), width="stretch")
 
-with sources_tab:
-    st.subheader("公开来源账本")
+with evidence_tab:
+    audit = build_research_audit(scope_data, assumptions=assumptions)
+    queue = review_queue(scope_data)
+    st.subheader("Evidence coverage and review queue")
+    audit_metrics = st.columns(4)
+    for column, (label, key) in zip(
+        audit_metrics,
+        [
+            ("Core fact coverage", "core_fact_completeness"),
+            ("Source metadata", "source_filing_metadata_coverage"),
+            ("Fact provenance", "fact_provenance_coverage"),
+        ],
+    ):
+        ratio = audit["metrics"][key]["ratio"]
+        column.metric(label, "N/A" if ratio is None else f"{ratio:.1%}")
+    audit_metrics[3].metric("Open review items", audit["review_queue_count"])
+    if queue.empty:
+        st.success("No item was generated under the published review rules.")
+    else:
+        st.dataframe(queue, hide_index=True, width="stretch")
+
+    st.subheader("Source ledger")
     sources = source_ledger(scope_data)
-    st.dataframe(
-        sources,
-        column_config={"source_url": st.column_config.LinkColumn("公开来源")},
-        hide_index=True,
-        width="stretch",
-    )
-    st.subheader("申报事实账本")
+    st.dataframe(sources, column_config={"source_url": st.column_config.LinkColumn("Public source")}, hide_index=True, width="stretch")
     facts = evidence_ledger(scope_data)
-    st.caption("record_type=reported_fact；派生指标不写回为申报事实。")
-    st.dataframe(
-        facts,
-        column_config={"source_url": st.column_config.LinkColumn("公开来源")},
-        hide_index=True,
-        width="stretch",
-    )
-    st.subheader("派生指标公式")
-    st.dataframe(formula_catalog(), hide_index=True, width="stretch")
 
-    report = render_research_report(
-        scope_data,
-        primary_ticker=ticker,
-        peer_tickers=peer_tickers,
-        assumptions=assumptions,
-        scenario=scenario,
-    )
+    report = enriched_report(scope_data, ticker, peer_tickers, assumptions, scenario, signals)
+    report_pdf = markdown_to_pdf(report, document_title=f"The Company · {ticker}")
     manifest = build_run_manifest(
         scope_data,
-        input_mode=input_mode,
+        input_mode=mode,
         start_year=start_year,
         end_year=end_year,
         primary_ticker=ticker,
         peer_tickers=peer_tickers,
         assumptions=assumptions,
     )
-    download1, download2, download3 = st.columns(3)
-    safe_name = "".join(character.lower() for character in ticker if character.isalnum() or character in "-_")
-    download1.download_button(
-        "下载Markdown报告",
-        report,
-        file_name=f"{safe_name}-financial-research.md",
-        mime="text/markdown",
-    )
-    download2.download_button(
-        "下载run_manifest.json",
-        manifest_json(manifest),
-        file_name=f"{safe_name}-run-manifest.json",
-        mime="application/json",
-    )
-    download3.download_button(
-        "下载事实账本CSV",
-        facts.to_csv(index=False),
-        file_name=f"{safe_name}-reported-facts.csv",
-        mime="text/csv",
-    )
-    st.info(
-        "上传内容只在当前会话内解析；报告记录事实、公式、用户假设与覆盖边界。"
-        "重要结论仍需回到原始SEC申报文件核验。"
-    )
+    name = safe_file_name(ticker)
+    downloads = st.columns(4)
+    downloads[0].download_button("Download PDF report", report_pdf, f"{name}-company-report.pdf", "application/pdf", type="primary")
+    downloads[1].download_button("Download Markdown", report, f"{name}-company-report.md", "text/markdown")
+    downloads[2].download_button("Download fact ledger", facts.to_csv(index=False), f"{name}-reported-facts.csv", "text/csv")
+    downloads[3].download_button("Download run record", manifest_json(manifest), f"{name}-run-manifest.json", "application/json")
+
+    with st.expander("Formula catalog"):
+        st.dataframe(formula_catalog(), hide_index=True, width="stretch")
+    with st.expander("Report preview"):
+        st.markdown(report)
+    st.caption("Uploaded files are processed in session memory. Important conclusions should be checked against the original filing.")

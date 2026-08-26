@@ -78,9 +78,9 @@ class ResearchTests(unittest.TestCase):
         frame.loc[1, "capex"] = 30.0
         result = add_metrics(frame)
         prompts = " ".join(financial_health_prompts(result, "TEST"))
-        self.assertIn("营收同比下降", prompts)
-        self.assertIn("简化自由现金流为负", prompts)
-        self.assertNotIn("买入", prompts)
+        self.assertIn("Revenue declined year over year", prompts)
+        self.assertIn("Simple free cash flow is negative", prompts)
+        self.assertNotIn("buy", prompts.lower())
 
     def test_latest_peer_comparison_returns_one_row_per_ticker(self) -> None:
         other = sample_frame().assign(ticker="OTHER")

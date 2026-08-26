@@ -11,11 +11,11 @@ class AppSmokeTests(unittest.TestCase):
         app.run()
         self.assertEqual(len(app.exception), 0)
         tab_labels = [tab.label for tab in app.tabs]
-        self.assertIn("1. 财务趋势与提示", tab_labels)
-        self.assertIn("2. 用户选择的年度比较", tab_labels)
-        self.assertIn("3. 估值与回报情景", tab_labels)
-        self.assertIn("4. 证据、公式与报告", tab_labels)
-        self.assertEqual(app.radio[0].label, "数据模式")
+        self.assertEqual(
+            tab_labels,
+            ["Executive View", "Financial Diagnostics", "Accounting Quality", "Valuation & Scenarios", "Evidence & PDF"],
+        )
+        self.assertEqual(app.radio[0].label, "Research mode")
         self.assertEqual(len(app.exception), 0)
 
 

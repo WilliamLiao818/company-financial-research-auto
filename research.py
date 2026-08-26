@@ -14,6 +14,8 @@ DATA_PATH = Path(__file__).parent / "data" / "financials.csv"
 
 SCHEMA_VERSION = "1.0.0"
 FORMULA_VERSION = "1.0.0"
+AUDIT_VERSION = "1.0.0"
+FISCAL_YEAR_END_ALIGNMENT_DAYS = 31
 
 REPORTED_FACT_FIELDS = [
     "revenue",
@@ -27,6 +29,64 @@ REPORTED_FACT_FIELDS = [
     "liabilities",
     "equity",
 ]
+
+SOURCE_FILING_METADATA_FIELDS = ["source_url", "filed"]
+FILING_IDENTITY_FIELDS = ["form", "accession"]
+REVIEW_QUEUE_COLUMNS = [
+    "issue_type",
+    "ticker",
+    "company",
+    "fiscal_year",
+    "field",
+    "observed_or_missing",
+    "audit_rule",
+    "next_check",
+]
+
+AUDIT_DEFINITIONS = {
+    "core_fact_completeness": {
+        "label": "Core reported-fact completeness / 核心申报事实完整度",
+        "formula": "non-null cells across 10 core reported-fact fields / (company-year rows × 10)",
+        "threshold": "No pass/fail threshold; every null creates a review-queue item.",
+        "meaning": "Measures observed fact coverage only; it does not assess company quality.",
+    },
+    "source_filing_metadata_coverage": {
+        "label": "Source and filing metadata coverage / 来源与申报元数据覆盖",
+        "formula": "non-blank source_url and filed cells / (company-year rows × 2)",
+        "threshold": "A blank cell is a review item; no quality score is assigned.",
+        "meaning": "Measures whether each company-year can be traced to a dated public source.",
+    },
+    "filing_identity_coverage": {
+        "label": "Filing identity coverage / 申报身份元数据覆盖",
+        "formula": "non-blank form and accession cells / (company-year rows × 2)",
+        "threshold": "A blank cell is a review item; CSV inputs may legitimately lack these optional fields.",
+        "meaning": "Shows whether the filing form and accession are available for precise retrieval.",
+    },
+    "fact_provenance_coverage": {
+        "label": "Fact-level provenance coverage / 事实级溯源覆盖",
+        "formula": "non-blank XBRL tag and fact accession cells / (observed core facts × 2)",
+        "threshold": "A missing component is a review item; the reported value is not discarded or guessed.",
+        "meaning": "Shows how much of the fact ledger can be traced below the company-year source level.",
+    },
+    "peer_annual_comparability_coverage": {
+        "label": "Peer annual overlap / 比较公司年度重叠覆盖",
+        "formula": "fiscal years present for every selected company / fiscal years present for any selected company",
+        "threshold": "Requires at least 2 selected companies; missing company-years enter the review queue.",
+        "meaning": "Measures calendar-year overlap only; it does not declare companies economically comparable.",
+    },
+    "peer_fye_alignment_coverage": {
+        "label": "Shared-year fiscal-end alignment / 共同年度财年截止日对齐覆盖",
+        "formula": "shared fiscal years with max fiscal-year-end gap ≤ 31 days / all shared fiscal years",
+        "threshold": "31 calendar days; wider gaps create review items for each affected company-year.",
+        "meaning": "Flags calendar mismatch without judging accounting or business-model comparability.",
+    },
+    "user_assumption_count": {
+        "label": "Explicit user assumptions / 显式用户假设数量",
+        "formula": "count of non-empty entries in the user-assumption mapping",
+        "threshold": "No threshold; the count is disclosed, not scored.",
+        "meaning": "Keeps scenario choices visible and separate from reported facts.",
+    },
+}
 
 REQUIRED_FINANCIAL_COLUMNS = {
     "ticker",
@@ -247,29 +307,29 @@ def financial_health_prompts(frame: pd.DataFrame, ticker: str) -> list[str]:
     prompts: list[str] = []
 
     if pd.notna(latest["revenue_growth"]) and latest["revenue_growth"] < 0:
-        prompts.append("营收同比下降：需要回到年报区分需求、价格、汇率和业务组合影响。")
+        prompts.append("Revenue declined year over year: separate demand, pricing, foreign exchange and business-mix effects in the filing.")
     if prior is not None:
         if pd.notna(latest["revenue_growth_change"]) and latest["revenue_growth_change"] <= -0.10:
-            prompts.append("营收增速较上年放缓至少10个百分点：需要核查基数与分部驱动。")
+            prompts.append("Revenue growth slowed by at least 10 percentage points: review the comparison base and segment drivers.")
         if pd.notna(latest["operating_margin_change"]) and latest["operating_margin_change"] <= -0.05:
-            prompts.append("营业利润率较上年下降至少5个百分点：需要核查成本、费用与业务组合。")
+            prompts.append("Operating margin declined by at least 5 percentage points: review costs, expenses and business mix.")
 
     if pd.notna(latest["free_cash_flow"]) and latest["free_cash_flow"] < 0:
-        prompts.append("简化自由现金流为负：经营现金流不足以覆盖当年资本开支。")
+        prompts.append("Simple free cash flow is negative: operating cash flow did not cover reported capital expenditure.")
     if pd.notna(latest["capex_intensity"]) and latest["capex_intensity"] >= 0.30:
-        prompts.append("资本开支/营收达到30%或以上：需要核查扩产、云基础设施或一次性项目。")
+        prompts.append("Capex reached at least 30% of revenue: review capacity expansion, cloud infrastructure and non-recurring projects.")
     if (
         pd.notna(latest["cash_conversion"])
         and latest["net_income"] > 0
         and latest["cash_conversion"] < 0.80
     ):
-        prompts.append("经营现金流/净利润低于0.8倍：需要核查营运资本与非现金项目。")
+        prompts.append("Operating cash flow / net income is below 0.8x: review working capital and non-cash items.")
     if pd.notna(latest["debt_to_assets_proxy"]) and latest["debt_to_assets_proxy"] >= 0.80:
-        prompts.append("总负债/总资产达到80%或以上：这是结构提示，不等同于净债务或信用结论。")
+        prompts.append("Total liabilities / assets reached at least 80%: this is a structure signal, not a net-debt or credit conclusion.")
     if "equity" in latest.index and pd.notna(latest["equity"]) and latest["equity"] < 0:
-        prompts.append("账面股东权益为负：需要核查回购、累计亏损和融资结构。")
+        prompts.append("Reported equity is negative: review repurchases, accumulated results and financing structure.")
 
-    return prompts or ["当前规则未触发财务观察点；这不代表公司没有经营或估值风险。"]
+    return prompts or ["No deterministic financial prompt was triggered; this does not establish an absence of operating or valuation risk."]
 
 
 def latest_peer_comparison(frame: pd.DataFrame) -> pd.DataFrame:
@@ -313,6 +373,379 @@ def formula_catalog() -> pd.DataFrame:
             for definition in FORMULA_DEFINITIONS.values()
         ]
     )
+
+
+def audit_definition_catalog() -> pd.DataFrame:
+    """Return every deterministic audit formula and review threshold."""
+    return pd.DataFrame(
+        [
+            {
+                "metric": metric,
+                "label": definition["label"],
+                "formula": definition["formula"],
+                "threshold_or_queue_rule": definition["threshold"],
+                "interpretation_limit": definition["meaning"],
+            }
+            for metric, definition in AUDIT_DEFINITIONS.items()
+        ]
+    )
+
+
+def _present_mask(frame: pd.DataFrame, column: str) -> pd.Series:
+    """Treat numeric zero as present while treating nulls and blank strings as absent."""
+    if column not in frame.columns:
+        return pd.Series(False, index=frame.index, dtype=bool)
+    values = frame[column]
+    return values.notna() & values.astype("string").str.strip().ne("").fillna(False)
+
+
+def _assumption_is_present(value: object) -> bool:
+    if value is None or (isinstance(value, str) and not value.strip()):
+        return False
+    try:
+        return not bool(pd.isna(value))
+    except (TypeError, ValueError):
+        return True
+
+
+def review_queue(
+    frame: pd.DataFrame,
+    *,
+    fiscal_year_end_alignment_days: int = FISCAL_YEAR_END_ALIGNMENT_DAYS,
+) -> pd.DataFrame:
+    """List deterministic missingness and comparability checks without imputing values."""
+    if fiscal_year_end_alignment_days < 0:
+        raise ValueError("Fiscal-year-end alignment days cannot be negative.")
+    if frame.empty:
+        return pd.DataFrame(columns=REVIEW_QUEUE_COLUMNS)
+
+    rows: list[dict[str, object]] = []
+    ordered = frame.sort_values(["ticker", "fiscal_year", "fiscal_year_end"])
+
+    def add_issue(
+        values: Mapping[str, object],
+        *,
+        issue_type: str,
+        field: str,
+        observed_or_missing: str,
+        audit_rule: str,
+        next_check: str,
+    ) -> None:
+        rows.append(
+            {
+                "issue_type": issue_type,
+                "ticker": values.get("ticker", ""),
+                "company": values.get("company", ""),
+                "fiscal_year": values.get("fiscal_year", ""),
+                "field": field,
+                "observed_or_missing": observed_or_missing,
+                "audit_rule": audit_rule,
+                "next_check": next_check,
+            }
+        )
+
+    for _, row in ordered.iterrows():
+        values = row.to_dict()
+        for field in REPORTED_FACT_FIELDS:
+            if field not in row.index or pd.isna(row[field]):
+                add_issue(
+                    values,
+                    issue_type="missing_reported_fact",
+                    field=field,
+                    observed_or_missing="missing",
+                    audit_rule="Core fact is null for this company-year.",
+                    next_check="Check the original filing and supported XBRL tags; keep null until verified.",
+                )
+
+        for field in SOURCE_FILING_METADATA_FIELDS:
+            value = values.get(field)
+            if value is None or pd.isna(value) or not str(value).strip():
+                add_issue(
+                    values,
+                    issue_type="missing_source_filing_metadata",
+                    field=field,
+                    observed_or_missing="missing",
+                    audit_rule="source_url and filed are expected for every company-year.",
+                    next_check="Locate the dated public filing source; do not infer the missing metadata.",
+                )
+
+        for field in FILING_IDENTITY_FIELDS:
+            value = values.get(field)
+            if value is None or pd.isna(value) or not str(value).strip():
+                add_issue(
+                    values,
+                    issue_type="missing_filing_identity",
+                    field=field,
+                    observed_or_missing="missing",
+                    audit_rule="Filing form and accession are checked when available.",
+                    next_check="Confirm the form/accession in the original filing or retain the documented gap.",
+                )
+
+        fiscal_year_end = pd.to_datetime(values.get("fiscal_year_end"), errors="coerce")
+        if pd.isna(fiscal_year_end):
+            add_issue(
+                values,
+                issue_type="invalid_fiscal_year_end",
+                field="fiscal_year_end",
+                observed_or_missing=str(values.get("fiscal_year_end", "missing")),
+                audit_rule="fiscal_year_end must be a valid calendar date.",
+                next_check="Verify the fiscal-year-end date against the filing.",
+            )
+
+        for field in REPORTED_FACT_FIELDS:
+            value = values.get(field)
+            if value is None or pd.isna(value):
+                continue
+            missing_components: list[str] = []
+            for component in (f"{field}_xbrl_tag", f"{field}_accession"):
+                component_value = values.get(component)
+                if component_value is None or pd.isna(component_value) or not str(component_value).strip():
+                    missing_components.append(component)
+            if missing_components:
+                add_issue(
+                    values,
+                    issue_type="missing_fact_provenance",
+                    field=field,
+                    observed_or_missing=", ".join(missing_components),
+                    audit_rule="Each observed fact is checked for an XBRL tag and fact accession.",
+                    next_check="Trace the value to the original filing; do not treat absent provenance as a new fact.",
+                )
+
+    tickers = sorted(ordered["ticker"].dropna().astype(str).unique())
+    if len(tickers) >= 2:
+        ticker_years = {
+            ticker: set(
+                pd.to_numeric(
+                    ordered.loc[ordered["ticker"].astype(str) == ticker, "fiscal_year"],
+                    errors="coerce",
+                )
+                .dropna()
+                .astype(int)
+            )
+            for ticker in tickers
+        }
+        all_years = sorted(set().union(*ticker_years.values()))
+        company_by_ticker = (
+            ordered.drop_duplicates("ticker").set_index("ticker")["company"].astype(str).to_dict()
+        )
+        for fiscal_year in all_years:
+            for ticker in tickers:
+                if fiscal_year not in ticker_years[ticker]:
+                    add_issue(
+                        {
+                            "ticker": ticker,
+                            "company": company_by_ticker.get(ticker, ""),
+                            "fiscal_year": fiscal_year,
+                        },
+                        issue_type="missing_peer_year",
+                        field="company_year_row",
+                        observed_or_missing="missing",
+                        audit_rule="Every selected company must have a row for a year to count as shared coverage.",
+                        next_check="Add a verified company-year row or exclude that year from like-for-like comparison.",
+                    )
+
+        shared_years = sorted(set.intersection(*ticker_years.values())) if ticker_years else []
+        for fiscal_year in shared_years:
+            shared = ordered.loc[
+                ordered["ticker"].astype(str).isin(tickers)
+                & (pd.to_numeric(ordered["fiscal_year"], errors="coerce") == fiscal_year)
+            ].copy()
+            shared["_parsed_fiscal_year_end"] = pd.to_datetime(
+                shared["fiscal_year_end"], errors="coerce"
+            )
+            valid_dates = shared["_parsed_fiscal_year_end"].dropna()
+            if len(valid_dates) != len(tickers):
+                continue
+            gap_days = int((valid_dates.max() - valid_dates.min()).days)
+            if gap_days > fiscal_year_end_alignment_days:
+                for _, row in shared.sort_values("ticker").iterrows():
+                    add_issue(
+                        row.to_dict(),
+                        issue_type="fiscal_year_end_misalignment",
+                        field="fiscal_year_end",
+                        observed_or_missing=str(row["fiscal_year_end"]),
+                        audit_rule=(
+                            f"Max fiscal-year-end gap is {gap_days} days; "
+                            f"alignment threshold is {fiscal_year_end_alignment_days} days."
+                        ),
+                        next_check="Normalize period context or avoid treating the shared fiscal year as fully aligned.",
+                    )
+
+    queue = pd.DataFrame(rows, columns=REVIEW_QUEUE_COLUMNS)
+    if queue.empty:
+        return queue
+    return queue.sort_values(
+        ["issue_type", "ticker", "fiscal_year", "field"], kind="stable"
+    ).reset_index(drop=True)
+
+
+def build_research_audit(
+    frame: pd.DataFrame,
+    *,
+    assumptions: Mapping[str, object] | None = None,
+    fiscal_year_end_alignment_days: int = FISCAL_YEAR_END_ALIGNMENT_DAYS,
+) -> dict[str, object]:
+    """Quantify research coverage; the result is an audit record, not a rating."""
+    queue = review_queue(
+        frame, fiscal_year_end_alignment_days=fiscal_year_end_alignment_days
+    )
+    row_count = int(len(frame))
+
+    core_denominator = row_count * len(REPORTED_FACT_FIELDS)
+    core_numerator = int(sum(int(_present_mask(frame, field).sum()) for field in REPORTED_FACT_FIELDS))
+
+    source_denominator = row_count * len(SOURCE_FILING_METADATA_FIELDS)
+    source_numerator = int(
+        sum(int(_present_mask(frame, field).sum()) for field in SOURCE_FILING_METADATA_FIELDS)
+    )
+
+    identity_denominator = row_count * len(FILING_IDENTITY_FIELDS)
+    identity_numerator = int(
+        sum(int(_present_mask(frame, field).sum()) for field in FILING_IDENTITY_FIELDS)
+    )
+
+    observed_facts = 0
+    fact_provenance_numerator = 0
+    for field in REPORTED_FACT_FIELDS:
+        observed_mask = _present_mask(frame, field)
+        observed_facts += int(observed_mask.sum())
+        fact_provenance_numerator += int((_present_mask(frame, f"{field}_xbrl_tag") & observed_mask).sum())
+        fact_provenance_numerator += int((_present_mask(frame, f"{field}_accession") & observed_mask).sum())
+    fact_provenance_denominator = observed_facts * 2
+
+    tickers = sorted(frame["ticker"].dropna().astype(str).unique()) if "ticker" in frame else []
+    annual_numerator = 0
+    annual_denominator = 0
+    shared_years: list[int] = []
+    if len(tickers) >= 2:
+        ticker_years = {
+            ticker: set(
+                pd.to_numeric(
+                    frame.loc[frame["ticker"].astype(str) == ticker, "fiscal_year"],
+                    errors="coerce",
+                )
+                .dropna()
+                .astype(int)
+            )
+            for ticker in tickers
+        }
+        union_years = set().union(*ticker_years.values())
+        shared_years = sorted(set.intersection(*ticker_years.values()))
+        annual_numerator = len(shared_years)
+        annual_denominator = len(union_years)
+
+    aligned_years = 0
+    alignment_denominator = 0
+    if len(tickers) >= 2:
+        for fiscal_year in shared_years:
+            dates = pd.to_datetime(
+                frame.loc[
+                    frame["ticker"].astype(str).isin(tickers)
+                    & (pd.to_numeric(frame["fiscal_year"], errors="coerce") == fiscal_year),
+                    "fiscal_year_end",
+                ],
+                errors="coerce",
+            ).dropna()
+            alignment_denominator += 1
+            if len(dates) == len(tickers) and int((dates.max() - dates.min()).days) <= fiscal_year_end_alignment_days:
+                aligned_years += 1
+
+    assumption_count = sum(
+        1 for value in (assumptions or {}).values() if _assumption_is_present(value)
+    )
+
+    def coverage_metric(metric: str, numerator: int, denominator: int) -> dict[str, object]:
+        definition = AUDIT_DEFINITIONS[metric]
+        return {
+            "label": definition["label"],
+            "numerator": int(numerator),
+            "denominator": int(denominator),
+            "ratio": float(numerator / denominator) if denominator else None,
+            "formula": definition["formula"],
+            "threshold": definition["threshold"],
+            "interpretation_limit": definition["meaning"],
+        }
+
+    metrics = {
+        "core_fact_completeness": coverage_metric(
+            "core_fact_completeness", core_numerator, core_denominator
+        ),
+        "source_filing_metadata_coverage": coverage_metric(
+            "source_filing_metadata_coverage", source_numerator, source_denominator
+        ),
+        "filing_identity_coverage": coverage_metric(
+            "filing_identity_coverage", identity_numerator, identity_denominator
+        ),
+        "fact_provenance_coverage": coverage_metric(
+            "fact_provenance_coverage",
+            fact_provenance_numerator,
+            fact_provenance_denominator,
+        ),
+        "peer_annual_comparability_coverage": coverage_metric(
+            "peer_annual_comparability_coverage", annual_numerator, annual_denominator
+        ),
+        "peer_fye_alignment_coverage": coverage_metric(
+            "peer_fye_alignment_coverage", aligned_years, alignment_denominator
+        ),
+        "user_assumption_count": {
+            "label": AUDIT_DEFINITIONS["user_assumption_count"]["label"],
+            "value": int(assumption_count),
+            "formula": AUDIT_DEFINITIONS["user_assumption_count"]["formula"],
+            "threshold": AUDIT_DEFINITIONS["user_assumption_count"]["threshold"],
+            "interpretation_limit": AUDIT_DEFINITIONS["user_assumption_count"]["meaning"],
+        },
+    }
+    issue_counts = {
+        str(issue_type): int(count)
+        for issue_type, count in queue["issue_type"].value_counts().sort_index().items()
+    }
+    return {
+        "audit_version": AUDIT_VERSION,
+        "audit_kind": "deterministic_coverage_audit_not_an_investment_rating",
+        "scope": {
+            "company_year_rows": row_count,
+            "tickers": tickers,
+            "core_reported_fact_fields": list(REPORTED_FACT_FIELDS),
+        },
+        "parameters": {
+            "fiscal_year_end_alignment_days": fiscal_year_end_alignment_days,
+        },
+        "metrics": metrics,
+        "review_queue_count": int(len(queue)),
+        "review_queue_by_issue_type": issue_counts,
+    }
+
+
+def audit_metrics_frame(audit: Mapping[str, object]) -> pd.DataFrame:
+    """Flatten an audit record for display without dropping formulas or limits."""
+    rows: list[dict[str, object]] = []
+    for metric, payload in audit.get("metrics", {}).items():
+        values = dict(payload)
+        ratio = values.get("ratio")
+        value = values.get("value") if "value" in values else ratio
+        rows.append(
+            {
+                "metric": metric,
+                "label": values.get("label", metric),
+                "value": value,
+                "numerator": values.get("numerator", ""),
+                "denominator": values.get("denominator", ""),
+                "formula": values.get("formula", ""),
+                "threshold_or_queue_rule": values.get("threshold", ""),
+                "interpretation_limit": values.get("interpretation_limit", ""),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def audit_json(
+    audit: Mapping[str, object],
+    queue: pd.DataFrame | None = None,
+) -> str:
+    payload = dict(audit)
+    if queue is not None:
+        payload["review_queue"] = queue.where(pd.notna(queue), None).to_dict(orient="records")
+    return json.dumps(payload, ensure_ascii=False, indent=2, default=str) + "\n"
 
 
 def valuation_scenario(
@@ -499,6 +932,8 @@ def render_research_report(
     comparison = latest_peer_comparison(scoped)
     sources = source_ledger(scoped)
     primary = scoped.loc[scoped["ticker"] == primary_ticker].sort_values("fiscal_year")
+    audit = build_research_audit(scoped, assumptions=assumptions)
+    queue = review_queue(scoped)
 
     lines = [
         f"# Company financial research report: {_markdown_text(summary['company'])}",
@@ -572,6 +1007,60 @@ def render_research_report(
     lines.extend(
         [
             "",
+            "## Deterministic research audit",
+            "",
+            "> Coverage measures describe the evidence in this run. They are not company-quality or investment ratings.",
+            "",
+            "| Audit measure | Result | Numerator | Denominator | Formula / rule |",
+            "|---|---:|---:|---:|---|",
+        ]
+    )
+    for metric, payload in audit["metrics"].items():
+        if metric == "user_assumption_count":
+            result = str(payload["value"])
+            numerator = "—"
+            denominator = "—"
+        else:
+            ratio = payload["ratio"]
+            result = "N/A" if ratio is None else f"{float(ratio):.1%}"
+            numerator = str(payload["numerator"])
+            denominator = str(payload["denominator"])
+        lines.append(
+            f"| {_markdown_text(payload['label'])} | {result} | {numerator} | {denominator} | "
+            f"{_markdown_text(payload['formula'])}; {_markdown_text(payload['threshold'])} |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Review queue",
+            "",
+            f"- Open deterministic review items: {audit['review_queue_count']}",
+        ]
+    )
+    if audit["review_queue_by_issue_type"]:
+        for issue_type, count in audit["review_queue_by_issue_type"].items():
+            lines.append(f"- `{_markdown_text(issue_type)}`: {count}")
+    if queue.empty:
+        lines.extend(["", "No review-queue item was generated under the published audit rules."])
+    else:
+        lines.extend(
+            [
+                "",
+                "| Issue | Ticker | Fiscal year | Field | Missing / observed | Required review |",
+                "|---|---|---:|---|---|---|",
+            ]
+        )
+        for row in queue.itertuples(index=False):
+            lines.append(
+                f"| {_markdown_text(row.issue_type)} | {_markdown_text(row.ticker)} | "
+                f"{_markdown_text(row.fiscal_year)} | {_markdown_text(row.field)} | "
+                f"{_markdown_text(row.observed_or_missing)} | {_markdown_text(row.next_check)} |"
+            )
+
+    lines.extend(
+        [
+            "",
             "## Boundaries",
             "",
             "- The tool supports public U.S. SEC Company Facts and a documented same-schema CSV; it does not claim global-company coverage.",
@@ -614,6 +1103,9 @@ def build_run_manifest(
         .to_csv(index=False)
     )
     sources = sorted(set(frame["source_url"].dropna().astype(str)))
+    audit = build_research_audit(frame, assumptions=assumptions)
+    queue = review_queue(frame)
+    queue_canonical = queue.to_csv(index=False)
     return {
         "schema_version": SCHEMA_VERSION,
         "formula_version": FORMULA_VERSION,
@@ -628,6 +1120,12 @@ def build_run_manifest(
         "reported_fact_fields": REPORTED_FACT_FIELDS,
         "derived_metrics": list(FORMULA_DEFINITIONS),
         "user_assumptions": dict(assumptions or {}),
+        "research_audit": audit,
+        "review_queue": {
+            "record_count": int(len(queue)),
+            "issue_counts": audit["review_queue_by_issue_type"],
+            "sha256": hashlib.sha256(queue_canonical.encode("utf-8")).hexdigest(),
+        },
         "input_sha256": hashlib.sha256(canonical.encode("utf-8")).hexdigest(),
         "uploads_persisted": False,
         "coverage_boundary": "Public U.S. SEC Company Facts or same-schema uploaded CSV only",
