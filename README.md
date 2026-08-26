@@ -18,11 +18,13 @@ MSFT and ORCL are bundled as verified snapshots and require no API key. Each pac
 - reported-to-analytical cash-flow normalization where sourced;
 - transparent valuation scenarios;
 - a claim-level evidence and review queue;
-- PDF, Markdown, fact-ledger and run-record downloads.
+- a chart-led PDF, fact ledger, review queue and run-record downloads.
 
 ## Analyze another U.S. public company
 
-The public SEC connector accepts a ticker or CIK and does not require an API key. SEC availability and an identifiable `SEC_USER_AGENT` are required. Users may also upload a saved SEC Company Facts JSON or a documented same-schema CSV. Uploaded files are processed in session memory and are not written by the application.
+The first page explains all four modes and their exact input requirements. The public SEC connector accepts a ticker or CIK and does not require a commercial key. SEC availability and an identifiable `SEC_USER_AGENT` are required. Users may also upload a saved SEC Company Facts JSON or a documented same-schema CSV. Uploaded files are processed in session memory and are not written by the application.
+
+The main interface prioritizes narrative, proportioned charts and accounting-quality signal cards. Raw financial rows, formulas and source records stay inside downloadable files or collapsed appendices.
 
 ## Accounting Quality & Normalization
 
