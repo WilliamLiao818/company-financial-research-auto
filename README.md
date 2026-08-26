@@ -12,19 +12,22 @@ The Company is an evidence-linked research system for U.S. public-company fundam
 MSFT and ORCL are bundled as verified snapshots and require no API key. Each pack includes:
 
 - an executive thesis and counter-thesis;
+- pivotal questions and explicit decision rules;
 - business-model-specific indicators and diligence questions;
-- multi-year financial diagnostics;
+- multi-year earnings, margin, cash-flow and balance-sheet diagnostics;
 - deterministic accounting-quality signals;
 - reported-to-analytical cash-flow normalization where sourced;
-- transparent valuation scenarios;
+- quantitative peer context and a revisable competitive-position rubric;
+- transparent operating scenarios and valuation sensitivity;
+- catalysts, downside risks and an updateable monitoring dashboard;
 - a claim-level evidence and review queue;
-- a chart-led PDF, fact ledger, review queue and run-record downloads.
+- a 12-page chart-led PDF, fact ledger, review queue and run-record downloads.
 
 ## Analyze another U.S. public company
 
 The first page explains all four modes and their exact input requirements. The public SEC connector accepts a ticker or CIK and does not require a commercial key. SEC availability and an identifiable `SEC_USER_AGENT` are required. Users may also upload a saved SEC Company Facts JSON or a documented same-schema CSV. Uploaded files are processed in session memory and are not written by the application.
 
-The main interface prioritizes narrative, proportioned charts and accounting-quality signal cards. Raw financial rows, formulas and source records stay inside downloadable files or collapsed appendices.
+The webpage and PDF share the same institutional research architecture: executive view, business and moat, earnings, cash and accounting quality, peers, scenario analysis, catalysts and risks, and evidence. Raw financial rows, formulas and source records stay inside downloadable files or collapsed appendices.
 
 ## Accounting Quality & Normalization
 
