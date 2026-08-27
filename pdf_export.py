@@ -10,6 +10,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
 from reportlab.graphics.shapes import Drawing, Line, Rect, String
+from reportlab.graphics.charts.piecharts import Pie
 from reportlab.platypus import (
     PageBreak,
     Paragraph,
@@ -18,6 +19,8 @@ from reportlab.platypus import (
     Table,
     TableStyle,
 )
+
+from research_catalog import market_share_snapshot, sec_filings_url, target_price_snapshot
 
 
 GREEN = colors.HexColor("#087F5B")
@@ -290,6 +293,51 @@ def _horizontal_bars(labels: list[str], values: list[float], *, height: int = 18
     return drawing
 
 
+def _market_share_pie(snapshot: dict[str, object], *, height: int = 215) -> Drawing:
+    width = 470
+    drawing = Drawing(width, height)
+    values = list(snapshot.get("values", {}).values())
+    labels = list(snapshot.get("values", {}))
+    pie = Pie()
+    pie.x = 132
+    pie.y = 20
+    pie.width = 175
+    pie.height = 175
+    pie.data = [float(value) for value in values]
+    pie.labels = [f"{_ascii(label)} {float(value):.0f}%" for label, value in zip(labels, values)]
+    pie.slices.strokeColor = colors.white
+    pie.slices.strokeWidth = 1.2
+    palette = [GREEN, colors.HexColor("#35A77C"), colors.HexColor("#76B89D"), colors.HexColor("#B7D8C9"), colors.HexColor("#DCEBE4"), colors.HexColor("#D97706"), colors.HexColor("#9AAEA4")]
+    for index in range(len(values)):
+        pie.slices[index].fillColor = palette[index % len(palette)]
+        pie.slices[index].fontName = "Helvetica"
+        pie.slices[index].fontSize = 6.5
+        pie.slices[index].labelRadius = 1.22
+    drawing.add(pie)
+    return drawing
+
+
+def _score_heatmap(profile: dict[str, object], *, height: int = 190) -> Drawing:
+    companies = list(profile["competitive_scores"])
+    dimensions = list(profile["competitive_dimensions"])
+    width = 470
+    drawing = Drawing(width, height)
+    left, top = 85, height - 34
+    cell_width = (width - left - 8) / max(len(dimensions), 1)
+    cell_height = min(28, (height - 55) / max(len(companies), 1))
+    for index, dimension in enumerate(dimensions):
+        drawing.add(String(left + cell_width * (index + .5), top + 13, _ascii(dimension)[:16], fontName="Helvetica-Bold", fontSize=5.8, fillColor=MUTED, textAnchor="middle"))
+    fills = [colors.HexColor("#EDF7F2"), colors.HexColor("#DCEFE6"), colors.HexColor("#B7D8C9"), colors.HexColor("#76B89D"), GREEN]
+    for row, company_name in enumerate(companies):
+        y = top - cell_height * (row + 1)
+        drawing.add(String(left - 7, y + cell_height / 2 - 2, _ascii(company_name)[:17], fontName="Helvetica-Bold", fontSize=6.7, fillColor=INK, textAnchor="end"))
+        for column, score in enumerate(profile["competitive_scores"][company_name]):
+            x = left + cell_width * column
+            drawing.add(Rect(x + 1, y + 1, cell_width - 2, cell_height - 2, fillColor=fills[int(score) - 1], strokeColor=colors.white, strokeWidth=.7, rx=3, ry=3))
+            drawing.add(String(x + cell_width / 2, y + cell_height / 2 - 2, f"{int(score)}/5", fontName="Helvetica-Bold", fontSize=7, fillColor=colors.white if int(score) >= 4 else INK, textAnchor="middle"))
+    return drawing
+
+
 def _competitive_matrix(profile: dict[str, object]) -> Table:
     dimensions = list(profile["competitive_dimensions"])
     rows = [[Paragraph("Company", _table_style(True)), *[Paragraph(escape(_ascii(item)), _table_style(True)) for item in dimensions]]]
@@ -361,7 +409,7 @@ def _report_page(canvas, document) -> None:
     canvas.line(18 * mm, 18 * mm, A4[0] - 18 * mm, 18 * mm)
     canvas.setFont("Helvetica", 6.8)
     canvas.setFillColor(MUTED)
-    canvas.drawString(18 * mm, 11 * mm, "PUBLIC-SOURCE RESEARCH SUPPORT | NOT A RATING OR TARGET PRICE")
+    canvas.drawString(18 * mm, 11 * mm, "PUBLIC-SOURCE RESEARCH SUPPORT | SCENARIOS ARE NOT RECOMMENDATIONS")
     canvas.drawRightString(A4[0] - 18 * mm, 11 * mm, f"{document.page}")
     canvas.restoreState()
 
@@ -405,6 +453,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     cfo = [float(value) / 1e9 for value in company["operating_cash_flow"].fillna(0)]
     capex = [float(value) / 1e9 for value in company["capex"].fillna(0)]
     fcf = [float(value) / 1e9 for value in company["free_cash_flow"].fillna(0)]
+    gross_margin = [float(value) * 100 for value in company["gross_margin"].fillna(0)]
     op_margin = [float(value) * 100 for value in company["operating_margin"].fillna(0)]
     net_margin = [float(value) * 100 for value in company["net_margin"].fillna(0)]
     fcf_margin = [float(value) * 100 for value in company["fcf_margin"].fillna(0)]
@@ -412,9 +461,8 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     assets = [float(value) / 1e9 for value in company["assets"].fillna(0)]
     liabilities = [float(value) / 1e9 for value in company["liabilities"].fillna(0)]
     fiscal_year = int(summary["fiscal_year"])
-    latest_revenue = float(summary["revenue"]) / 1e9
-    latest_op_income = float(company.iloc[-1]["operating_income"]) / 1e9
-    latest_fcf = float(summary["free_cash_flow"]) / 1e9
+    target_snapshot = target_price_snapshot(ticker)
+    market_snapshot = market_share_snapshot(ticker)
     if scenarios is None:
         defaults = profile["scenario_defaults"]
         scenario_rows = []
@@ -444,7 +492,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
         Paragraph("<b>Counter-thesis.</b> " + escape(_ascii(profile["counter_thesis"])), styles["note"]),
         Paragraph("What the latest year says", styles["h2"]),
         Paragraph(
-            f"Revenue changed {_fmt_percent(summary.get('revenue_growth'))} year over year, operating margin reached {_fmt_percent(summary.get('operating_margin'))}, capex represented {_fmt_percent(summary.get('capex_intensity'))} of revenue and simple FCF was {_fmt_billions(summary.get('free_cash_flow'))}. These observations frame the debate; they do not determine a rating or target price.",
+            f"Revenue changed {_fmt_percent(summary.get('revenue_growth'))} year over year, gross margin reached {_fmt_percent(summary.get('gross_margin'))}, operating margin reached {_fmt_percent(summary.get('operating_margin'))}, capex represented {_fmt_percent(summary.get('capex_intensity'))} of revenue and simple FCF was {_fmt_billions(summary.get('free_cash_flow'))}. These observations frame the debate; they do not by themselves determine the scenario range presented later.",
             styles["body"],
         ),
     ])
@@ -475,7 +523,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     story.extend([PageBreak(), Paragraph("Earnings trajectory", styles["page"]), Paragraph("Scale, growth and operating profit are shown before valuation so the direction of the underlying business remains distinct from market assumptions.", styles["deck"]), Paragraph("Revenue and operating income", styles["h2"]), _bar_chart(years, [("Revenue | USD B", revenue, GREEN), ("Operating income | USD B", operating_income, colors.HexColor("#76B89D"))], height=205), Paragraph("Net income progression", styles["h2"]), _line_chart(years, [("Net income", net_income, colors.HexColor("#173F32"))], height=170), Paragraph("Interpretation", styles["h2"]), Paragraph("Revenue growth should be reconciled to price, volume, mix, acquisitions and currency. Operating income adds the cost structure, but not the investment intensity required to sustain the growth path.", styles["body"])])
 
     # 5 | Margins
-    story.extend([PageBreak(), Paragraph("Margins and operating leverage", styles["page"]), Paragraph("Margin direction is assessed together with reinvestment intensity. A rising accounting margin can coexist with weakening economic cash returns when infrastructure commitments accelerate.", styles["deck"]), Paragraph("Profit and cash margins", styles["h2"]), _line_chart(years, [("Operating margin", op_margin, GREEN), ("Net margin", net_margin, colors.HexColor("#173F32")), ("FCF margin", fcf_margin, colors.HexColor("#76B89D"))], height=220, suffix="%"), Paragraph("Capex intensity", styles["h2"]), _bar_chart(years, [("Capex / revenue", capex_intensity, colors.HexColor("#D97706"))], height=175, suffix="%"), Paragraph("Research implication", styles["h2"]), Paragraph("The key question is not whether margin is high in isolation, but whether incremental revenue produces operating profit and cash returns after the required capital base is recognized consistently.", styles["body"])])
+    story.extend([PageBreak(), Paragraph("Margins and operating leverage", styles["page"]), Paragraph("Margin direction is assessed together with reinvestment intensity. A rising accounting margin can coexist with weakening economic cash returns when infrastructure commitments accelerate.", styles["deck"]), Paragraph("Reported profitability", styles["h2"]), _line_chart(years, [("Gross margin", gross_margin, colors.HexColor("#76B89D")), ("Operating margin", op_margin, GREEN), ("Net margin", net_margin, colors.HexColor("#173F32"))], height=205, suffix="%"), Paragraph("Cash margin and capex intensity", styles["h2"]), _line_chart(years, [("FCF margin", fcf_margin, colors.HexColor("#35A77C")), ("Capex / revenue", capex_intensity, colors.HexColor("#D97706"))], height=185, suffix="%"), Paragraph("Research implication", styles["h2"]), Paragraph("The key question is not whether margin is high in isolation, but whether incremental revenue produces operating profit and cash returns after the required capital base is recognized consistently.", styles["body"])])
 
     # 6 | Cash and balance sheet
     story.extend([PageBreak(), Paragraph("Cash generation and financial capacity", styles["page"]), Paragraph("Operating cash flow, reported capital expenditure and simple FCF are presented together. Balance-sheet scale is then used to test how much financial capacity supports the investment cycle.", styles["deck"]), Paragraph("Cash-flow bridge by fiscal year", styles["h2"]), _bar_chart(years, [("Operating cash flow", cfo, GREEN), ("Capex", capex, colors.HexColor("#D97706")), ("Simple FCF", fcf, colors.HexColor("#76B89D"))], height=210), Paragraph("Assets and liabilities", styles["h2"]), _line_chart(years, [("Assets", assets, GREEN), ("Liabilities", liabilities, colors.HexColor("#8AA89A"))], height=180), Paragraph("Boundary", styles["h2"]), Paragraph("Total liabilities / assets is a structure indicator, not net debt, liquidity or a credit conclusion. A full review requires debt maturities, commitments, leases, cash availability and financing terms.", styles["body"])])
@@ -490,13 +538,11 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     if len(bridge) > 1:
         story.extend([Paragraph("Reported-to-analytical cash-flow bridge", styles["h2"]), _horizontal_bars([_ascii(value) for value in bridge["step"]], [float(value) for value in bridge["amount_usd_billions"]], height=145, suffix="B"), Paragraph("The adjustment is an analytical view, not a restatement. Definitions must remain consistent across periods and peers.", styles["body"])])
 
-    # 8 | Peers
-    story.extend([PageBreak(), Paragraph("Peer benchmarking and competitive position", styles["page"]), Paragraph("Reported peer metrics and a transparent competitive rubric answer different questions. The first is observed; the second is analyst judgment and must remain revisable.", styles["deck"])])
-    if peers is not None and len(peers) > 1:
-        peer_records = peers.to_dict("records") if hasattr(peers, "to_dict") else list(peers)
-        labels = [record["ticker"] for record in peer_records]
-        story.extend([Paragraph("Latest reported operating comparison", styles["h2"]), _bar_chart(labels, [("Revenue growth", [float(record.get("revenue_growth") or 0) * 100 for record in peer_records], GREEN), ("Operating margin", [float(record.get("operating_margin") or 0) * 100 for record in peer_records], colors.HexColor("#173F32")), ("FCF margin", [float(record.get("fcf_margin") or 0) * 100 for record in peer_records], colors.HexColor("#76B89D"))], height=190, suffix="%")])
-    story.extend([Paragraph("Competitive rubric | 1 to 5", styles["h2"]), _competitive_matrix(profile), Spacer(1, 6), Paragraph("Scores are explicit analytical judgments designed to expose assumptions. They are not reported facts, ratings or market-share estimates.", styles["source"])])
+    # 8 | Competition and market share
+    story.extend([PageBreak(), Paragraph("Competitive position and market share", styles["page"]), Paragraph("Market share and the competitive rubric answer different questions. Share is a sourced category snapshot; scores are explicit judgments about the durability of the company's position.", styles["deck"])])
+    if market_snapshot.get("values"):
+        story.extend([Paragraph(f"{escape(_ascii(market_snapshot['title']))} | {escape(_ascii(market_snapshot['period']))}", styles["h2"]), _market_share_pie(market_snapshot, height=210), Paragraph(f"Source: {escape(_ascii(market_snapshot['source']))}. {escape(_ascii(market_snapshot['note']))}", styles["source"])])
+    story.extend([Paragraph("Competitive rubric | 1 to 5", styles["h2"]), _score_heatmap(profile, height=175), Paragraph("Read across a row to compare one company across dimensions; read down a column to compare competitors on one dimension. Scores are revisable judgments, not reported facts.", styles["source"])])
 
     # 9 | Operating scenarios
     story.extend([PageBreak(), Paragraph("Operating scenarios", styles["page"]), Paragraph("Bear, base and bull cases isolate the operating assumptions that matter most. They are not forecasts and do not imply probabilities.", styles["deck"]), Paragraph("Illustrative revenue outcome", styles["h2"]), _bar_chart([record["case"] for record in scenario_records], [("Revenue | USD B", [float(record["revenue"]) / 1e9 for record in scenario_records], GREEN), ("Operating income | USD B", [float(record["operating_income"]) / 1e9 for record in scenario_records], colors.HexColor("#76B89D"))], height=220), Paragraph("Assumptions", styles["h2"])])
@@ -507,10 +553,18 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     scenario_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), GREEN), ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F4F8F6")]), ("GRID", (0, 0), (-1, -1), .4, LINE), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"), ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
     story.extend([scenario_table, Paragraph("What would change the case", styles["h2"]), Paragraph("The scenarios should move only when new evidence changes demand, pricing, operating leverage, capacity requirements or competitive intensity. A share-price move alone does not change the operating case.", styles["body"])])
 
-    # 10 | Valuation framework
-    valuation_labels = ["Revenue | 6x", "Revenue | 8x", "Revenue | 10x", "Operating income | 15x", "Operating income | 20x", "Operating income | 25x", "Simple FCF | 20x", "Simple FCF | 25x"]
-    valuation_values = [latest_revenue * 6, latest_revenue * 8, latest_revenue * 10, latest_op_income * 15, latest_op_income * 20, latest_op_income * 25, latest_fcf * 20, latest_fcf * 25]
-    story.extend([PageBreak(), Paragraph("Valuation framework", styles["page"]), Paragraph("The framework shows transparent enterprise- or equity-value proxies from selected reported metrics and illustrative multiples. It deliberately stops before a target price because net debt, share count, dilution, market price and a complete forecast have not been established in this report.", styles["deck"]), Paragraph("Illustrative value proxies | USD billions", styles["h2"]), _horizontal_bars(valuation_labels, valuation_values, height=275, suffix="B"), Paragraph("Use with discipline", styles["h2"]), Paragraph("A multiple is an assumption, not evidence. The appropriate range depends on growth durability, margin structure, reinvestment needs, cash conversion, balance-sheet risk and peer comparability. The webpage valuation lab exposes user-selected assumptions separately from reported facts.", styles["body"]), Paragraph("No rating, target price or expected return is produced.", styles["note"])])
+    # 10 | 12-month price framework
+    story.extend([PageBreak(), Paragraph("12-month price framework", styles["page"]), Paragraph("Recent institutional targets are dated source observations. The Company range is a separate Bear/Base/Bull scenario output; it is not a consensus average and does not imply probabilities.", styles["deck"])])
+    if target_snapshot.get("street"):
+        street = list(target_snapshot["street"])
+        labels = [f"{item['firm']} | {item['date']}" for item in street]
+        values = [float(item["target"]) for item in street]
+        house = target_snapshot["house"]
+        labels.extend(["The Company | Bear", "The Company | Base", "The Company | Bull"])
+        values.extend([float(house["Bear"]), float(house["Base"]), float(house["Bull"])])
+        story.extend([Paragraph("Institutional observations and scenario range | USD per share", styles["h2"]), _horizontal_bars(labels, values, height=270, suffix=""), Paragraph(f"Snapshot through {escape(_ascii(target_snapshot['as_of']))}. Dates are the latest updates shown by the cited aggregator; verify against each institution's original publication where accessible.", styles["source"]), Paragraph("Range basis", styles["h2"]), Paragraph(escape(_ascii(target_snapshot["basis"])), styles["note"]), Paragraph("Interpretation boundary", styles["h2"]), Paragraph("The range is an analytical scenario output, not a recommendation, probability-weighted forecast or individually tailored view. It should be refreshed when operating assumptions, balance-sheet facts, share count or valuation conditions change.", styles["body"])])
+    else:
+        story.append(Paragraph("No dated target-price snapshot is prebuilt for this company. Provider coverage is required before this section can be populated responsibly.", styles["note"]))
 
     # 11 | Catalysts and risks
     story.extend([PageBreak(), Paragraph("Catalysts, risks and monitoring agenda", styles["page"]), Paragraph("A useful research view is falsifiable and updateable. The monitoring agenda connects each thesis driver to evidence that can confirm, weaken or reject it.", styles["deck"]), _two_columns(profile["catalysts"], profile["risks"], styles, left_title="Potential catalysts", right_title="Downside risks"), Paragraph("Monitoring dashboard", styles["h2"])])
@@ -519,8 +573,8 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     story.append(Paragraph("Update cadence", styles["h2"]))
     story.append(Paragraph("Refresh after each annual filing, material earnings release, major capital-allocation change or new evidence that directly affects demand, margins, investment intensity, accounting classification or competitive position.", styles["body"]))
 
-    # 12 | Evidence, methods and disclosures
-    story.extend([PageBreak(), Paragraph("Evidence, methodology and disclosures", styles["page"]), Paragraph("The report keeps source facts, deterministic calculations, analytical judgments and user assumptions distinct so every conclusion can be traced and challenged.", styles["deck"]), Paragraph("Core formulas", styles["h2"])])
+    # 12 | Sources, filing access and methodology
+    story.extend([PageBreak(), Paragraph("Sources, filing access and methodology", styles["page"]), Paragraph("The report keeps source facts, deterministic calculations, sourced market observations and scenario assumptions distinct so every conclusion can be traced and challenged.", styles["deck"]), Paragraph("Core formulas", styles["h2"])])
     formulas = [
         "Revenue growth = Revenue_t / Revenue_(t-1) - 1",
         "Operating margin = Operating income / Revenue",
@@ -531,7 +585,14 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     ]
     for item in formulas:
         story.append(Paragraph("• " + escape(_ascii(item)), styles["bullet"]))
-    story.extend([Paragraph("Evidence hierarchy", styles["h2"]), Paragraph("1. Original filing and filing note. 2. Structured filing fact with accession metadata. 3. Deterministic calculation. 4. Explicit analytical judgment. 5. User-selected scenario assumption.", styles["body"]), Paragraph("Primary sources", styles["h2"]), Paragraph("Company filing: " + escape(_ascii(profile["source_url"])), styles["source"]), Paragraph("Structured facts: " + escape(_ascii(summary.get("source_url", ""))), styles["source"]), Paragraph("Research boundary", styles["h2"]), Paragraph("This report uses public-source data and deterministic rules. Missing values remain missing. Accounting-quality signals identify review work and do not allege misconduct. Competitive scores and scenarios are explicit judgments or assumptions. The report is informational and does not provide a rating, target price, transaction instruction or individually tailored advice.", styles["note"]), Paragraph("Generated by The Company | Version 2.0", styles["source"])])
+    story.extend([Paragraph("Source hierarchy", styles["h2"]), Paragraph("1. Original filing and filing note. 2. Structured filing fact. 3. Deterministic calculation. 4. Dated external market observation. 5. Explicit analytical judgment or scenario assumption.", styles["body"]), Paragraph("Filing access", styles["h2"]), Paragraph("Primary annual filing: " + escape(_ascii(profile["source_url"])), styles["source"]), Paragraph("Structured facts: " + escape(_ascii(summary.get("source_url", ""))), styles["source"])])
+    if ticker in {"MSFT", "ORCL", "GOOG", "AVGO", "SNDK", "NVDA"}:
+        story.extend([Paragraph("Recent 10-K filings: " + escape(_ascii(sec_filings_url(ticker, "10-K"))), styles["source"]), Paragraph("Recent 10-Q filings: " + escape(_ascii(sec_filings_url(ticker, "10-Q"))), styles["source"])])
+    if market_snapshot.get("source_url"):
+        story.append(Paragraph("Market-share source: " + escape(_ascii(market_snapshot["source_url"])), styles["source"]))
+    if target_snapshot.get("source_url"):
+        story.append(Paragraph("Target-price source: " + escape(_ascii(target_snapshot["source_url"])), styles["source"]))
+    story.extend([Paragraph("Research boundary", styles["h2"]), Paragraph("This report uses public-source data and deterministic rules. Missing values remain missing. Accounting-quality signals identify review work and do not allege misconduct. Competitive scores, operating cases and target-price ranges are explicit judgments or assumptions. The report is informational and does not provide transaction instructions or individually tailored advice.", styles["note"]), Paragraph("Generated by The Company | Version 2.0", styles["source"])])
 
     document.build(story, onFirstPage=_report_page, onLaterPages=_report_page)
     return buffer.getvalue()

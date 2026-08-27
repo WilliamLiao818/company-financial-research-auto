@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import pandas as pd
 
+from research_catalog import EXTENDED_PROFILES
+
 
 PROFILES = {
     "MSFT": {
@@ -122,6 +124,8 @@ PROFILES = {
         "source_url": "https://www.sec.gov/Archives/edgar/data/1341439/000095017026090794/orcl-20260531.htm",
     },
 }
+
+PROFILES.update(EXTENDED_PROFILES)
 
 
 MSFT_FINANCE_LEASE_PRINCIPAL = {

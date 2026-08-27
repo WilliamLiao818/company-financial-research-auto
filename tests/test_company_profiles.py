@@ -8,8 +8,13 @@ class CompanyProfileTests(unittest.TestCase):
     def setUp(self) -> None:
         self.frame = load_financials()
 
-    def test_prebuilt_snapshot_contains_only_two_companies(self) -> None:
-        self.assertEqual(set(self.frame["ticker"]), {"MSFT", "ORCL"})
+    def test_prebuilt_snapshot_contains_six_company_packs(self) -> None:
+        self.assertEqual(set(self.frame["ticker"]), {"MSFT", "ORCL", "GOOG", "AVGO", "SNDK", "NVDA"})
+
+    def test_oracle_gross_margin_is_derived_from_reported_direct_costs(self) -> None:
+        oracle = self.frame.loc[self.frame["ticker"] == "ORCL"].sort_values("fiscal_year")
+        self.assertTrue(oracle["gross_profit"].notna().all())
+        self.assertAlmostEqual(float(oracle.iloc[-1]["gross_margin"]), 44336000000 / 67357000000)
 
     def test_msft_lease_signal_is_sourced_and_adjusts_simple_fcf(self) -> None:
         signals = accounting_quality_signals(self.frame, "MSFT")

@@ -146,9 +146,10 @@ def company_facts_to_frame(
     rows: list[dict[str, object]] = []
     for period_end in periods:
         revenue_fact = metric_values["revenue"].get(period_end, {})
-        fiscal_year = revenue_fact.get("fy")
-        if not isinstance(fiscal_year, int):
-            fiscal_year = int(period_end[:4])
+        # Company Facts may attach the latest filing's `fy` value to prior
+        # comparative periods. The statement end date is the stable period
+        # identity for an annual research series.
+        fiscal_year = int(period_end[:4])
         row: dict[str, object] = {
             "ticker": display_ticker,
             "company": entity_name,
@@ -166,6 +167,9 @@ def company_facts_to_frame(
             row[metric] = fact.get("val") if fact else None
             row[f"{metric}_xbrl_tag"] = fact.get("_xbrl_tag", "") if fact else ""
             row[f"{metric}_accession"] = fact.get("accn", "") if fact else ""
+        if row["gross_profit"] is None and row["revenue"] is not None and row["cost_of_revenue"] is not None:
+            row["gross_profit"] = float(row["revenue"]) - float(row["cost_of_revenue"])
+            row["gross_profit_xbrl_tag"] = "Derived: Revenue less cost of revenue"
         rows.append(row)
     return pd.DataFrame(rows)
 
