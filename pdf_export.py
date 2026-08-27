@@ -197,7 +197,10 @@ def _ascii(value: object) -> str:
 
 
 def _fmt_billions(value: object) -> str:
-    return "-" if value is None or value != value else f"${float(value) / 1e9:,.1f}B"
+    if value is None or value != value:
+        return "-"
+    amount = float(value) / 1e9
+    return f"-${abs(amount):,.1f}B" if amount < 0 else f"${amount:,.1f}B"
 
 
 def _fmt_percent(value: object) -> str:

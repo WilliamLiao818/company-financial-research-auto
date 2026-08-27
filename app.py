@@ -110,7 +110,10 @@ def percent(value: object) -> str:
 
 
 def usd_billions(value: object) -> str:
-    return "—" if value is None or pd.isna(value) else f"${float(value) / 1e9:,.1f}B"
+    if value is None or pd.isna(value):
+        return "—"
+    amount = float(value) / 1e9
+    return f"-${abs(amount):,.1f}B" if amount < 0 else f"${amount:,.1f}B"
 
 
 def safe_name(value: str) -> str:
@@ -403,7 +406,7 @@ with earnings_tab:
         flags = quality_flags(scope, ticker)
         if flags:
             for item in flags:
-                st.write(f"- {humanize(item)}")
+                st.write(f"- {humanize(item) if '_' in item else item}")
         else:
             st.success("Core annual statement fields are populated for the latest period.")
 
