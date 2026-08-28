@@ -261,6 +261,7 @@ def latest_company_summary(frame: pd.DataFrame, ticker: str) -> dict[str, object
         "cash_conversion": latest["cash_conversion"],
         "debt_to_assets_proxy": latest["debt_to_assets_proxy"],
         "source_url": latest["source_url"],
+        "currency": latest.get("currency", "USD"),
     }
     if prior is not None and pd.notna(prior["revenue"]):
         summary["revenue_growth"] = latest["revenue"] / prior["revenue"] - 1

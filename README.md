@@ -1,6 +1,6 @@
 # The Company
 
-**Fundamentals, Accounting Quality & 12-Month View · Version 2.0**
+**Fundamentals, Accounting Quality, Market Performance & Valuation · Version 2.0**
 
 The Company is a public-source research system for U.S.-listed companies. It separates reported facts, deterministic calculations, dated market observations, accounting-quality signals and analytical scenarios.
 
@@ -9,7 +9,7 @@ The Company is a public-source research system for U.S.-listed companies. It sep
 
 ## Prebuilt research packs
 
-MSFT, ORCL, GOOG, AVGO, SNDK and NVDA are bundled as ready-to-use snapshots and require no API key. Each pack includes:
+Fifteen companies are bundled as ready-to-use snapshots and require no API key: MSFT, ORCL, GOOG, AVGO, SNDK, NVDA, MRVL, AAPL, AMZN, META, LITE, AMAT, TSM, ASML and AMD. Each pack includes:
 
 - an executive thesis and counter-thesis;
 - pivotal questions and explicit decision rules;
@@ -17,18 +17,20 @@ MSFT, ORCL, GOOG, AVGO, SNDK and NVDA are bundled as ready-to-use snapshots and 
 - multi-year earnings, margin, cash-flow and balance-sheet diagnostics;
 - deterministic accounting-quality signals;
 - reported-to-analytical cash-flow normalization where sourced;
-- selected peer context, a sourced market-share view and a revisable competitive-position rubric;
+- selected peer context, a dated market-share view where available and a revisable competitive-position rubric;
+- up to ten years of adjusted share-price performance against the S&P 500 and QQQ;
+- a one-month monitor of material coverage from established publications;
 - recent institutional target-price observations with dates and a separate Bear/Base/Bull analytical range;
 - transparent operating scenarios and valuation sensitivity;
 - catalysts, downside risks and an updateable monitoring dashboard;
 - direct links to recent 10-K and 10-Q filings;
-- a 12-page chart-led PDF available from the landing page and the company view.
+- a 9–11 page chart-led PDF with a table of contents, available from the landing page and the company view.
 
 ## Analyze another U.S. public company
 
 The first page uses one ticker/company search. Prebuilt packs open immediately. For another U.S.-listed company, users may choose either a user-supplied Financial Modeling Prep key for normalized annual statements or the SEC Company Facts path for core annual facts. Provider keys are password-masked, used only for the current request and never written to the repository.
 
-The webpage and PDF share the same architecture: executive view, business and moat, earnings, cash and accounting quality, competition, 12-month view, scenario analysis, catalysts and risks, and filing access. Technical appendices are intentionally kept out of the main interface.
+The webpage and PDF share the same architecture: executive view, business and moat, financials and accounting quality, competition, long-term market performance, valuation and scenarios, catalysts and risks, and filing access. Technical appendices are intentionally kept out of the main interface.
 
 ## Accounting Quality & Normalization
 

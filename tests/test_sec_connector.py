@@ -58,7 +58,7 @@ class SecConnectorTests(unittest.TestCase):
         self.assertEqual(frame.iloc[-1]["input_source"], "uploaded_sec_json")
 
     def test_company_facts_rejects_non_company_facts_json(self) -> None:
-        with self.assertRaisesRegex(SecInputError, "facts.us-gaap"):
+        with self.assertRaisesRegex(SecInputError, "US GAAP or IFRS"):
             company_facts_to_frame({"cik": 1234, "facts": {}}, years=2)
 
     def test_online_fetch_requires_identifiable_user_agent_before_network(self) -> None:

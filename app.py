@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from html import escape
+
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -8,6 +10,8 @@ import streamlit as st
 from company_profiles import accounting_quality_signals, fcf_bridge, profile_for
 from fmp_connector import FmpConnectionError, FmpInputError, load_financial_statements
 from input_pipeline import online_company_facts, parse_identifiers
+from market_data import load_market_performance, performance_summary
+from news_connector import load_company_news
 from pdf_export import build_company_pdf
 from research import (
     VALUATION_METRICS,
@@ -36,7 +40,16 @@ PEER_MAP = {
     "GOOG": ["MSFT", "ORCL"],
     "AVGO": ["NVDA"],
     "NVDA": ["AVGO"],
-    "SNDK": [],
+    "SNDK": ["NVDA", "AVGO"],
+    "MRVL": ["AVGO", "NVDA", "AMD"],
+    "AAPL": ["GOOG", "MSFT"],
+    "AMZN": ["MSFT", "GOOG", "META"],
+    "META": ["GOOG", "AMZN"],
+    "LITE": ["MRVL", "AVGO"],
+    "AMAT": ["ASML", "TSM"],
+    "TSM": ["ASML", "AMAT", "NVDA"],
+    "ASML": ["AMAT", "TSM"],
+    "AMD": ["NVDA", "AVGO", "MRVL"],
 }
 METRIC_LABELS = {
     "revenue": "Revenue",
@@ -58,10 +71,11 @@ st.set_page_config(page_title="The Company · Version 2.0", page_icon="C", layou
 st.markdown(
     """
     <style>
+    :root { color-scheme:light only; }
     :root { --green:#087f5b; --deep:#0b2a20; --ink:#17372c; --muted:#52685e; --soft:#edf7f2; --line:#d4e2db; --amber:#d97706; }
     .stApp { background:#fbfdfc; color:var(--deep); }
     .block-container { max-width:1160px; padding-top:1.6rem; padding-bottom:4rem; }
-    [data-testid="stHeader"] { background:rgba(251,253,252,.93); backdrop-filter:blur(18px); }
+    header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"], [data-testid="stAppDeployButton"], footer, #MainMenu { display:none!important; visibility:hidden!important; height:0!important; }
     [data-testid="stAppViewContainer"] p,
     [data-testid="stAppViewContainer"] label,
     [data-testid="stAppViewContainer"] li,
@@ -93,6 +107,16 @@ st.markdown(
     .research-strip { padding:16px 19px; border:1px solid var(--line); border-radius:14px; background:white; color:var(--deep); font-size:14px; line-height:1.7; }
     .research-strip b { color:var(--green); }
     .source-note { padding:12px 15px; background:#f5f9f7; border-radius:12px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .selection-pill { display:inline-flex; align-items:center; gap:8px; margin:.25rem 0 .75rem; padding:8px 12px; border-radius:999px; background:var(--soft); color:var(--green); font-weight:700; font-size:13px; }
+    .news-card { height:100%; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:white; box-shadow:0 10px 32px rgba(11,42,32,.035); }
+    .news-card img { width:100%; height:132px; object-fit:cover; display:block; }
+    .news-card img.logo { object-fit:contain; padding:30px; background:linear-gradient(135deg,#edf7f2,#f8fbf9); }
+    .news-card .news-copy { padding:16px 17px 18px; }
+    .news-card .news-meta { color:var(--green)!important; font-weight:700; font-size:11px; letter-spacing:.04em; }
+    .news-card h4 { margin:8px 0 0; color:var(--deep); font-size:16px; line-height:1.35; }
+    .news-card a { text-decoration:none; }
+    [data-testid="stAppViewContainer"], [data-testid="stMain"], .stApp { background:#fbfdfc!important; }
+    .js-plotly-plot text { fill:#27453a!important; }
     @keyframes rise { from { transform:translateY(10px); opacity:0; } to { transform:none; opacity:1; } }
     @keyframes barGrow { from { transform:scaleY(.02); opacity:.25; } to { transform:scaleY(1); opacity:1; } }
     @keyframes lineDraw { to { stroke-dashoffset:0; } }
@@ -116,6 +140,14 @@ def usd_billions(value: object) -> str:
     return f"-${abs(amount):,.1f}B" if amount < 0 else f"${amount:,.1f}B"
 
 
+def money_billions(value: object, currency: str = "USD") -> str:
+    if value is None or pd.isna(value):
+        return "—"
+    symbol = {"USD": "$", "EUR": "€", "GBP": "£", "JPY": "¥", "TWD": "NT$"}.get(str(currency), f"{currency} ")
+    amount = float(value) / 1e9
+    return f"-{symbol}{abs(amount):,.1f}B" if amount < 0 else f"{symbol}{amount:,.1f}B"
+
+
 def safe_name(value: str) -> str:
     return "".join(character.lower() for character in value if character.isalnum() or character in "-_")
 
@@ -126,15 +158,16 @@ def humanize(name: object) -> str:
 
 
 def style_figure(figure: go.Figure, *, title: str | None = None, height: int = 360, legend: str = "h") -> go.Figure:
+    figure.update_layout(template=None)
     figure.update_layout(
-        title={"text": title, "font": {"size": 20, "color": "#0b2a20"}, "x": .02} if title else None,
+        title={"text": title, "font": {"size": 20, "color": "#0b2a20"}, "x": .02, "y": .98, "yanchor": "top"} if title else None,
         height=height,
         plot_bgcolor="white",
         paper_bgcolor="white",
         font={"family": "Arial, sans-serif", "size": 14, "color": "#27453a"},
-        legend={"title": {"text": ""}, "orientation": legend, "yanchor": "bottom", "y": 1.02, "x": .02, "font": {"size": 13}},
+        legend={"title": {"text": ""}, "orientation": legend, "yanchor": "top", "y": .91, "x": .02, "font": {"size": 13, "color": "#27453a"}},
         hoverlabel={"bgcolor": "#0b2a20", "font": {"color": "white", "size": 13}},
-        margin={"l": 64, "r": 34, "t": 78 if title else 44, "b": 58},
+        margin={"l": 68, "r": 46, "t": 106 if title else 50, "b": 66},
         transition={"duration": 600, "easing": "cubic-in-out"},
     )
     figure.update_xaxes(showline=True, linecolor="#c6d7ce", gridcolor="#edf3f0", tickfont={"color": "#40584d", "size": 13}, title_font={"color": "#27453a", "size": 14}, zerolinecolor="#c6d7ce")
@@ -153,6 +186,11 @@ def operating_scenarios(company: pd.DataFrame, profile: dict[str, object]) -> pd
         revenue = float(latest["revenue"]) * (1 + growth) ** years
         rows.append({"case": case.title(), "revenue": revenue, "operating_income": revenue * margin, "growth": growth, "margin": margin, "years": years})
     return pd.DataFrame(rows)
+
+
+@st.cache_data(ttl=1800, show_spinner=False)
+def recent_news(company_name: str, ticker: str) -> list[dict[str, str]]:
+    return load_company_news(company_name, ticker, limit=4)
 
 
 def resolve_showcase(query: str) -> str | None:
@@ -193,7 +231,7 @@ def base_pdf(frame: pd.DataFrame, ticker: str) -> bytes:
 def render_custom_loader(query: str) -> None:
     st.markdown("### Analyze another U.S.-listed company")
     st.markdown(
-        "<div class='source-note'><b>Why a key?</b> SEC filings are public, but reliable company-name search and normalized statements at scale require a data provider. Your key is used only for this browser session and is never saved in the repository.</div>",
+        "<div class='source-note'><b>For non-prebuilt companies:</b> choose normalized statements with your provider key or use the SEC core-facts path. Keys stay in session memory and are not stored.</div>",
         unsafe_allow_html=True,
     )
     source = st.radio("Data path", ["Provider API · full statement history", "SEC Company Facts · core facts"], horizontal=True)
@@ -225,17 +263,27 @@ def render_custom_loader(query: str) -> None:
 def render_landing(prebuilt: pd.DataFrame) -> None:
     st.caption("THE COMPANY / FUNDAMENTALS, ACCOUNTING QUALITY & 12-MONTH VIEW · VERSION 2.0")
     st.title("Start with a company.")
-    st.markdown("<div class='hero-note'>Search a ticker or company name. The six prebuilt U.S. public-company packs work immediately; any other U.S.-listed company can be loaded with a user-supplied provider key or through core SEC facts.</div>", unsafe_allow_html=True)
-    query = st.text_input("Search ticker or company", placeholder="Try MSFT, Oracle, NVIDIA…", help="Currently supports U.S.-listed public companies.")
+    query = st.selectbox(
+        "Search ticker or company",
+        options=list(SHOWCASES),
+        index=None,
+        placeholder="Type a ticker or company name, then select a match",
+        format_func=lambda item: f"{item} · {SHOWCASES[item]}" if item in SHOWCASES else str(item),
+        accept_new_options=True,
+        help="Currently supports U.S.-listed public companies.",
+    )
+    if query:
+        resolved = resolve_showcase(str(query))
+        selected_label = f"{resolved} · {SHOWCASES[resolved]}" if resolved else str(query)
+        st.markdown(f"<div class='selection-pill'>✓ Selected&nbsp;&nbsp;{selected_label}</div>", unsafe_allow_html=True)
     if st.button("Open company", type="primary", width="stretch"):
-        ticker = resolve_showcase(query)
+        ticker = resolve_showcase(str(query or ""))
         if ticker:
             open_company(ticker)
-        elif query.strip():
-            st.session_state["custom_query"] = query.strip()
+        elif str(query or "").strip():
+            st.session_state["custom_query"] = str(query).strip()
         else:
-            st.warning("Enter a ticker or company name.")
-    st.caption("Currently supports U.S.-listed public companies. Prebuilt packs require no key.")
+            st.warning("Select a company before opening it.")
     custom_query = st.session_state.get("custom_query")
     if custom_query:
         render_custom_loader(str(custom_query))
@@ -247,7 +295,7 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
         for column, ticker in zip(columns, tickers[start:start + 3]):
             summary = latest_company_summary(prebuilt, ticker)
             with column:
-                st.markdown(f"<div class='company-card'><strong>{ticker} · PUBLIC FILINGS</strong><h3>{SHOWCASES[ticker]}</h3><p>FY{summary['fiscal_year']} · Revenue {usd_billions(summary['revenue'])}<br/>Operating margin {percent(summary['operating_margin'])}</p></div>", unsafe_allow_html=True)
+                st.markdown(f"<div class='company-card'><strong>{ticker}</strong><h3>{SHOWCASES[ticker]}</h3><p>FY{summary['fiscal_year']} · Revenue {money_billions(summary['revenue'], summary.get('currency', 'USD'))}<br/>Operating margin {percent(summary['operating_margin'])}</p></div>", unsafe_allow_html=True)
                 actions = st.columns(2)
                 if actions[0].button("Open", key=f"open-{ticker}", width="stretch"):
                     open_company(ticker)
@@ -302,32 +350,41 @@ pdf_bytes = build_company_pdf(company, summary, profile, signals, bridge, ticker
 headline, download = st.columns([4.5, 1.5])
 with headline:
     st.title(summary["company"])
-    st.markdown(f"<div class='hero-note'><strong>{ticker}</strong> · FY{summary['fiscal_year']} · Public-source research architecture. Reported facts, deterministic calculations and analytical judgments remain visibly separate.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='hero-note'><strong>{ticker}</strong> · FY{summary['fiscal_year']} · Integrated fundamentals, cash-quality diagnostics, competition and scenario analysis.</div>", unsafe_allow_html=True)
 with download:
     st.write("")
     st.download_button("Download full PDF", pdf_bytes, f"{safe_name(ticker)}-company-report.pdf", "application/pdf", type="primary", width="stretch")
-    st.caption("12-page detailed report")
+    st.caption("Detailed PDF report")
 
 filing_links = st.columns([1, 1, 4])
 if ticker in CIKS:
-    filing_links[0].link_button("Recent 10-K filings", sec_filings_url(ticker, "10-K"), width="stretch")
-    filing_links[1].link_button("Recent 10-Q filings", sec_filings_url(ticker, "10-Q"), width="stretch")
+    annual_form, interim_form = (("20-F", "6-K") if ticker in {"TSM", "ASML"} else ("10-K", "10-Q"))
+    filing_links[0].link_button(f"Recent {annual_form} filings", sec_filings_url(ticker, annual_form), width="stretch")
+    filing_links[1].link_button(f"Recent {interim_form} filings", sec_filings_url(ticker, interim_form), width="stretch")
 else:
     filing_links[0].link_button("SEC filing search", f"https://www.sec.gov/edgar/search/#/q={ticker}", width="stretch")
 
 metrics = st.columns(6)
-metrics[0].metric("Revenue", usd_billions(summary["revenue"]), percent(summary["revenue_growth"]))
+currency = str(summary.get("currency", "USD"))
+currency_label = {"USD": "USD", "EUR": "EUR", "GBP": "GBP", "JPY": "JPY", "TWD": "TWD"}.get(currency, currency)
+currency_symbol = {"USD": "$", "EUR": "€", "GBP": "£", "JPY": "¥", "TWD": "NT$"}.get(currency, f"{currency} ")
+metrics[0].metric("Revenue", money_billions(summary["revenue"], currency), percent(summary["revenue_growth"]))
 metrics[1].metric("Gross Margin", percent(summary["gross_margin"]))
 metrics[2].metric("Operating Margin", percent(summary["operating_margin"]))
-metrics[3].metric("Free Cash Flow", usd_billions(summary["free_cash_flow"]))
+metrics[3].metric("Free Cash Flow", money_billions(summary["free_cash_flow"], currency))
 metrics[4].metric("Capex / Revenue", percent(summary["capex_intensity"]))
 metrics[5].metric("Cash Conversion", "—" if pd.isna(summary["cash_conversion"]) else f"{summary['cash_conversion']:.2f}x")
 if ticker == "ORCL":
     st.markdown("<div class='source-note'><b>Oracle gross margin:</b> derived from reported revenue less cloud/software, hardware and services direct costs. Oracle does not publish the standard GrossProfit XBRL tag used by many issuers.</div>", unsafe_allow_html=True)
 
-executive_tab, business_tab, earnings_tab, cash_tab, competition_tab, target_tab, scenario_tab, risk_tab = st.tabs([
-    "Executive view", "Business & moat", "Earnings", "Cash & quality", "Competition", "12-month view", "Scenario lab", "Catalysts & risks",
+overview_tab, business_tab, financials_tab, competition_tab, performance_tab, valuation_tab, risk_tab = st.tabs([
+    "Overview", "Business & moat", "Financials & quality", "Competition", "Market performance", "Valuation & scenarios", "Catalysts & risks",
 ])
+executive_tab = overview_tab
+earnings_tab = financials_tab
+cash_tab = financials_tab
+target_tab = valuation_tab
+scenario_tab = valuation_tab
 
 with executive_tab:
     st.subheader("Answer first")
@@ -340,7 +397,25 @@ with executive_tab:
     for index, (column, question) in enumerate(zip(questions, profile["key_questions"]), start=1):
         column.markdown(f"<div class='compact-card'><strong>QUESTION {index:02d}</strong><p>{question}</p></div>", unsafe_allow_html=True)
     st.subheader("Latest read-through")
-    st.markdown(f"<div class='research-strip'><b>Growth:</b> revenue changed {percent(summary['revenue_growth'])}. <b>Profitability:</b> gross margin is {percent(summary['gross_margin'])} and operating margin is {percent(summary['operating_margin'])}. <b>Reinvestment:</b> capex is {percent(summary['capex_intensity'])} of revenue. <b>Cash:</b> free cash flow is {usd_billions(summary['free_cash_flow'])}.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='research-strip'><b>Growth:</b> revenue changed {percent(summary['revenue_growth'])}. <b>Profitability:</b> gross margin is {percent(summary['gross_margin'])} and operating margin is {percent(summary['operating_margin'])}. <b>Reinvestment:</b> capex is {percent(summary['capex_intensity'])} of revenue. <b>Cash:</b> free cash flow is {money_billions(summary['free_cash_flow'], currency)}.</div>", unsafe_allow_html=True)
+    stories = recent_news(str(summary["company"]), ticker)
+    st.subheader("One-month news monitor")
+    st.markdown("<div class='section-deck'>Material recent coverage from established financial and general-news publications, refreshed automatically.</div>", unsafe_allow_html=True)
+    if stories:
+        for start in range(0, len(stories), 2):
+            columns = st.columns(2)
+            for column, story in zip(columns, stories[start:start + 2]):
+                image_class = "logo" if story.get("image_kind") == "logo" else "article-image"
+                image = f"<img class='{image_class}' src='{escape(story['image'], quote=True)}' alt='{escape(story['publisher'], quote=True)}'/>" if story.get("image") else ""
+                card = (
+                    f"<div class='news-card'>{image}<div class='news-copy'>"
+                    f"<div class='news-meta'>{escape(story['publisher'])} · {escape(story['date'])}</div>"
+                    f"<a href='{escape(story['url'], quote=True)}' target='_blank' rel='noopener'><h4>{escape(story['title'])}</h4></a>"
+                    "</div></div>"
+                )
+                column.markdown(card, unsafe_allow_html=True)
+    else:
+        st.info("No qualifying article was available from the monitored publications during the last month.")
 
 with business_tab:
     st.subheader("Business model and competitive durability")
@@ -362,11 +437,11 @@ with earnings_tab:
     st.markdown("<div class='section-deck'>Scale, growth, profitability and reinvestment are separated so different economic signals do not collapse into one crowded chart.</div>", unsafe_allow_html=True)
     trend = company.melt(id_vars=["fiscal_year"], value_vars=["revenue", "operating_income", "free_cash_flow"], var_name="metric", value_name="value")
     trend["Metric"] = trend["metric"].map(humanize)
-    trend["USD billions"] = trend["value"] / 1e9
-    figure = px.line(trend, x="fiscal_year", y="USD billions", color="Metric", markers=True, color_discrete_sequence=["#087f5b", "#35a77c", "#173f32"])
-    style_figure(figure, title="Scale and cash generation · USD billions", height=390)
+    trend[f"{currency_label} billions"] = trend["value"] / 1e9
+    figure = px.line(trend, x="fiscal_year", y=f"{currency_label} billions", color="Metric", markers=True, color_discrete_sequence=["#087f5b", "#35a77c", "#173f32"])
+    style_figure(figure, title=f"Scale and cash generation · {currency_label} billions", height=390)
     figure.update_xaxes(dtick=1, title="Fiscal Year")
-    st.plotly_chart(figure, width="stretch")
+    st.plotly_chart(figure, width="stretch", theme=None)
 
     growth = company.loc[company["revenue_growth"].notna()].copy()
     growth["Revenue Growth"] = growth["revenue_growth"] * 100
@@ -376,7 +451,7 @@ with earnings_tab:
     growth_chart.update_yaxes(title="Percent", ticksuffix="%")
     growth_chart.update_traces(texttemplate="%{y:.1f}%", textposition="outside", cliponaxis=False)
     _, center, _ = st.columns([.7, 5.8, .7])
-    center.plotly_chart(growth_chart, width="stretch")
+    center.plotly_chart(growth_chart, width="stretch", theme=None)
     if len(company):
         st.caption(f"FY{int(company.iloc[0]['fiscal_year'])} is the starting year; year-over-year growth begins with the next comparable period.")
 
@@ -394,7 +469,7 @@ with earnings_tab:
         style_figure(margin_figure, title=title, height=360)
         margin_figure.update_xaxes(dtick=1, title="Fiscal Year")
         margin_figure.update_yaxes(title="Percent", ticksuffix="%")
-        column.plotly_chart(margin_figure, width="stretch")
+        column.plotly_chart(margin_figure, width="stretch", theme=None)
 
     prompts, quality = st.columns(2)
     with prompts:
@@ -414,12 +489,12 @@ with cash_tab:
     st.subheader("Cash conversion, reinvestment and accounting quality")
     cash_data = company.melt(id_vars=["fiscal_year"], value_vars=["operating_cash_flow", "capex", "free_cash_flow"], var_name="metric", value_name="value")
     cash_data["Metric"] = cash_data["metric"].map(humanize)
-    cash_data["USD billions"] = cash_data["value"] / 1e9
-    cash_figure = px.bar(cash_data, x="fiscal_year", y="USD billions", color="Metric", barmode="group", color_discrete_sequence=["#087f5b", "#d97706", "#76b89d"])
+    cash_data[f"{currency_label} billions"] = cash_data["value"] / 1e9
+    cash_figure = px.bar(cash_data, x="fiscal_year", y=f"{currency_label} billions", color="Metric", barmode="group", color_discrete_sequence=["#087f5b", "#d97706", "#76b89d"])
     style_figure(cash_figure, title="Cash generation versus investment", height=390)
     cash_figure.update_xaxes(dtick=1, title="Fiscal Year")
-    cash_figure.update_yaxes(title="USD Billions")
-    st.plotly_chart(cash_figure, width="stretch")
+    cash_figure.update_yaxes(title=f"{currency_label} Billions")
+    st.plotly_chart(cash_figure, width="stretch", theme=None)
     st.subheader("Noise filter")
     st.caption("Classification, timing and evidence checks identify review work; they do not allege misconduct.")
     if signals.empty:
@@ -436,12 +511,12 @@ with cash_tab:
         waterfall.update_layout(showlegend=False)
         waterfall.update_yaxes(title="USD Billions")
         _, center, _ = st.columns([1, 5.5, 1])
-        center.plotly_chart(waterfall, width="stretch")
+        center.plotly_chart(waterfall, width="stretch", theme=None)
         st.info("This adjustment is an analytical view, not a restatement. Definitions must remain consistent across periods and peers.")
 
 with competition_tab:
     st.subheader("Competitive position")
-    st.markdown("<div class='section-deck'>Reported peer metrics, market share and a scored competitive rubric answer different questions; each carries its own source and boundary.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-deck'>Peer metrics, market share and a scored competitive rubric answer different questions and should be read separately.</div>", unsafe_allow_html=True)
     relevant = [ticker, *PEER_MAP.get(ticker, [])]
     peer_view = peer_summary.loc[peer_summary["ticker"].isin(relevant)]
     if len(peer_view) > 1:
@@ -453,32 +528,51 @@ with competition_tab:
         style_figure(peer_figure, title="Latest reported operating comparison", height=390)
         peer_figure.update_yaxes(title="Percent", ticksuffix="%")
         peer_figure.update_xaxes(title="")
-        st.plotly_chart(peer_figure, width="stretch")
+        st.plotly_chart(peer_figure, width="stretch", theme=None)
 
     market = market_share_snapshot(ticker)
     competition_columns = st.columns([1, 1.25])
     if market["values"]:
         labels = list(market["values"])
         values = list(market["values"].values())
-        donut = go.Figure(go.Pie(labels=labels, values=values, hole=.58, sort=False, textinfo="label+percent", textposition="outside", marker={"colors":["#087f5b", "#35a77c", "#76b89d", "#b7d8c9", "#dcebe4", "#d97706", "#9aaea4"]}))
+        donut = go.Figure(go.Pie(labels=labels, values=values, hole=.62, sort=False, textinfo="percent", textposition="inside", marker={"colors":["#087f5b", "#35a77c", "#76b89d", "#b7d8c9", "#dcebe4", "#d97706", "#9aaea4"]}))
         style_figure(donut, title=f"{market['title']} · {market['period']}", height=440)
-        donut.update_layout(showlegend=False, margin={"l":45,"r":45,"t":86,"b":35})
-        competition_columns[0].plotly_chart(donut, width="stretch")
-        competition_columns[0].caption(f"Source: {market['source']}. {market['note']}")
-        competition_columns[0].link_button("Open market-share source", str(market["source_url"]), width="stretch")
+        donut.update_layout(showlegend=True, legend={"orientation":"h", "y":-.12, "x":0, "font":{"size":11,"color":"#27453a"}}, margin={"l":35,"r":35,"t":100,"b":100})
+        competition_columns[0].plotly_chart(donut, width="stretch", theme=None)
+        competition_columns[0].caption(f"Data through {market['period']}.")
 
     scores = pd.DataFrame(profile["competitive_scores"], index=profile["competitive_dimensions"]).T
     heatmap = go.Figure(go.Heatmap(z=scores.values, x=list(scores.columns), y=list(scores.index), zmin=1, zmax=5, colorscale=[[0,"#edf7f2"],[.5,"#76b89d"],[1,"#087f5b"]], text=scores.values, texttemplate="%{text}/5", hovertemplate="%{y}<br>%{x}: %{z}/5<extra></extra>", colorbar={"title":"Score","tickvals":[1,2,3,4,5]}))
     style_figure(heatmap, title="Competitive rubric · explicit analyst judgment", height=440)
     heatmap.update_xaxes(title="", tickangle=-18)
     heatmap.update_yaxes(title="", autorange="reversed")
-    competition_columns[1].plotly_chart(heatmap, width="stretch")
+    competition_columns[1].plotly_chart(heatmap, width="stretch", theme=None)
     competition_columns[1].caption("Read across a row to compare one company across dimensions; read down a column to compare competitors on one dimension. Scores are revisable judgments, not reported facts.")
+
+with performance_tab:
+    st.subheader("Long-term market performance")
+    history = load_market_performance(ticker)
+    if history.empty:
+        st.info("A comparable market-history window is not available for this company.")
+    else:
+        history_figure = px.line(history, x="date", y="growth_of_100", color="series", color_discrete_map={ticker:"#087f5b", "S&P 500":"#173f32", "QQQ":"#76b89d"})
+        style_figure(history_figure, title="Growth of 100 · adjusted monthly performance", height=430)
+        history_figure.update_xaxes(title="")
+        history_figure.update_yaxes(title="Growth of 100")
+        history_figure.update_layout(hovermode="x unified")
+        st.plotly_chart(history_figure, width="stretch", theme=None)
+        performance_rows = performance_summary(history)
+        cards = st.columns(len(performance_rows))
+        for card, row in zip(cards, performance_rows):
+            card.metric(str(row["series"]), f"{float(row['total_return']):+.1%}", f"{float(row['annualized_return']):.1%} annualized")
+        first_date = pd.Timestamp(history["date"].min()).date().isoformat()
+        last_date = pd.Timestamp(history["date"].max()).date().isoformat()
+        st.caption(f"Common comparison window: {first_date} to {last_date}. The window shortens automatically when a company has less than ten years of trading history.")
 
 with target_tab:
     target = target_price_snapshot(ticker)
     st.subheader("12-month price framework")
-    st.markdown("<div class='section-deck'>Recent institutional targets are dated source observations. The Company range is a separate Bear/Base/Bull scenario output with an explicit analytical basis.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-deck'>Recent institutional targets are dated market observations. The Company range is a separate Bear/Base/Bull scenario output with an explicit analytical basis.</div>", unsafe_allow_html=True)
     if target["street"]:
         street = pd.DataFrame(target["street"])
         street["Label"] = street["firm"] + " · " + street["date"]
@@ -487,9 +581,10 @@ with target_tab:
         street_figure.update_xaxes(title="USD per Share")
         street_figure.update_yaxes(title="")
         street_figure.update_traces(texttemplate="$%{x:,.0f}", textposition="outside", cliponaxis=False)
-        st.plotly_chart(street_figure, width="stretch")
-        st.caption(f"Snapshot through {target['as_of']}. Dates are the latest updates shown by the cited aggregator; verify against each institution's original publication where accessible.")
-        st.link_button("Open target-price source", str(target["source_url"]), width="stretch")
+        street_figure.update_yaxes(automargin=True)
+        street_figure.update_xaxes(range=[0, float(street["target"].max()) * 1.18])
+        st.plotly_chart(street_figure, width="stretch", theme=None)
+        st.caption(f"Target observations updated through {target['as_of']}.")
         house = target["house"]
         cards = st.columns(3)
         for card, case in zip(cards, ["Bear", "Base", "Bull"]):
@@ -503,12 +598,12 @@ with scenario_tab:
     st.caption("Scenario outputs are transparent assumptions, not market data or recommendations.")
     scenario_plot = scenario_frame.melt(id_vars=["case"], value_vars=["revenue", "operating_income"], var_name="metric", value_name="value")
     scenario_plot["Metric"] = scenario_plot["metric"].map(humanize)
-    scenario_plot["USD billions"] = scenario_plot["value"] / 1e9
-    scenario_figure = px.bar(scenario_plot, x="case", y="USD billions", color="Metric", barmode="group", color_discrete_sequence=["#087f5b", "#76b89d"], text_auto=".1f")
+    scenario_plot[f"{currency_label} billions"] = scenario_plot["value"] / 1e9
+    scenario_figure = px.bar(scenario_plot, x="case", y=f"{currency_label} billions", color="Metric", barmode="group", color_discrete_sequence=["#087f5b", "#76b89d"], text_auto=".1f")
     style_figure(scenario_figure, title=f"Illustrative {int(scenario_frame.iloc[0]['years'])}-year operating outcomes", height=370)
     scenario_figure.update_xaxes(title="Scenario")
-    scenario_figure.update_yaxes(title="USD Billions")
-    st.plotly_chart(scenario_figure, width="stretch")
+    scenario_figure.update_yaxes(title=f"{currency_label} Billions")
+    st.plotly_chart(scenario_figure, width="stretch", theme=None)
     latest = company.iloc[-1]
     available_metrics = [name for name in VALUATION_METRICS if name in latest.index and pd.notna(latest[name]) and latest[name] > 0]
     if available_metrics:
@@ -521,8 +616,8 @@ with scenario_tab:
         exit_multiple = inputs[3].number_input("Exit multiple", min_value=.1, value=10.0, step=.5)
         scenario = valuation_scenario(base_metric_value=base_value, metric=metric, annual_growth_rate=growth_rate, holding_period_years=years, entry_multiple=entry_multiple, exit_multiple=exit_multiple, entry_net_debt=0, exit_net_debt=0)
         results = st.columns(4)
-        results[0].metric("Entry equity value", f"${scenario['entry_equity_value']:,.1f}B")
-        results[1].metric("Exit equity value", f"${scenario['exit_equity_value']:,.1f}B")
+        results[0].metric("Entry equity value", f"{currency_symbol}{scenario['entry_equity_value']:,.1f}B")
+        results[1].metric("Exit equity value", f"{currency_symbol}{scenario['exit_equity_value']:,.1f}B")
         results[2].metric("MOIC", f"{scenario['moic']:.2f}x")
         results[3].metric("IRR", f"{scenario['irr']:.1%}")
         sensitivity = scenario_sensitivity(base_metric_value=base_value, metric=metric, annual_growth_rates=[max(-.99,growth_rate-.05),growth_rate,growth_rate+.05], holding_period_years=years, entry_multiple=entry_multiple, exit_multiples=[max(.1,exit_multiple-2),exit_multiple,exit_multiple+2], entry_net_debt=0, exit_net_debt=0)
@@ -534,7 +629,7 @@ with scenario_tab:
         heat_figure.update_xaxes(title="Exit Multiple", type="category")
         heat_figure.update_yaxes(title="Annual Growth", type="category")
         _, center, _ = st.columns([1.1, 5, 1.1])
-        center.plotly_chart(heat_figure, width="stretch")
+        center.plotly_chart(heat_figure, width="stretch", theme=None)
 
 with risk_tab:
     st.subheader("Catalysts, risks and monitoring agenda")
@@ -554,5 +649,3 @@ with risk_tab:
     st.markdown("### Priority diligence")
     for item in profile["diligence_questions"]:
         st.write(f"- {item}")
-
-st.caption("Public-source research support. Missing values remain missing. Scenarios and target-price ranges are analytical outputs, not recommendations or transaction instructions.")

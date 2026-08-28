@@ -12,7 +12,7 @@ import pandas as pd
 SEC_COMPANY_FACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 SEC_TICKER_MAP_URL = "https://www.sec.gov/files/company_tickers.json"
 
-METRICS = {
+US_GAAP_METRICS = {
     "revenue": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"],
     "gross_profit": ["GrossProfit"],
     "cost_of_revenue": ["CostOfRevenue", "CostOfGoodsAndServicesSold"],
@@ -23,6 +23,19 @@ METRICS = {
     "assets": ["Assets"],
     "liabilities": ["Liabilities"],
     "equity": ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"],
+}
+
+IFRS_METRICS = {
+    "revenue": ["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods"],
+    "gross_profit": ["GrossProfit"],
+    "cost_of_revenue": ["CostOfSales"],
+    "operating_income": ["ProfitLossFromOperatingActivities", "OperatingProfitLoss"],
+    "net_income": ["ProfitLoss", "ProfitLossAttributableToOwnersOfParent"],
+    "operating_cash_flow": ["CashFlowsFromUsedInOperatingActivities"],
+    "capex": ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"],
+    "assets": ["Assets"],
+    "liabilities": ["Liabilities"],
+    "equity": ["Equity", "EquityAttributableToOwnersOfParent"],
 }
 
 
@@ -93,12 +106,18 @@ def resolve_sec_identifier(identifier: str, user_agent: str | None = None) -> di
     raise SecInputError(f"Ticker {ticker} was not found in the SEC company ticker file.")
 
 
-def select_annual_facts(payload: Mapping, tags: list[str]) -> dict[str, dict]:
+def select_annual_facts(
+    payload: Mapping,
+    tags: list[str],
+    *,
+    namespace: str = "us-gaap",
+    currency: str = "USD",
+) -> dict[str, dict]:
     """Select the latest-filed annual fact per period, preserving preferred tag order."""
-    us_gaap = payload.get("facts", {}).get("us-gaap", {})
+    facts = payload.get("facts", {}).get(namespace, {})
     selected: dict[str, dict] = {}
     for tag in tags:
-        candidates = us_gaap.get(tag, {}).get("units", {}).get("USD", [])
+        candidates = facts.get(tag, {}).get("units", {}).get(currency, [])
         by_period: dict[str, dict] = {}
         for item in candidates:
             if (
@@ -130,15 +149,31 @@ def company_facts_to_frame(
         raise SecInputError("Years must be between 1 and 20.")
     if not isinstance(payload, Mapping):
         raise SecInputError("SEC Company Facts JSON must be an object.")
-    us_gaap = payload.get("facts", {}).get("us-gaap")
-    if not isinstance(us_gaap, Mapping):
-        raise SecInputError("Uploaded JSON does not contain facts.us-gaap Company Facts data.")
+    all_facts = payload.get("facts", {})
+    if isinstance(all_facts.get("us-gaap"), Mapping):
+        namespace = "us-gaap"
+        metrics = US_GAAP_METRICS
+    elif isinstance(all_facts.get("ifrs-full"), Mapping):
+        namespace = "ifrs-full"
+        metrics = IFRS_METRICS
+    else:
+        raise SecInputError("Uploaded JSON does not contain supported US GAAP or IFRS Company Facts data.")
 
     cik = normalize_cik(payload.get("cik", ""))
     entity_name = str(payload.get("entityName", "")).strip() or f"SEC registrant CIK {cik}"
     display_ticker = (ticker or f"CIK{cik}").strip().upper()
     fact_url = source_url or SEC_COMPANY_FACTS_URL.format(cik=cik)
-    metric_values = {name: select_annual_facts(payload, tags) for name, tags in METRICS.items()}
+    namespace_facts = all_facts[namespace]
+    revenue_units: list[str] = []
+    for tag in metrics["revenue"]:
+        revenue_units.extend(namespace_facts.get(tag, {}).get("units", {}).keys())
+    currency = next((unit for unit in ["USD", "EUR", "TWD", "JPY", "GBP"] if unit in revenue_units), "")
+    if not currency:
+        raise SecInputError("No supported annual reporting currency was found in the revenue facts.")
+    metric_values = {
+        name: select_annual_facts(payload, tags, namespace=namespace, currency=currency)
+        for name, tags in metrics.items()
+    }
     periods = sorted(metric_values["revenue"])[-years:]
     if not periods:
         raise SecInputError("No annual USD revenue facts matched the supported standard XBRL tags.")
@@ -161,6 +196,7 @@ def company_facts_to_frame(
             "accession": revenue_fact.get("accn", ""),
             "source_url": fact_url,
             "input_source": "sec_company_facts",
+            "currency": currency,
         }
         for metric, values in metric_values.items():
             fact = values.get(period_end)

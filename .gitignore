@@ -3,3 +3,6 @@ __pycache__/
 .streamlit/secrets.toml
 .env
 .DS_Store
+tmp/
+output/pdf/*
+!output/pdf/msft-company-report-v2.1.pdf

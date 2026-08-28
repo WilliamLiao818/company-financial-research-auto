@@ -8,8 +8,11 @@ class CompanyProfileTests(unittest.TestCase):
     def setUp(self) -> None:
         self.frame = load_financials()
 
-    def test_prebuilt_snapshot_contains_six_company_packs(self) -> None:
-        self.assertEqual(set(self.frame["ticker"]), {"MSFT", "ORCL", "GOOG", "AVGO", "SNDK", "NVDA"})
+    def test_prebuilt_snapshot_contains_fifteen_company_packs(self) -> None:
+        self.assertEqual(
+            set(self.frame["ticker"]),
+            {"MSFT", "ORCL", "GOOG", "AVGO", "SNDK", "NVDA", "MRVL", "AAPL", "AMZN", "META", "LITE", "AMAT", "TSM", "ASML", "AMD"},
+        )
 
     def test_oracle_gross_margin_is_derived_from_reported_direct_costs(self) -> None:
         oracle = self.frame.loc[self.frame["ticker"] == "ORCL"].sort_values("fiscal_year")
