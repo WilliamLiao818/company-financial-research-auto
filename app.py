@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import importlib
 from html import escape
 
+import market_data as market_data_module
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -10,7 +12,6 @@ import streamlit as st
 from company_profiles import accounting_quality_signals, fcf_bridge, profile_for
 from fmp_connector import FmpConnectionError, FmpInputError, load_financial_statements
 from input_pipeline import online_company_facts, parse_identifiers
-from market_data import load_market_performance, performance_summary
 from news_connector import load_company_news
 from pdf_export import build_company_pdf
 from research import (
@@ -31,6 +32,13 @@ from research_catalog import (
     target_price_snapshot,
 )
 from sec_connector import SecConfigurationError, SecConnectionError, SecInputError
+
+
+# Streamlit Cloud can retain imported helpers during a hot deployment. Reloading
+# this small module keeps the benchmark schema synchronized with the CSV snapshot.
+market_data_module = importlib.reload(market_data_module)
+load_market_performance = market_data_module.load_market_performance
+performance_summary = market_data_module.performance_summary
 
 
 SHOWCASES = COMPANY_NAMES
