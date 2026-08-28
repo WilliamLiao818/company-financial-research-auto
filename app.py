@@ -261,7 +261,7 @@ def render_custom_loader(query: str) -> None:
 
 
 def render_landing(prebuilt: pd.DataFrame) -> None:
-    st.caption("THE COMPANY / FUNDAMENTALS, ACCOUNTING QUALITY & 12-MONTH VIEW · VERSION 2.0")
+    st.caption("THE COMPANY / FUNDAMENTALS, QUALITY, PERFORMANCE & VALUATION · VERSION 2.0")
     st.title("Start with a company.")
     query = st.selectbox(
         "Search ticker or company",
