@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 
-BENCHMARKS = {"S&P 500": "^GSPC", "QQQ": "QQQ"}
+BENCHMARKS = {"SPY": "SPY", "QQQ": "QQQ"}
 SNAPSHOT_PATH = Path(__file__).resolve().parent / "data" / "market_performance.csv"
 
 
@@ -59,7 +59,7 @@ def load_market_performance(ticker: str, path: Path = SNAPSHOT_PATH) -> pd.DataF
         return pd.DataFrame(columns=["date", "series", "adjusted_close"])
     pivot = pivot.tail(121)
     rebased = pivot.div(pivot.iloc[0]).mul(100)
-    labels = {ticker: ticker, "S&P 500": "S&P 500", "QQQ": "QQQ"}
+    labels = {ticker: ticker, "SPY": "SPY", "QQQ": "QQQ"}
     result = rebased.reset_index().melt(id_vars="date", var_name="series", value_name="growth_of_100")
     result["series"] = result["series"].map(labels).fillna(result["series"])
     return result

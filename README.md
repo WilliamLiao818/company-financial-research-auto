@@ -18,8 +18,8 @@ Fifteen companies are bundled as ready-to-use snapshots and require no API key: 
 - deterministic accounting-quality signals;
 - reported-to-analytical cash-flow normalization where sourced;
 - selected peer context, a dated market-share view where available and a revisable competitive-position rubric;
-- up to ten years of adjusted share-price performance against the S&P 500 and QQQ;
-- a one-month monitor of material coverage from established publications;
+- up to ten years of adjusted share-price performance against SPY and QQQ;
+- a rolling three-month monitor of material coverage from established publications;
 - recent institutional target-price observations with dates and a separate Bear/Base/Bull analytical range;
 - transparent operating scenarios and valuation sensitivity;
 - catalysts, downside risks and an updateable monitoring dashboard;

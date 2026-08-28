@@ -399,8 +399,8 @@ with executive_tab:
     st.subheader("Latest read-through")
     st.markdown(f"<div class='research-strip'><b>Growth:</b> revenue changed {percent(summary['revenue_growth'])}. <b>Profitability:</b> gross margin is {percent(summary['gross_margin'])} and operating margin is {percent(summary['operating_margin'])}. <b>Reinvestment:</b> capex is {percent(summary['capex_intensity'])} of revenue. <b>Cash:</b> free cash flow is {money_billions(summary['free_cash_flow'], currency)}.</div>", unsafe_allow_html=True)
     stories = recent_news(str(summary["company"]), ticker)
-    st.subheader("One-month news monitor")
-    st.markdown("<div class='section-deck'>Material recent coverage from established financial and general-news publications, refreshed automatically.</div>", unsafe_allow_html=True)
+    st.subheader("Three-month news monitor")
+    st.markdown("<div class='section-deck'>Material coverage published within the latest rolling 90 days, refreshed automatically.</div>", unsafe_allow_html=True)
     if stories:
         for start in range(0, len(stories), 2):
             columns = st.columns(2)
@@ -415,7 +415,7 @@ with executive_tab:
                 )
                 column.markdown(card, unsafe_allow_html=True)
     else:
-        st.info("No qualifying article was available from the monitored publications during the last month.")
+        st.info("No qualifying article was available from the monitored publications during the latest 90 days.")
 
 with business_tab:
     st.subheader("Business model and competitive durability")
@@ -555,7 +555,7 @@ with performance_tab:
     if history.empty:
         st.info("A comparable market-history window is not available for this company.")
     else:
-        history_figure = px.line(history, x="date", y="growth_of_100", color="series", color_discrete_map={ticker:"#087f5b", "S&P 500":"#173f32", "QQQ":"#76b89d"})
+        history_figure = px.line(history, x="date", y="growth_of_100", color="series", color_discrete_map={ticker:"#087f5b", "SPY":"#173f32", "QQQ":"#76b89d"})
         style_figure(history_figure, title="Growth of 100 · adjusted monthly performance", height=430)
         history_figure.update_xaxes(title="")
         history_figure.update_yaxes(title="Growth of 100")

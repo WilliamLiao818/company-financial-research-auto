@@ -608,7 +608,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
         annual["year"] = annual["date"].dt.year
         annual = annual.sort_values("date").groupby(["series", "year"], as_index=False).tail(1)
         annual_pivot = annual.pivot(index="year", columns="series", values="growth_of_100").dropna()
-        performance_colors = {ticker: GREEN, "S&P 500": colors.HexColor("#173F32"), "QQQ": colors.HexColor("#76B89D")}
+        performance_colors = {ticker: GREEN, "SPY": colors.HexColor("#173F32"), "QQQ": colors.HexColor("#76B89D")}
         performance_series = [(name, annual_pivot[name].tolist(), performance_colors.get(name, colors.HexColor("#8AA89A"))) for name in annual_pivot.columns]
         performance_rows = performance_summary(market_history)
         story.extend([
