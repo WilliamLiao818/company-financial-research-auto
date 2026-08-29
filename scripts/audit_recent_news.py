@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 from datetime import date, timedelta
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,8 +28,18 @@ def main() -> None:
                 raise RuntimeError(f"Outdated article for {ticker}: {story['date']} · {story['title']}")
             if story.get("image_kind") != "article" or not story.get("image", "").startswith("https://"):
                 raise RuntimeError(f"Missing article cover for {ticker}: {story['title']}")
+            article_host = (urlparse(story["url"]).hostname or "").lower()
+            image_host = (urlparse(story["image"]).hostname or "").lower()
+            if article_host == "news.google.com":
+                raise RuntimeError(f"Unresolved publisher URL for {ticker}: {story['title']}")
+            if image_host.endswith(("googleusercontent.com", "gstatic.com")):
+                raise RuntimeError(f"Generic news thumbnail for {ticker}: {story['title']}")
         dates = ", ".join(story["date"] for story in stories) or "no qualifying coverage"
         print(f"{ticker}: {dates}")
+        for story in stories:
+            article_host = (urlparse(story["url"]).hostname or "").lower()
+            image_host = (urlparse(story["image"]).hostname or "").lower()
+            print(f"  {article_host} -> {image_host} | {story['title']}")
 
 
 if __name__ == "__main__":

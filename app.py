@@ -241,7 +241,7 @@ def base_pdf(frame: pd.DataFrame, ticker: str) -> bytes:
 
 
 def render_custom_loader(query: str) -> None:
-    st.markdown("### Analyze another U.S.-listed company")
+    st.markdown("### Analyze another company")
     st.markdown(
         "<div class='source-note'><b>For non-prebuilt companies:</b> choose normalized statements with your provider key or use the SEC core-facts path. Keys stay in session memory and are not stored.</div>",
         unsafe_allow_html=True,
@@ -266,7 +266,7 @@ def render_custom_loader(query: str) -> None:
             except (SecInputError, SecConfigurationError, SecConnectionError, ValueError) as error:
                 st.error(str(error))
     with st.expander("Three-step setup guide"):
-        st.markdown("1. Create a Financial Modeling Prep account and copy your API key.\n\n2. Paste the key above and enter a U.S. ticker or company name.\n\n3. Generate the view. The key stays in session memory and is not written to GitHub or included in downloads.")
+        st.markdown("1. Create a Financial Modeling Prep account and copy your API key.\n\n2. Paste the key above and enter a ticker or company name.\n\n3. Generate the view. The key stays in session memory and is not written to GitHub or included in downloads.")
         links = st.columns(2)
         links[0].link_button("Provider API documentation", "https://site.financialmodelingprep.com/developer/docs", width="stretch")
         links[1].link_button("SEC Company Search", "https://www.sec.gov/edgar/search/", width="stretch")
