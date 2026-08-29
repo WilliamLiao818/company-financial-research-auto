@@ -408,7 +408,7 @@ with executive_tab:
         column.markdown(f"<div class='compact-card'><strong>QUESTION {index:02d}</strong><p>{question}</p></div>", unsafe_allow_html=True)
     st.subheader("Latest read-through")
     st.markdown(f"<div class='research-strip'><b>Growth:</b> revenue changed {percent(summary['revenue_growth'])}. <b>Profitability:</b> gross margin is {percent(summary['gross_margin'])} and operating margin is {percent(summary['operating_margin'])}. <b>Reinvestment:</b> capex is {percent(summary['capex_intensity'])} of revenue. <b>Cash:</b> free cash flow is {money_billions(summary['free_cash_flow'], currency)}.</div>", unsafe_allow_html=True)
-    stories = recent_news(str(summary["company"]), ticker, "verified-article-covers-v2")
+    stories = recent_news(str(summary["company"]), ticker, "verified-article-covers-v3")
     st.subheader("Three-month news monitor")
     st.markdown("<div class='section-deck'>Material coverage published within the latest rolling 90 days, refreshed automatically.</div>", unsafe_allow_html=True)
     if stories:

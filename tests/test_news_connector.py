@@ -73,6 +73,8 @@ class CompanyNewsTests(unittest.TestCase):
 
         self.assertEqual(results[0]["url"], "https://www.reuters.com/business/microsoft-ai-chip")
         self.assertIn("ONUT.article-specific", results[0]["image"])
+        self.assertIn("w=1200", results[0]["image"])
+        self.assertIn("h=675", results[0]["image"])
 
 
 if __name__ == "__main__":

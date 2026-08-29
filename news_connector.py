@@ -290,6 +290,19 @@ def _bing_original_url(value: str) -> str:
     return decoded if decoded.startswith("https://") else ""
 
 
+def _bing_thumbnail(value: str) -> str:
+    if value.startswith("http://www.bing.com/"):
+        value = "https://www.bing.com/" + value.removeprefix("http://www.bing.com/")
+    parsed = urllib.parse.urlparse(value)
+    if (parsed.hostname or "").lower() not in {"bing.com", "www.bing.com"} or parsed.path != "/th":
+        return ""
+    parameters = urllib.parse.parse_qs(parsed.query)
+    if not parameters.get("id"):
+        return ""
+    parameters.update({"w": ["1200"], "h": ["675"], "c": ["14"], "rs": ["2"], "qlt": ["90"]})
+    return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(parameters, doseq=True)))
+
+
 def _load_bing_company_news(
     aliases: list[str],
     publishers: dict[str, str],
@@ -332,9 +345,7 @@ def _load_bing_company_news(
         domain = _domain(original_url, publishers)
         if not domain:
             continue
-        raw_image = _local_child_text(item, "Image")
-        if raw_image.startswith("http://www.bing.com/"):
-            raw_image = "https://www.bing.com/" + raw_image.removeprefix("http://www.bing.com/")
+        raw_image = _bing_thumbnail(_local_child_text(item, "Image"))
         image = _valid_cover_url(raw_image)
         if not image or "th?id=" not in image:
             original_url, image = _article_metadata(original_url, domain)
