@@ -5,7 +5,7 @@ import re
 from html import escape
 
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_RIGHT
+from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
@@ -383,7 +383,14 @@ def _table_style(header: bool) -> ParagraphStyle:
 
 
 def _metric_cards(items: list[tuple[str, str]]) -> Table:
-    style = getSampleStyleSheet()["BodyText"]
+    style = ParagraphStyle(
+        "MetricCard",
+        parent=getSampleStyleSheet()["BodyText"],
+        fontName="Helvetica",
+        leading=17,
+        alignment=TA_CENTER,
+        textColor=INK,
+    )
     cells = [Paragraph(f"<font size='6.7' color='#607068'>{escape(_ascii(label.upper()))}</font><br/><font size='15' color='#087F5B'><b>{escape(_ascii(value))}</b></font>", style) for label, value in items]
     table = Table([cells], colWidths=[(A4[0] - 36 * mm) / len(cells)] * len(cells))
     table.setStyle(TableStyle([
@@ -391,6 +398,25 @@ def _metric_cards(items: list[tuple[str, str]]) -> Table:
         ("INNERGRID", (0, 0), (-1, -1), .55, LINE), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ("LEFTPADDING", (0, 0), (-1, -1), 8), ("RIGHTPADDING", (0, 0), (-1, -1), 8),
         ("TOPPADDING", (0, 0), (-1, -1), 10), ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+    ]))
+    return table
+
+
+def _executive_box(profile: dict[str, object], styles: dict[str, ParagraphStyle]) -> Table:
+    content = [
+        Paragraph("<b>Core thesis.</b> " + escape(_ascii(profile["research_thesis"])), styles["body"]),
+        Spacer(1, 5),
+        Paragraph("<b>Counter-thesis.</b> " + escape(_ascii(profile["counter_thesis"])), styles["body"]),
+    ]
+    table = Table([[content]], colWidths=[A4[0] - 36 * mm], hAlign="LEFT")
+    table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), SOFT),
+        ("BOX", (0, 0), (-1, -1), .45, LINE),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("LEFTPADDING", (0, 0), (-1, -1), 11),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 11),
+        ("TOPPADDING", (0, 0), (-1, -1), 11),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
     ]))
     return table
 
@@ -431,16 +457,16 @@ def _report_page(canvas, document) -> None:
 
 def _styles() -> dict[str, ParagraphStyle]:
     base = getSampleStyleSheet()
-    body = ParagraphStyle("ResearchBody", parent=base["BodyText"], fontName="Helvetica", fontSize=8.8, leading=13, textColor=INK, spaceAfter=6)
+    body = ParagraphStyle("ResearchBody", parent=base["BodyText"], fontName="Helvetica", fontSize=9, leading=13.2, textColor=INK, spaceAfter=6)
     return {
         "title": ParagraphStyle("ResearchTitle", parent=base["Title"], fontName="Helvetica-Bold", fontSize=27, leading=31, textColor=INK, spaceAfter=7),
         "deck": ParagraphStyle("ResearchDeck", parent=body, fontSize=10.2, leading=15, textColor=MUTED, spaceAfter=13),
         "page": ParagraphStyle("PageTitle", parent=base["Heading1"], fontName="Helvetica-Bold", fontSize=18, leading=22, textColor=INK, spaceBefore=3, spaceAfter=11),
-        "h2": ParagraphStyle("ResearchH2", parent=base["Heading2"], fontName="Helvetica-Bold", fontSize=12, leading=15, textColor=GREEN, spaceBefore=10, spaceAfter=7),
+        "h2": ParagraphStyle("ResearchH2", parent=base["Heading2"], fontName="Helvetica-Bold", fontSize=12, leading=15, textColor=GREEN, spaceBefore=12, spaceAfter=8),
         "h3": ParagraphStyle("ResearchH3", parent=base["Heading3"], fontName="Helvetica-Bold", fontSize=9.4, leading=12, textColor=INK, spaceBefore=7, spaceAfter=4),
         "body": body,
         "bullet": ParagraphStyle("ResearchBullet", parent=body, leftIndent=12, firstLineIndent=-7, spaceAfter=4),
-        "note": ParagraphStyle("ResearchNote", parent=body, borderPadding=10, backColor=SOFT, textColor=INK, spaceAfter=10),
+        "note": ParagraphStyle("ResearchNote", parent=body, borderPadding=7, backColor=SOFT, textColor=INK, spaceBefore=4, spaceAfter=9),
         "eyebrow": ParagraphStyle("ResearchEyebrow", parent=body, fontName="Helvetica-Bold", fontSize=6.8, leading=9, textColor=GREEN, tracking=.8, spaceAfter=6),
         "source": ParagraphStyle("ResearchSource", parent=body, fontSize=6.7, leading=9.5, textColor=MUTED, spaceAfter=3),
     }
@@ -519,9 +545,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
             ("Operating margin", _fmt_percent(summary.get("operating_margin"))),
             ("Simple FCF", _fmt_billions(summary.get("free_cash_flow"), currency)),
         ]),
-        Paragraph("Executive view", styles["h2"]),
-        Paragraph("<b>Core thesis.</b> " + escape(_ascii(profile["research_thesis"])), styles["note"]),
-        Paragraph("<b>Counter-thesis.</b> " + escape(_ascii(profile["counter_thesis"])), styles["note"]),
+        KeepTogether([Paragraph("Executive view", styles["h2"]), _executive_box(profile, styles)]),
         Paragraph("What the latest year says", styles["h2"]),
         Paragraph(
             f"Revenue changed {_fmt_percent(summary.get('revenue_growth'))} year over year, gross margin reached {_fmt_percent(summary.get('gross_margin'))}, operating margin reached {_fmt_percent(summary.get('operating_margin'))}, capex represented {_fmt_percent(summary.get('capex_intensity'))} of revenue and simple FCF was {_fmt_billions(summary.get('free_cash_flow'), currency)}. These observations frame the debate; they do not by themselves determine the scenario range presented later.",
@@ -600,7 +624,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
             ])
     if market_snapshot.get("values"):
         story.append(KeepTogether([Paragraph(f"{escape(_ascii(market_snapshot['title']))} | {escape(_ascii(market_snapshot['period']))}", styles["h2"]), _market_share_pie(market_snapshot, height=170), Paragraph(f"Data through {escape(_ascii(market_snapshot['period']))}.", styles["source"])]))
-    story.append(KeepTogether([Paragraph("Competitive rubric | 1 to 5", styles["h2"]), _score_heatmap(profile, height=145), Paragraph("Read across a row to compare one company across dimensions; read down a column to compare competitors on one dimension. Scores are revisable judgments, not reported facts.", styles["source"])]))
+    story.append(KeepTogether([Paragraph("Competitive rubric | 1 to 5", styles["h2"]), _score_heatmap(profile, height=145), Paragraph("Read across a row to compare one company across dimensions. Application Reach measures the breadth of first-party applications and installed workflows available to distribute adjacent cloud, data and AI services. Scores are revisable judgments, not reported facts.", styles["source"])]))
 
     # 9 | Market performance
     if not market_history.empty:

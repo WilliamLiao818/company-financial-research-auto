@@ -8,6 +8,7 @@ class MarketDataTests(unittest.TestCase):
         self.assertEqual(BENCHMARKS, {"SPY": "SPY", "QQQ": "QQQ"})
         frame = load_market_performance("MSFT")
         self.assertEqual(set(frame["series"]), {"MSFT", "SPY", "QQQ"})
+        self.assertTrue(frame["adjusted_close"].notna().all())
 
 
 if __name__ == "__main__":

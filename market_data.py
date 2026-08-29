@@ -61,6 +61,8 @@ def load_market_performance(ticker: str, path: Path = SNAPSHOT_PATH) -> pd.DataF
     rebased = pivot.div(pivot.iloc[0]).mul(100)
     labels = {ticker: ticker, "SPY": "SPY", "QQQ": "QQQ"}
     result = rebased.reset_index().melt(id_vars="date", var_name="series", value_name="growth_of_100")
+    prices = pivot.reset_index().melt(id_vars="date", var_name="series", value_name="adjusted_close")
+    result = result.merge(prices, on=["date", "series"], how="left", validate="one_to_one")
     result["series"] = result["series"].map(labels).fillna(result["series"])
     return result
 

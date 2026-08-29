@@ -4,8 +4,10 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
+from html.parser import HTMLParser
 
 
 TRUSTED_DOMAINS = {
@@ -16,6 +18,24 @@ TRUSTED_DOMAINS = {
     "bloomberg.com": "Bloomberg",
     "cnbc.com": "CNBC",
     "apnews.com": "Associated Press",
+}
+
+OFFICIAL_DOMAINS_BY_TICKER = {
+    "MSFT": {"microsoft.com": "Microsoft"},
+    "ORCL": {"oracle.com": "Oracle"},
+    "GOOG": {"blog.google": "Google"},
+    "AVGO": {"broadcom.com": "Broadcom"},
+    "SNDK": {"sandisk.com": "SanDisk"},
+    "NVDA": {"nvidia.com": "NVIDIA"},
+    "MRVL": {"marvell.com": "Marvell"},
+    "AAPL": {"apple.com": "Apple"},
+    "AMZN": {"aboutamazon.com": "Amazon"},
+    "META": {"about.fb.com": "Meta"},
+    "LITE": {"lumentum.com": "Lumentum"},
+    "AMAT": {"appliedmaterials.com": "Applied Materials"},
+    "TSM": {"tsmc.com": "TSMC"},
+    "ASML": {"asml.com": "ASML"},
+    "AMD": {"amd.com": "AMD"},
 }
 
 BUSINESS_TERMS = "earnings OR revenue OR AI OR cloud OR chips OR investment OR acquisition OR regulation OR product OR strategy"
@@ -36,12 +56,115 @@ SEARCH_ALIASES = {
     "LITE": ["Lumentum"], "AMAT": ["Applied Materials"], "TSM": ["TSMC", "Taiwan Semiconductor"],
     "ASML": ["ASML"], "AMD": ["AMD", "Advanced Micro Devices"],
 }
+MEDIA_CONTENT = "{http://search.yahoo.com/mrss/}content"
+MEDIA_THUMBNAIL = "{http://search.yahoo.com/mrss/}thumbnail"
 
 
-def _domain(value: str) -> str:
+class _ArticleMetadataParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.image_candidates: list[str] = []
+        self.canonical_url = ""
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {str(key).lower(): str(value or "").strip() for key, value in attrs}
+        if tag.lower() == "meta":
+            key = (values.get("property") or values.get("name") or "").lower()
+            if key in {"og:image", "og:image:secure_url", "twitter:image", "twitter:image:src"}:
+                self.image_candidates.append(values.get("content", ""))
+        elif tag.lower() == "link" and "canonical" in values.get("rel", "").lower():
+            self.canonical_url = values.get("href", "")
+        elif tag.lower() == "img":
+            self.image_candidates.append(values.get("src", ""))
+
+
+def _valid_cover_url(value: str, *, base_url: str = "") -> str:
+    candidate = urllib.parse.urljoin(base_url, value.strip())
+    parsed = urllib.parse.urlparse(candidate)
+    lowered = candidate.lower()
+    if parsed.scheme != "https" or not parsed.netloc:
+        return ""
+    if any(marker in lowered for marker in ("favicon", "sprite", "avatar", "author", "logo", "icon")):
+        return ""
+    if lowered.endswith((".svg", ".gif")):
+        return ""
+    return candidate
+
+
+def _rss_cover(item: ET.Element) -> str:
+    for tag in (MEDIA_CONTENT, MEDIA_THUMBNAIL):
+        for media in item.findall(tag):
+            candidate = _valid_cover_url(media.get("url", ""))
+            if candidate:
+                return candidate
+    enclosure = item.find("enclosure")
+    if enclosure is not None and str(enclosure.get("type", "")).startswith("image/"):
+        candidate = _valid_cover_url(enclosure.get("url", ""))
+        if candidate:
+            return candidate
+    description = item.findtext("description") or ""
+    parser = _ArticleMetadataParser()
+    try:
+        parser.feed(description)
+    except (ValueError, TypeError):
+        return ""
+    for value in parser.image_candidates:
+        candidate = _valid_cover_url(value)
+        if candidate:
+            return candidate
+    return ""
+
+
+def _host_matches(value: str, expected_domain: str) -> bool:
+    hostname = (urllib.parse.urlparse(value).hostname or "").lower().removeprefix("www.")
+    return hostname == expected_domain or hostname.endswith("." + expected_domain)
+
+
+def _article_metadata(url: str, expected_domain: str) -> tuple[str, str]:
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=7) as response:
+            final_url = response.geturl() if hasattr(response, "geturl") else url
+            payload = response.read(2_500_000)
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+        return url, ""
+    try:
+        text = payload.decode("utf-8", errors="ignore")
+        parser = _ArticleMetadataParser()
+        parser.feed(text)
+    except (UnicodeError, ValueError, TypeError):
+        return url, ""
+
+    canonical = urllib.parse.urljoin(final_url, parser.canonical_url) if parser.canonical_url else final_url
+    article_url = canonical if _host_matches(canonical, expected_domain) else final_url if _host_matches(final_url, expected_domain) else url
+    for value in parser.image_candidates:
+        candidate = _valid_cover_url(value, base_url=article_url)
+        if candidate:
+            return article_url, candidate
+    return article_url, ""
+
+
+def _complete_story(row: tuple[int, datetime, dict[str, str], str]) -> tuple[int, datetime, dict[str, str]] | None:
+    score, published_at, story, domain = row
+    if story.get("image"):
+        return score, published_at, story
+    article_url, image = _article_metadata(story["url"], domain)
+    if not image:
+        return None
+    completed = {**story, "url": article_url, "image": image, "image_kind": "article"}
+    return score, published_at, completed
+
+
+def _domain(value: str, domains: dict[str, str] | None = None) -> str:
     hostname = urllib.parse.urlparse(value).hostname or ""
     hostname = hostname.lower().removeprefix("www.")
-    for domain in TRUSTED_DOMAINS:
+    for domain in domains or TRUSTED_DOMAINS:
         if hostname == domain or hostname.endswith("." + domain):
             return domain
     return ""
@@ -68,7 +191,8 @@ def load_company_news(
     short_name = company_name.replace(" Corporation", "").replace(" Inc.", "").replace(" plc", "")
     aliases = SEARCH_ALIASES.get(ticker, [short_name, ticker])
     company_filter = " OR ".join(f'"{alias}"' for alias in aliases)
-    site_filter = " OR ".join(f"site:{domain}" for domain in TRUSTED_DOMAINS)
+    publishers = {**TRUSTED_DOMAINS, **OFFICIAL_DOMAINS_BY_TICKER.get(ticker, {})}
+    site_filter = " OR ".join(f"site:{domain}" for domain in publishers)
     query = f'({company_filter}) ({BUSINESS_TERMS}) when:{window_days}d ({site_filter})'
     params = urllib.parse.urlencode({"q": query, "hl": "en-US", "gl": "US", "ceid": "US:en"})
     request = urllib.request.Request(
@@ -88,15 +212,15 @@ def load_company_news(
     cutoff = current_time - timedelta(days=window_days)
     latest_allowed = current_time + timedelta(days=1)
 
-    ranked_results: list[tuple[int, datetime, dict[str, str]]] = []
+    ranked_results: list[tuple[int, datetime, dict[str, str], str]] = []
     seen: set[str] = set()
     for item in root.findall("./channel/item"):
         source = item.find("source")
-        domain = _domain(source.get("url", "") if source is not None else "")
+        domain = _domain(source.get("url", "") if source is not None else "", publishers)
         if not domain:
             continue
         title = " ".join((item.findtext("title") or "").split())
-        publisher = TRUSTED_DOMAINS[domain]
+        publisher = publishers[domain]
         for suffix in [f" - {publisher}", " - WSJ", " - Bloomberg.com", " - Reuters", " - CNBC", " - AP News"]:
             if title.endswith(suffix):
                 title = title[: -len(suffix)].strip()
@@ -114,6 +238,7 @@ def load_company_news(
             continue
         seen.add(key)
         materiality_score = sum(term in lowered_title for term in MATERIAL_TITLE_TERMS)
+        cover = _rss_cover(item)
         ranked_results.append(
             (
                 materiality_score,
@@ -123,10 +248,16 @@ def load_company_news(
                     "url": url,
                     "publisher": publisher,
                     "date": published_at.date().isoformat(),
-                    "image": f"https://www.google.com/s2/favicons?domain={domain}&sz=256",
-                    "image_kind": "logo",
+                    "image": cover,
+                    "image_kind": "article" if cover else "",
                 },
+                domain,
             )
         )
     ranked_results.sort(key=lambda row: (row[0], row[1]), reverse=True)
-    return [row[2] for row in ranked_results[:limit]]
+    candidates = ranked_results[: max(limit * 3, limit)]
+    with ThreadPoolExecutor(max_workers=min(4, max(1, len(candidates)))) as executor:
+        completed = list(executor.map(_complete_story, candidates))
+    available = [row for row in completed if row is not None]
+    available.sort(key=lambda row: (row[0], row[1]), reverse=True)
+    return [row[2] for row in available[:limit]]

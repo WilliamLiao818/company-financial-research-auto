@@ -118,18 +118,20 @@ st.markdown(
     .selection-pill { display:inline-flex; align-items:center; gap:8px; margin:.25rem 0 .75rem; padding:8px 12px; border-radius:999px; background:var(--soft); color:var(--green); font-weight:700; font-size:13px; }
     .news-card { height:100%; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:white; box-shadow:0 10px 32px rgba(11,42,32,.035); }
     .news-card img { width:100%; height:132px; object-fit:cover; display:block; }
-    .news-card img.logo { object-fit:contain; padding:30px; background:linear-gradient(135deg,#edf7f2,#f8fbf9); }
     .news-card .news-copy { padding:16px 17px 18px; }
     .news-card .news-meta { color:var(--green)!important; font-weight:700; font-size:11px; letter-spacing:.04em; }
     .news-card h4 { margin:8px 0 0; color:var(--deep); font-size:16px; line-height:1.35; }
     .news-card a { text-decoration:none; }
     [data-testid="stAppViewContainer"], [data-testid="stMain"], .stApp { background:#fbfdfc!important; }
-    .js-plotly-plot text { fill:#27453a!important; }
     @keyframes rise { from { transform:translateY(10px); opacity:0; } to { transform:none; opacity:1; } }
     @keyframes barGrow { from { transform:scaleY(.02); opacity:.25; } to { transform:scaleY(1); opacity:1; } }
-    @keyframes lineDraw { to { stroke-dashoffset:0; } }
+    @keyframes lineDraw {
+        0% { stroke-dasharray:3000; stroke-dashoffset:3000; }
+        99% { stroke-dasharray:3000; stroke-dashoffset:0; }
+        100% { stroke-dasharray:none; stroke-dashoffset:0; }
+    }
     .js-plotly-plot .barlayer path { transform-box:fill-box; transform-origin:center bottom; animation:barGrow .8s cubic-bezier(.22,1,.36,1) both; }
-    .js-plotly-plot .scatterlayer path.js-line { stroke-dasharray:1500; stroke-dashoffset:1500; animation:lineDraw 1.05s ease-out forwards; }
+    .js-plotly-plot .scatterlayer path.js-line { animation:lineDraw 1.05s ease-out forwards; }
     @media (prefers-reduced-motion:reduce) { * { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
     </style>
     """,
@@ -173,9 +175,11 @@ def style_figure(figure: go.Figure, *, title: str | None = None, height: int = 3
         plot_bgcolor="white",
         paper_bgcolor="white",
         font={"family": "Arial, sans-serif", "size": 14, "color": "#27453a"},
-        legend={"title": {"text": ""}, "orientation": legend, "yanchor": "top", "y": .91, "x": .02, "font": {"size": 13, "color": "#27453a"}},
-        hoverlabel={"bgcolor": "#0b2a20", "font": {"color": "white", "size": 13}},
-        margin={"l": 68, "r": 46, "t": 106 if title else 50, "b": 66},
+        legend={"title": {"text": ""}, "orientation": legend, "yanchor": "bottom", "y": 1.025, "x": .02, "font": {"size": 12, "color": "#27453a"}, "bgcolor": "rgba(255,255,255,.92)"},
+        hoverlabel={"bgcolor": "white", "bordercolor": "#76b89d", "font": {"color": "#0b2a20", "size": 13, "family": "Arial, sans-serif"}, "align": "left"},
+        hovermode="closest",
+        margin={"l": 68, "r": 46, "t": 126 if title else 58, "b": 66},
+        uniformtext={"minsize": 11, "mode": "hide"},
         transition={"duration": 600, "easing": "cubic-in-out"},
     )
     figure.update_xaxes(showline=True, linecolor="#c6d7ce", gridcolor="#edf3f0", tickfont={"color": "#40584d", "size": 13}, title_font={"color": "#27453a", "size": 14}, zerolinecolor="#c6d7ce")
@@ -278,7 +282,6 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
         placeholder="Type a ticker or company name, then select a match",
         format_func=lambda item: f"{item} · {SHOWCASES[item]}" if item in SHOWCASES else str(item),
         accept_new_options=True,
-        help="Currently supports U.S.-listed public companies.",
     )
     if query:
         resolved = resolve_showcase(str(query))
@@ -341,7 +344,6 @@ if selected != ticker_hint:
     if selected in SHOWCASES:
         st.session_state.pop("custom_data", None)
     open_company(selected)
-navigation[2].caption("U.S.-listed companies")
 
 ticker = selected
 if ticker in SHOWCASES and ticker not in set(scope["ticker"]):
@@ -362,7 +364,6 @@ with headline:
 with download:
     st.write("")
     st.download_button("Download full PDF", pdf_bytes, f"{safe_name(ticker)}-company-report.pdf", "application/pdf", type="primary", width="stretch")
-    st.caption("Detailed PDF report")
 
 filing_links = st.columns([1, 1, 4])
 if ticker in CIKS:
@@ -413,8 +414,7 @@ with executive_tab:
         for start in range(0, len(stories), 2):
             columns = st.columns(2)
             for column, story in zip(columns, stories[start:start + 2]):
-                image_class = "logo" if story.get("image_kind") == "logo" else "article-image"
-                image = f"<img class='{image_class}' src='{escape(story['image'], quote=True)}' alt='{escape(story['publisher'], quote=True)}'/>" if story.get("image") else ""
+                image = f"<img class='article-image' src='{escape(story['image'], quote=True)}' alt='{escape(story['title'], quote=True)}'/>" if story.get("image") else ""
                 card = (
                     f"<div class='news-card'>{image}<div class='news-copy'>"
                     f"<div class='news-meta'>{escape(story['publisher'])} · {escape(story['date'])}</div>"
@@ -449,6 +449,7 @@ with earnings_tab:
     figure = px.line(trend, x="fiscal_year", y=f"{currency_label} billions", color="Metric", markers=True, color_discrete_sequence=["#087f5b", "#35a77c", "#173f32"])
     style_figure(figure, title=f"Scale and cash generation · {currency_label} billions", height=390)
     figure.update_xaxes(dtick=1, title="Fiscal Year")
+    figure.update_traces(hovertemplate=f"<b>%{{fullData.name}}</b><br>Fiscal Year %{{x}}<br>%{{y:,.1f}} {currency_label}B<extra></extra>")
     st.plotly_chart(figure, width="stretch", theme=None)
 
     growth = company.loc[company["revenue_growth"].notna()].copy()
@@ -457,7 +458,8 @@ with earnings_tab:
     style_figure(growth_chart, title="Revenue growth · year over year", height=330)
     growth_chart.update_xaxes(dtick=1, title="Fiscal Year")
     growth_chart.update_yaxes(title="Percent", ticksuffix="%")
-    growth_chart.update_traces(texttemplate="%{y:.1f}%", textposition="outside", cliponaxis=False)
+    growth_chart.update_yaxes(range=[0, max(1, float(growth["Revenue Growth"].max()) * 1.25)])
+    growth_chart.update_traces(texttemplate="%{y:.1f}%", textposition="outside", cliponaxis=False, hovertemplate="<b>Revenue Growth</b><br>Fiscal Year %{x}<br>%{y:.1f}%<extra></extra>")
     _, center, _ = st.columns([.7, 5.8, .7])
     center.plotly_chart(growth_chart, width="stretch", theme=None)
     if len(company):
@@ -475,8 +477,9 @@ with earnings_tab:
         melted["Percent"] = melted["ratio"] * 100
         margin_figure = px.line(melted, x="fiscal_year", y="Percent", color="Metric", markers=True, color_discrete_sequence=palette)
         style_figure(margin_figure, title=title, height=360)
-        margin_figure.update_xaxes(dtick=1, title="Fiscal Year")
+        margin_figure.update_xaxes(dtick=1, title="Fiscal Year", range=[float(company["fiscal_year"].min()) - .25, float(company["fiscal_year"].max()) + .25], automargin=True)
         margin_figure.update_yaxes(title="Percent", ticksuffix="%")
+        margin_figure.update_traces(hovertemplate="<b>%{fullData.name}</b><br>Fiscal Year %{x}<br>%{y:.1f}%<extra></extra>")
         column.plotly_chart(margin_figure, width="stretch", theme=None)
 
     prompts, quality = st.columns(2)
@@ -502,6 +505,7 @@ with cash_tab:
     style_figure(cash_figure, title="Cash generation versus investment", height=390)
     cash_figure.update_xaxes(dtick=1, title="Fiscal Year")
     cash_figure.update_yaxes(title=f"{currency_label} Billions")
+    cash_figure.update_traces(hovertemplate=f"<b>%{{fullData.name}}</b><br>Fiscal Year %{{x}}<br>%{{y:,.1f}} {currency_label}B<extra></extra>")
     st.plotly_chart(cash_figure, width="stretch", theme=None)
     st.subheader("Noise filter")
     st.caption("Classification, timing and evidence checks identify review work; they do not allege misconduct.")
@@ -518,6 +522,7 @@ with cash_tab:
         style_figure(waterfall, title="Reported-to-analytical cash-flow bridge", height=380)
         waterfall.update_layout(showlegend=False)
         waterfall.update_yaxes(title="USD Billions")
+        waterfall.update_traces(hovertemplate="<b>%{x}</b><br>%{y:,.1f} USD B<extra></extra>")
         _, center, _ = st.columns([1, 5.5, 1])
         center.plotly_chart(waterfall, width="stretch", theme=None)
         st.info("This adjustment is an analytical view, not a restatement. Definitions must remain consistent across periods and peers.")
@@ -536,6 +541,7 @@ with competition_tab:
         style_figure(peer_figure, title="Latest reported operating comparison", height=390)
         peer_figure.update_yaxes(title="Percent", ticksuffix="%")
         peer_figure.update_xaxes(title="")
+        peer_figure.update_traces(hovertemplate="<b>%{fullData.name}</b><br>%{x}<br>%{y:.1f}%<extra></extra>")
         st.plotly_chart(peer_figure, width="stretch", theme=None)
 
     market = market_share_snapshot(ticker)
@@ -543,11 +549,12 @@ with competition_tab:
     if market["values"]:
         labels = list(market["values"])
         values = list(market["values"].values())
-        donut = go.Figure(go.Pie(labels=labels, values=values, hole=.62, sort=False, textinfo="percent", textposition="inside", marker={"colors":["#087f5b", "#35a77c", "#76b89d", "#b7d8c9", "#dcebe4", "#d97706", "#9aaea4"]}))
+        legend_labels = [f"{label} · {value:.0f}%" for label, value in zip(labels, values)]
+        donut = go.Figure(go.Pie(labels=legend_labels, customdata=labels, values=values, hole=.62, sort=False, textinfo="none", hovertemplate="<b>%{customdata}</b><br>%{value:.1f}%<extra></extra>", marker={"colors":["#087f5b", "#35a77c", "#76b89d", "#b7d8c9", "#dcebe4", "#d97706", "#9aaea4"]}))
         style_figure(donut, title=f"{market['title']} · {market['period']}", height=440)
-        donut.update_layout(showlegend=True, legend={"orientation":"h", "y":-.12, "x":0, "font":{"size":11,"color":"#27453a"}}, margin={"l":35,"r":35,"t":100,"b":100})
+        donut.update_layout(showlegend=True, legend={"orientation":"h", "yanchor":"top", "y":-.04, "x":0, "font":{"size":11,"color":"#27453a"}, "bgcolor":"rgba(255,255,255,.94)"}, margin={"l":35,"r":35,"t":115,"b":112})
         competition_columns[0].plotly_chart(donut, width="stretch", theme=None)
-        competition_columns[0].caption(f"Data through {market['period']}.")
+        competition_columns[0].caption(f"Data through {market['period']}. {market.get('note', '')}")
 
     scores = pd.DataFrame(profile["competitive_scores"], index=profile["competitive_dimensions"]).T
     heatmap = go.Figure(go.Heatmap(z=scores.values, x=list(scores.columns), y=list(scores.index), zmin=1, zmax=5, colorscale=[[0,"#edf7f2"],[.5,"#76b89d"],[1,"#087f5b"]], text=scores.values, texttemplate="%{text}/5", hovertemplate="%{y}<br>%{x}: %{z}/5<extra></extra>", colorbar={"title":"Score","tickvals":[1,2,3,4,5]}))
@@ -555,7 +562,7 @@ with competition_tab:
     heatmap.update_xaxes(title="", tickangle=-18)
     heatmap.update_yaxes(title="", autorange="reversed")
     competition_columns[1].plotly_chart(heatmap, width="stretch", theme=None)
-    competition_columns[1].caption("Read across a row to compare one company across dimensions; read down a column to compare competitors on one dimension. Scores are revisable judgments, not reported facts.")
+    competition_columns[1].caption("Read across a row to compare one company across dimensions. Application Reach measures the breadth of first-party business applications and installed workflows available to distribute adjacent cloud, data and AI services. All 1–5 scores are revisable analyst judgments, not market-share data.")
 
 with performance_tab:
     st.subheader("Long-term market performance")
@@ -563,11 +570,12 @@ with performance_tab:
     if history.empty:
         st.info("A comparable market-history window is not available for this company.")
     else:
-        history_figure = px.line(history, x="date", y="growth_of_100", color="series", color_discrete_map={ticker:"#087f5b", "SPY":"#173f32", "QQQ":"#76b89d"})
+        history_figure = px.line(history, x="date", y="growth_of_100", color="series", custom_data=["adjusted_close"], color_discrete_map={ticker:"#087f5b", "SPY":"#173f32", "QQQ":"#76b89d"})
         style_figure(history_figure, title="Growth of 100 · adjusted monthly performance", height=430)
         history_figure.update_xaxes(title="")
         history_figure.update_yaxes(title="Growth of 100")
-        history_figure.update_layout(hovermode="x unified")
+        history_figure.update_traces(hovertemplate="<b>%{fullData.name}</b><br>%{x|%b %Y}<br>Adjusted price %{customdata[0]:,.2f}<extra></extra>")
+        history_figure.update_layout(hovermode="closest", hoverdistance=24)
         st.plotly_chart(history_figure, width="stretch", theme=None)
         performance_rows = performance_summary(history)
         cards = st.columns(len(performance_rows))
@@ -589,6 +597,7 @@ with target_tab:
         street_figure.update_xaxes(title="USD per Share")
         street_figure.update_yaxes(title="")
         street_figure.update_traces(texttemplate="$%{x:,.0f}", textposition="outside", cliponaxis=False)
+        street_figure.update_traces(hovertemplate="<b>%{y}</b><br>$%{x:,.0f} per share<extra></extra>")
         street_figure.update_yaxes(automargin=True)
         street_figure.update_xaxes(range=[0, float(street["target"].max()) * 1.18])
         st.plotly_chart(street_figure, width="stretch", theme=None)
@@ -611,10 +620,14 @@ with scenario_tab:
     style_figure(scenario_figure, title=f"Illustrative {int(scenario_frame.iloc[0]['years'])}-year operating outcomes", height=370)
     scenario_figure.update_xaxes(title="Scenario")
     scenario_figure.update_yaxes(title=f"{currency_label} Billions")
+    scenario_maximum = float((scenario_plot[f"{currency_label} billions"]).max())
+    scenario_figure.update_yaxes(range=[0, scenario_maximum * 1.24])
+    scenario_figure.update_traces(texttemplate="%{y:.1f}", textposition="outside", cliponaxis=False, hovertemplate=f"<b>%{{fullData.name}}</b><br>%{{x}}<br>%{{y:,.1f}} {currency_label}B<extra></extra>")
     st.plotly_chart(scenario_figure, width="stretch", theme=None)
     latest = company.iloc[-1]
     available_metrics = [name for name in VALUATION_METRICS if name in latest.index and pd.notna(latest[name]) and latest[name] > 0]
     if available_metrics:
+        st.markdown("<div class='source-note'><b>How to use:</b> choose the operating metric, holding period, growth rate and entry/exit multiples. The cards show the resulting return; the matrix shows how IRR changes across growth and exit-multiple assumptions.</div>", unsafe_allow_html=True)
         metric = st.selectbox("Base metric", available_metrics, format_func=lambda name: humanize(name))
         base_value = float(latest[metric] / 1e9)
         inputs = st.columns(4)
