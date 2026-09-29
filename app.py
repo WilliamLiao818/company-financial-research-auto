@@ -27,6 +27,7 @@ from research import (
 from research_catalog import (
     CIKS,
     COMPANY_NAMES,
+    latest_results_snapshot,
     market_share_snapshot,
     sec_filings_url,
     target_price_snapshot,
@@ -306,8 +307,15 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
         columns = st.columns(3)
         for column, ticker in zip(columns, tickers[start:start + 3]):
             summary = latest_company_summary(prebuilt, ticker)
+            latest_result = latest_results_snapshot(ticker)
             with column:
-                st.markdown(f"<div class='company-card'><strong>{ticker}</strong><h3>{SHOWCASES[ticker]}</h3><p>FY{summary['fiscal_year']} · Revenue {money_billions(summary['revenue'], summary.get('currency', 'USD'))}<br/>Operating margin {percent(summary['operating_margin'])}</p></div>", unsafe_allow_html=True)
+                st.markdown(
+                    f"<div class='company-card'><strong>{ticker}</strong><h3>{SHOWCASES[ticker]}</h3>"
+                    f"<p>Latest annual FY{summary['fiscal_year']} · Revenue {money_billions(summary['revenue'], summary.get('currency', 'USD'))}"
+                    f"<br/>Operating margin {percent(summary['operating_margin'])}"
+                    f"<br/>Latest official update {latest_result['label']} · {latest_result['period_end']}</p></div>",
+                    unsafe_allow_html=True,
+                )
                 actions = st.columns(2)
                 if actions[0].button("Open", key=f"open-{ticker}", width="stretch"):
                     open_company(ticker)
@@ -361,19 +369,43 @@ pdf_bytes = build_company_pdf(company, summary, profile, signals, bridge, ticker
 headline, download = st.columns([4.5, 1.5])
 with headline:
     st.title(summary["company"])
-    st.markdown(f"<div class='hero-note'><strong>{ticker}</strong> · FY{summary['fiscal_year']} · Integrated fundamentals, cash-quality diagnostics, competition and scenario analysis.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='hero-note'><strong>{ticker}</strong> · Latest annual: FY{summary['fiscal_year']} ended {summary['fiscal_year_end']} · Integrated fundamentals, cash-quality diagnostics, competition and scenario analysis.</div>", unsafe_allow_html=True)
 with download:
     st.write("")
     st.download_button("Download full PDF", pdf_bytes, f"{safe_name(ticker)}-company-report.pdf", "application/pdf", type="primary", width="stretch")
 
-filing_links = st.columns([1, 1, 4])
+filing_links = st.columns([1, 1, 1.25, 2.75])
+latest_result = latest_results_snapshot(ticker)
 if ticker in CIKS:
     annual_form, interim_form = (("20-F", "6-K") if ticker in {"TSM", "ASML"} else ("10-K", "10-Q"))
     filing_links[0].link_button(f"Recent {annual_form} filings", sec_filings_url(ticker, annual_form), width="stretch")
     filing_links[1].link_button(f"Recent {interim_form} filings", sec_filings_url(ticker, interim_form), width="stretch")
+    if latest_result["url"]:
+        filing_links[2].link_button(f"Latest results · {latest_result['label']}", latest_result["url"], width="stretch")
 else:
     filing_links[0].link_button("SEC filing search", f"https://www.sec.gov/edgar/search/#/q={ticker}", width="stretch")
+if latest_result["url"]:
+    st.caption(
+        f"Latest official update: {latest_result['label']} ({latest_result['form']}), "
+        f"period ended {latest_result['period_end']}, filed {latest_result['filed']}. "
+        f"The financial history and headline metrics below remain annual to preserve comparability."
+    )
 
+if latest_result.get("revenue") is not None:
+    st.markdown(f"### Latest reported quarter · {latest_result['label']}")
+    latest_currency = str(latest_result["currency"])
+    latest_metrics = st.columns(3)
+    latest_metrics[0].metric("Reported Revenue", money_billions(float(latest_result["revenue"]) * 1e6, latest_currency))
+    latest_metrics[1].metric("Reported Operating Income", money_billions(float(latest_result["operating_income"]) * 1e6, latest_currency))
+    latest_metrics[2].metric("Reported Net Income", money_billions(float(latest_result["net_income"]) * 1e6, latest_currency))
+    st.caption(
+        f"Native currency ({latest_currency}); explicit three-month period {latest_result['period_start']} to "
+        f"{latest_result['period_end']}. Reported GAAP/TIFRS figures; not annualized."
+    )
+    if latest_result.get("note"):
+        st.markdown(f"<div class='source-note'>{latest_result['note']}</div>", unsafe_allow_html=True)
+
+st.markdown("### Latest annual fundamentals")
 metrics = st.columns(6)
 currency = str(summary.get("currency", "USD"))
 currency_label = {"USD": "USD", "EUR": "EUR", "GBP": "GBP", "JPY": "JPY", "TWD": "TWD"}.get(currency, currency)
@@ -406,7 +438,7 @@ with executive_tab:
     questions = st.columns(min(3, len(profile["key_questions"])))
     for index, (column, question) in enumerate(zip(questions, profile["key_questions"]), start=1):
         column.markdown(f"<div class='compact-card'><strong>QUESTION {index:02d}</strong><p>{question}</p></div>", unsafe_allow_html=True)
-    st.subheader("Latest read-through")
+    st.subheader("Latest annual read-through")
     st.markdown(f"<div class='research-strip'><b>Growth:</b> revenue changed {percent(summary['revenue_growth'])}. <b>Profitability:</b> gross margin is {percent(summary['gross_margin'])} and operating margin is {percent(summary['operating_margin'])}. <b>Reinvestment:</b> capex is {percent(summary['capex_intensity'])} of revenue. <b>Cash:</b> free cash flow is {money_billions(summary['free_cash_flow'], currency)}.</div>", unsafe_allow_html=True)
     stories = recent_news(str(summary["company"]), ticker, "verified-article-covers-v3")
     st.subheader("Three-month news monitor")
@@ -555,7 +587,8 @@ with competition_tab:
         style_figure(donut, title=f"{market['title']} · {market['period']}", height=440)
         donut.update_layout(showlegend=True, legend={"orientation":"h", "yanchor":"top", "y":-.04, "x":0, "font":{"size":11,"color":"#27453a"}, "bgcolor":"rgba(255,255,255,.94)"}, margin={"l":35,"r":35,"t":115,"b":112})
         competition_columns[0].plotly_chart(donut, width="stretch", theme=None)
-        competition_columns[0].caption(f"Data through {market['period']}. {market.get('note', '')}")
+        reference_label = "Historical reference — not a current market-share estimate. " if market.get("historical") else ""
+        competition_columns[0].caption(f"{reference_label}Data through {market['period']}. {market.get('note', '')}")
 
     scores = pd.DataFrame(profile["competitive_scores"], index=profile["competitive_dimensions"]).T
     heatmap = go.Figure(go.Heatmap(z=scores.values, x=list(scores.columns), y=list(scores.index), zmin=1, zmax=5, colorscale=[[0,"#edf7f2"],[.5,"#76b89d"],[1,"#087f5b"]], text=scores.values, texttemplate="%{text}/5", hovertemplate="%{y}<br>%{x}: %{z}/5<extra></extra>", colorbar={"title":"Score","tickvals":[1,2,3,4,5]}))
@@ -590,7 +623,7 @@ with target_tab:
     target = target_price_snapshot(ticker)
     st.subheader("12-month price framework")
     st.markdown("<div class='section-deck'>Recent institutional targets are dated market observations. The Company range is a separate Bear/Base/Bull scenario output with an explicit analytical basis.</div>", unsafe_allow_html=True)
-    if target["street"]:
+    if target["street"] and not target.get("stale"):
         street = pd.DataFrame(target["street"])
         street["Label"] = street["firm"] + " · " + street["date"]
         street_figure = px.bar(street.sort_values("target"), x="target", y="Label", orientation="h", color_discrete_sequence=["#76b89d"], text="target")
@@ -608,6 +641,8 @@ with target_tab:
         for card, case in zip(cards, ["Bear", "Base", "Bull"]):
             card.metric(f"The Company · {case}", f"${house[case]:,.0f}")
         st.markdown(f"<div class='source-note'><b>Range basis:</b> {target['basis']} Scenarios are not recommendations or probabilities.</div>", unsafe_allow_html=True)
+    elif target.get("stale"):
+        st.info(f"The prior target-price observations expired after 45 days (last updated {target['as_of']}) and are hidden until a newly dated, verifiable set is available.")
     else:
         st.info("A dated target-price snapshot is not prebuilt for this company. Provider coverage is required before this section can be populated responsibly.")
 

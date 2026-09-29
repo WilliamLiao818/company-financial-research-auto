@@ -6,7 +6,7 @@ from unittest.mock import patch
 import pandas as pd
 
 from input_pipeline import company_facts_json_from_bytes, financial_csv_from_bytes, parse_identifiers
-from sec_connector import SecConfigurationError, SecInputError, company_facts_to_frame, fetch_company_facts, normalize_cik
+from sec_connector import SecConfigurationError, SecInputError, company_facts_to_frame, fetch_company_facts, normalize_cik, select_annual_facts
 
 
 def sec_payload() -> dict:
@@ -60,6 +60,25 @@ class SecConnectorTests(unittest.TestCase):
     def test_company_facts_rejects_non_company_facts_json(self) -> None:
         with self.assertRaisesRegex(SecInputError, "US GAAP or IFRS"):
             company_facts_to_frame({"cik": 1234, "facts": {}}, years=2)
+
+    def test_annual_selector_rejects_short_duration_facts(self) -> None:
+        payload = sec_payload()
+        values = payload["facts"]["us-gaap"]["RevenueFromContractWithCustomerExcludingAssessedTax"]["units"]["USD"]
+        values[1]["start"] = "2025-01-01"
+        values.append(
+            {
+                "fy": 2025,
+                "fp": "FY",
+                "form": "10-K",
+                "start": "2025-07-01",
+                "end": "2025-12-31",
+                "filed": "2026-03-01",
+                "accn": "0000001234-26-000002",
+                "val": 999,
+            }
+        )
+        selected = select_annual_facts(payload, ["RevenueFromContractWithCustomerExcludingAssessedTax"])
+        self.assertEqual(selected["2025-12-31"]["val"], 120)
 
     def test_online_fetch_requires_identifiable_user_agent_before_network(self) -> None:
         with patch.dict(os.environ, {}, clear=True):

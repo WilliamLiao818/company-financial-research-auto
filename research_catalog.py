@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import date
+
 
 COMPANY_NAMES = {
     "MSFT": "Microsoft Corporation",
@@ -42,6 +44,113 @@ CIKS = {
 def sec_filings_url(ticker: str, form: str) -> str:
     cik = CIKS[ticker]
     return f"https://www.sec.gov/edgar/browse/?CIK={cik}&owner=exclude&action=getcompany&type={form}"
+
+
+LATEST_RESULTS_SNAPSHOTS = {
+    "MSFT": {
+        "label": "Q4 FY2026", "period_start": "2026-04-01", "period_end": "2026-06-30",
+        "form": "8-K Exhibit 99.1", "filed": "2026-07-29", "accession": "0001193125-26-323632",
+        "currency": "USD", "unit": "millions", "revenue": 90007.0, "operating_income": 40603.0, "net_income": 35766.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-ex99_1.htm",
+    },
+    "ORCL": {
+        "label": "Q1 FY2027", "period_start": "2026-06-01", "period_end": "2026-08-31",
+        "form": "10-Q", "filed": "2026-09-11", "accession": "0001193125-26-389274",
+        "currency": "USD", "unit": "millions", "revenue": 19345.0, "operating_income": 6728.0, "net_income": 4760.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm",
+    },
+    "GOOG": {
+        "label": "Q2 2026", "period_start": "2026-04-01", "period_end": "2026-06-30",
+        "form": "10-Q", "filed": "2026-07-23", "accession": "0001652044-26-000071",
+        "currency": "USD", "unit": "millions", "revenue": 119796.0, "operating_income": 40770.0, "net_income": 112193.0,
+        "note": "Reported net income includes material non-operating gains and is not an operating-margin proxy.",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+    },
+    "AVGO": {
+        "label": "Q3 FY2026", "period_start": "2026-05-04", "period_end": "2026-08-02",
+        "form": "10-Q", "filed": "2026-09-10", "accession": "0001730168-26-000080",
+        "currency": "USD", "unit": "millions", "revenue": 29591.0, "operating_income": 15955.0, "net_income": 13088.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+    },
+    "SNDK": {
+        "label": "Q4 FY2026", "period_start": "2026-04-04", "period_end": "2026-07-03",
+        "form": "8-K Exhibit 99.1", "filed": "2026-08-05", "accession": "0001628280-26-053346",
+        "currency": "USD", "unit": "millions", "revenue": 8965.0, "operating_income": 7037.0, "net_income": 6903.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026053346/sndkq4-26ex991xpressrelease.htm",
+    },
+    "NVDA": {
+        "label": "Q2 FY2027", "period_start": "2026-04-27", "period_end": "2026-07-26",
+        "form": "10-Q", "filed": "2026-08-26", "accession": "0001045810-26-000075",
+        "currency": "USD", "unit": "millions", "revenue": 96221.0, "operating_income": 63734.0, "net_income": 59688.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+    },
+    "MRVL": {
+        "label": "Q2 FY2027", "period_start": "2026-05-03", "period_end": "2026-08-01",
+        "form": "10-Q", "filed": "2026-08-28", "accession": "0001835632-26-000025",
+        "currency": "USD", "unit": "millions", "revenue": 2739.3, "operating_income": 459.7, "net_income": 308.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm",
+    },
+    "AAPL": {
+        "label": "Q3 FY2026", "period_start": "2026-03-29", "period_end": "2026-06-27",
+        "form": "10-Q", "filed": "2026-07-31", "accession": "0000320193-26-000020",
+        "currency": "USD", "unit": "millions", "revenue": 109417.0, "operating_income": 35695.0, "net_income": 29789.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+    },
+    "AMZN": {
+        "label": "Q2 2026", "period_start": "2026-04-01", "period_end": "2026-06-30",
+        "form": "10-Q", "filed": "2026-07-31", "accession": "0001018724-26-000026",
+        "currency": "USD", "unit": "millions", "revenue": 200606.0, "operating_income": 27461.0, "net_income": 62647.0,
+        "note": "Reported net income includes material non-operating gains and is not an operating-margin proxy.",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+    },
+    "META": {
+        "label": "Q2 2026", "period_start": "2026-04-01", "period_end": "2026-06-30",
+        "form": "10-Q", "filed": "2026-07-30", "accession": "0001628280-26-050705",
+        "currency": "USD", "unit": "millions", "revenue": 60801.0, "operating_income": 18775.0, "net_income": 15848.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+    },
+    "LITE": {
+        "label": "Q4 FY2026", "period_start": "2026-03-29", "period_end": "2026-06-27",
+        "form": "8-K Exhibit 99.1", "filed": "2026-08-11", "accession": "0001628280-26-055726",
+        "currency": "USD", "unit": "millions", "revenue": 1006.3, "operating_income": 279.3, "net_income": -7161.7,
+        "note": "Reported net loss includes a $7.7566B one-time non-cash debt-extinguishment loss.",
+        "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026055726/lite_ex991xq4fy26.htm",
+    },
+    "AMAT": {
+        "label": "Q3 FY2026", "period_start": "2026-04-27", "period_end": "2026-07-26",
+        "form": "10-Q", "filed": "2026-08-20", "accession": "0001628280-26-058235",
+        "currency": "USD", "unit": "millions", "revenue": 9115.0, "operating_income": 3075.0, "net_income": 2538.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/amat-20260726.htm",
+    },
+    "TSM": {
+        "label": "Q2 2026", "period_start": "2026-04-01", "period_end": "2026-06-30",
+        "form": "6-K Exhibit 99.1", "filed": "2026-07-16", "accession": "0001046179-26-000451",
+        "currency": "TWD", "unit": "millions", "revenue": 1270381.0, "operating_income": 766603.0, "net_income": 706562.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000451/a2q26e_withguidancexfinal.htm",
+    },
+    "ASML": {
+        "label": "Q2 2026", "period_start": "2026-03-30", "period_end": "2026-06-28",
+        "form": "6-K Exhibit", "filed": "2026-07-15", "accession": "0001628280-26-048235",
+        "currency": "EUR", "unit": "millions", "revenue": 9326.5, "operating_income": 3456.1, "net_income": 2917.6,
+        "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm",
+    },
+    "AMD": {
+        "label": "Q2 2026", "period_start": "2026-03-29", "period_end": "2026-06-27",
+        "form": "10-Q", "filed": "2026-08-05", "accession": "0000002488-26-000123",
+        "currency": "USD", "unit": "millions", "revenue": 11536.0, "operating_income": 1990.0, "net_income": 2297.0,
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
+    },
+}
+
+
+def latest_results_snapshot(ticker: str) -> dict[str, object]:
+    return LATEST_RESULTS_SNAPSHOTS.get(
+        ticker,
+        {
+            "label": "", "period_start": "", "period_end": "", "form": "", "filed": "", "accession": "",
+            "currency": "", "unit": "", "revenue": None, "operating_income": None, "net_income": None, "url": "",
+        },
+    )
 
 
 TARGET_PRICE_SNAPSHOTS = {
@@ -146,6 +255,7 @@ MARKET_SHARE_SNAPSHOTS = {
     "AVGO": {
         "title": "AI accelerator vendor revenue",
         "period": "2025 reference view",
+        "historical": True,
         "values": {"NVIDIA": 78.0, "Broadcom": 10.3, "AMD": 7.0, "Other": 4.7},
         "source": "IDC market outlook",
         "source_url": "https://www.semi.org/sites/semi.org/files/2025-09/1%20%EA%B9%80%EC%88%98%EA%B2%B8_IDC%20Semiconductor%20Market%20Outlook.pdf",
@@ -162,6 +272,7 @@ MARKET_SHARE_SNAPSHOTS = {
     "NVDA": {
         "title": "Worldwide discrete data-center GPUs",
         "period": "H1 2024 regulatory reference",
+        "historical": True,
         "values": {"NVIDIA": 85.0, "AMD and other": 15.0},
         "source": "European Commission decision using IDC and company data",
         "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32024M11766",
@@ -425,9 +536,17 @@ EXTENDED_PROFILES.update({
 })
 
 
-def target_price_snapshot(ticker: str) -> dict[str, object]:
-    return TARGET_PRICE_SNAPSHOTS.get(ticker, {"as_of": "", "source_url": "", "street": [], "house": {}, "basis": ""})
+def target_price_snapshot(
+    ticker: str,
+    *,
+    max_age_days: int = 45,
+    as_of: date | None = None,
+) -> dict[str, object]:
+    snapshot = dict(TARGET_PRICE_SNAPSHOTS.get(ticker, {"as_of": "", "source_url": "", "street": [], "house": {}, "basis": ""}))
+    snapshot_date = date.fromisoformat(str(snapshot["as_of"])) if snapshot.get("as_of") else None
+    snapshot["stale"] = bool(snapshot_date and ((as_of or date.today()) - snapshot_date).days > max_age_days)
+    return snapshot
 
 
 def market_share_snapshot(ticker: str) -> dict[str, object]:
-    return MARKET_SHARE_SNAPSHOTS.get(ticker, {"title": "", "period": "", "values": {}, "source": "", "source_url": "", "note": ""})
+    return MARKET_SHARE_SNAPSHOTS.get(ticker, {"title": "", "period": "", "values": {}, "source": "", "source_url": "", "note": "", "historical": False})

@@ -15,6 +15,7 @@ Fifteen companies are bundled as ready-to-use snapshots and require no API key: 
 - pivotal questions and explicit decision rules;
 - business-model-specific indicators and diligence questions;
 - multi-year earnings, margin, cash-flow and balance-sheet diagnostics;
+- a separate native-currency snapshot of the latest explicitly reported quarter;
 - deterministic accounting-quality signals;
 - reported-to-analytical cash-flow normalization where sourced;
 - selected peer context, a dated market-share view where available and a revisable competitive-position rubric;
@@ -23,8 +24,10 @@ Fifteen companies are bundled as ready-to-use snapshots and require no API key: 
 - recent institutional target-price observations with dates and a separate Bear/Base/Bull analytical range;
 - transparent operating scenarios and valuation sensitivity;
 - catalysts, downside risks and an updateable monitoring dashboard;
-- direct links to recent 10-K and 10-Q filings;
+- direct links to recent 10-K/10-Q or 20-F/6-K filings;
 - a 9–11 page chart-led PDF with a table of contents, available from the landing page and the company view.
+
+The bundled annual series and the latest official quarter are intentionally separated. Annual charts remain comparable across fiscal years; the latest-quarter cards use explicit three-month statement columns and link directly to the verified 10-Q, 6-K or SEC-filed earnings exhibit. They are never annualized or substituted into annual history.
 
 ## Analyze another U.S. public company
 

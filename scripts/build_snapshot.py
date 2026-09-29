@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from input_pipeline import parse_identifiers  # noqa: E402
+from research_catalog import COMPANY_NAMES  # noqa: E402
 from sec_connector import company_facts_to_frame, fetch_company_facts  # noqa: E402
 
 
@@ -24,6 +25,11 @@ def main() -> None:
         action="append",
         help="Ticker or CIK. Repeat the flag or provide a comma-separated value; defaults to the demo companies.",
     )
+    parser.add_argument(
+        "--all-prebuilt",
+        action="store_true",
+        help="Refresh every prebuilt company in the research catalog.",
+    )
     parser.add_argument("--years", type=int, default=5, help="Latest annual periods to keep (1-20).")
     parser.add_argument(
         "--raw-dir",
@@ -35,8 +41,9 @@ def main() -> None:
     if not 1 <= args.years <= 20:
         parser.error("--years must be between 1 and 20")
 
-    identifier_text = ",".join(args.identifier or DEFAULT_IDENTIFIERS)
-    identifiers = parse_identifiers(identifier_text)
+    if args.all_prebuilt and args.identifier:
+        parser.error("--all-prebuilt cannot be combined with --identifier")
+    identifiers = list(COMPANY_NAMES) if args.all_prebuilt else parse_identifiers(",".join(args.identifier or DEFAULT_IDENTIFIERS))
     frames: list[pd.DataFrame] = []
     for identifier in identifiers:
         if args.raw_dir:

@@ -19,11 +19,11 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m unittest discover -s tests -v
-      - name: Refresh public SEC snapshot when contact is configured
+      - name: Refresh all prebuilt SEC snapshots when contact is configured
         if: ${{ vars.SEC_CONTACT_EMAIL != '' }}
         env:
           SEC_USER_AGENT: "${{ github.repository }} ${{ vars.SEC_CONTACT_EMAIL }}"
-        run: python scripts/build_snapshot.py --output refreshed/financials.csv
+        run: python scripts/build_snapshot.py --all-prebuilt --output refreshed/financials.csv
       - uses: actions/upload-artifact@v4
         if: ${{ vars.SEC_CONTACT_EMAIL != '' }}
         with:

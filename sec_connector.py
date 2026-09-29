@@ -120,10 +120,18 @@ def select_annual_facts(
         candidates = facts.get(tag, {}).get("units", {}).get(currency, [])
         by_period: dict[str, dict] = {}
         for item in candidates:
+            start = pd.to_datetime(item.get("start"), errors="coerce")
+            end = pd.to_datetime(item.get("end"), errors="coerce")
+            has_duration = bool(item.get("start"))
+            valid_annual_duration = (
+                not has_duration
+                or (pd.notna(start) and pd.notna(end) and 300 <= int((end - start).days) <= 400)
+            )
             if (
                 item.get("form") not in {"10-K", "20-F", "40-F"}
                 or item.get("fp") != "FY"
                 or not item.get("end")
+                or not valid_annual_duration
             ):
                 continue
             period = str(item["end"])
