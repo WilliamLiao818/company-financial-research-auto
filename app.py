@@ -47,6 +47,9 @@ performance_context_note = market_data_module.performance_context_note
 
 
 SHOWCASES = COMPANY_NAMES
+COMPANY_TICKERS_AZ = tuple(
+    sorted(SHOWCASES, key=lambda ticker: (SHOWCASES[ticker].casefold(), ticker))
+)
 PEER_MAP = {
     "MSFT": ["ORCL", "GOOG"],
     "ORCL": ["MSFT", "GOOG"],
@@ -284,7 +287,7 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
     st.title("Start with a company.")
     query = st.selectbox(
         "Search ticker or company",
-        options=list(SHOWCASES),
+        options=list(COMPANY_TICKERS_AZ),
         index=None,
         placeholder="Type a ticker or company name, then select a match",
         format_func=lambda item: f"{item} · {SHOWCASES[item]}" if item in SHOWCASES else str(item),
@@ -307,18 +310,20 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
         render_custom_loader(str(custom_query))
 
     st.subheader("50 prebuilt research packs")
-    filters = st.columns([2.4, 1])
-    sector_options = ["All sectors", *dict.fromkeys(COMPANY_SECTORS.values())]
-    selected_sector = filters[0].selectbox("Sector", sector_options)
-    tickers = [ticker for ticker in SHOWCASES if selected_sector == "All sectors" or COMPANY_SECTORS[ticker] == selected_sector]
-    page_size = 12
-    page_count = max(1, (len(tickers) + page_size - 1) // page_size)
-    page_number = int(filters[1].selectbox("Page", list(range(1, page_count + 1)), format_func=lambda value: f"Page {value} of {page_count}"))
-    visible_tickers = tickers[(page_number - 1) * page_size:page_number * page_size]
-    st.caption(f"{len(tickers)} companies in this view · PDFs are available after opening a company.")
-    for start in range(0, len(visible_tickers), 3):
+    sector_options = ["All sectors", *sorted(set(COMPANY_SECTORS.values()), key=str.casefold)]
+    selected_sector = st.selectbox("Sector", sector_options)
+    tickers = [
+        ticker
+        for ticker in COMPANY_TICKERS_AZ
+        if selected_sector == "All sectors" or COMPANY_SECTORS[ticker] == selected_sector
+    ]
+    st.caption(
+        f"{len(tickers)} companies · Sorted A–Z by company name · "
+        "PDFs are available after opening a company."
+    )
+    for start in range(0, len(tickers), 3):
         columns = st.columns(3)
-        for column, ticker in zip(columns, visible_tickers[start:start + 3]):
+        for column, ticker in zip(columns, tickers[start:start + 3]):
             summary = latest_company_summary(prebuilt, ticker)
             latest_result = latest_results_snapshot(ticker)
             latest_line = (
@@ -352,10 +357,10 @@ custom_data = st.session_state.get("custom_data")
 ticker_hint = str(st.session_state.get("selected_ticker", "MSFT"))
 if isinstance(custom_data, pd.DataFrame) and ticker_hint in set(custom_data["ticker"]):
     scope = custom_data.copy()
-    selector_options = [ticker_hint, *SHOWCASES]
+    selector_options = list(dict.fromkeys([ticker_hint, *COMPANY_TICKERS_AZ]))
 else:
     scope = prebuilt.copy()
-    selector_options = list(SHOWCASES)
+    selector_options = list(COMPANY_TICKERS_AZ)
 
 navigation = st.columns([1.15, 4.1, 1.4])
 if navigation[0].button("← Company search", width="stretch"):

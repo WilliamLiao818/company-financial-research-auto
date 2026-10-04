@@ -4,5 +4,16 @@ __pycache__/
 .env
 .DS_Store
 tmp/
+private_data/
+broker_exports/
+*activity-statement*
+*portfolio*.csv
+*positions*.csv
+*orders*.csv
+*trades*.csv
+*transactions*.csv
+*pnl*.csv
+*.ofx
+*.qfx
 output/pdf/*
 !output/pdf/msft-company-report-v2.1.pdf

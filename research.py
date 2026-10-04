@@ -97,6 +97,16 @@ REQUIRED_FINANCIAL_COLUMNS = {
     "source_url",
     *REPORTED_FACT_FIELDS,
 }
+PUBLIC_FINANCIAL_INPUT_COLUMNS = {
+    *REQUIRED_FINANCIAL_COLUMNS,
+    "cik",
+    "currency",
+    "form",
+    "accession",
+    "input_source",
+    *(f"{field}_xbrl_tag" for field in REPORTED_FACT_FIELDS),
+    *(f"{field}_accession" for field in REPORTED_FACT_FIELDS),
+}
 
 
 FORMULA_DEFINITIONS = {
@@ -167,9 +177,16 @@ VALUATION_METRICS = {
 def validate_financials(frame: pd.DataFrame) -> list[str]:
     """Validate the public-research CSV contract without inventing missing fields."""
     errors: list[str] = []
+    unexpected = sorted(str(column) for column in frame.columns if column not in PUBLIC_FINANCIAL_INPUT_COLUMNS)
+    if unexpected:
+        errors.append(
+            "Only public-company financial statement fields are accepted; remove unsupported columns: "
+            + ", ".join(unexpected)
+        )
     missing = REQUIRED_FINANCIAL_COLUMNS.difference(frame.columns)
     if missing:
-        return ["Missing required financial columns: " + ", ".join(sorted(missing))]
+        errors.append("Missing required financial columns: " + ", ".join(sorted(missing)))
+        return errors
     if frame.empty:
         return ["The financial dataset is empty."]
     if frame["ticker"].fillna("").astype(str).str.strip().eq("").any():

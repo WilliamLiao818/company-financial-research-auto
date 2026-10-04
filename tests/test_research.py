@@ -141,6 +141,23 @@ class ResearchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "No fiscal-year rows"):
             filter_year_range(prepared, 2020, 2021)
 
+    def test_public_data_boundary_rejects_private_or_unsupported_columns(self) -> None:
+        frame = sample_frame().assign(
+            company="Test Company",
+            fiscal_year_end=["2025-12-31", "2026-12-31"],
+            filed=["2026-02-01", "2027-02-01"],
+            source_url="https://example.com/filing",
+            cost_of_revenue=[60.0, 72.0],
+            account_id="private-account",
+            position_quantity=[10, 12],
+            unrealized_pnl=[1.0, 2.0],
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "Only public-company financial statement fields are accepted",
+        ):
+            prepare_financials(frame)
+
     def test_report_and_manifest_separate_facts_assumptions_and_formulas(self) -> None:
         frame = sample_frame().assign(
             company="Test Company",

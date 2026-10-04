@@ -5,7 +5,7 @@
 The Company is a public-source research system for U.S.-listed companies. It separates reported facts, deterministic calculations, dated market observations, accounting-quality signals and analytical scenarios.
 
 - **Live application:** [Open The Company](https://company-financial-research-auto.streamlit.app/)
-- **Unified research desk:** [Open The Research Desk](https://research-systems-lab.william-liao818.chatgpt.site/)
+- **Unified research desk:** [Open The Research Desk](https://liaoresearch.com/)
 
 ## Prebuilt research packs
 
@@ -40,6 +40,10 @@ The bundled annual series and the latest official quarter are intentionally sepa
 ## Analyze another U.S. public company
 
 The first page uses one ticker/company search. Prebuilt packs open immediately. For another U.S.-listed company, users may choose either a user-supplied Financial Modeling Prep key for normalized annual statements or the SEC Company Facts path for core annual facts. Provider keys are password-masked, used only for the current request and never written to the repository.
+
+## Public-data boundary
+
+The public application accepts only an explicit allowlist of company financial-statement and filing-provenance fields. Unsupported columns are rejected before they can enter the research session or a PDF export. The deployed application has no connection to personal accounts, portfolios, orders, transactions or individually tailored investment data.
 
 The webpage and PDF share the same architecture: executive view, business and moat, financials and accounting quality, competition, long-term market performance, valuation and scenarios, catalysts and risks, and filing access. Technical appendices are intentionally kept out of the main interface.
 
