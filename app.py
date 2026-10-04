@@ -12,7 +12,7 @@ import streamlit as st
 from company_profiles import accounting_quality_signals, fcf_bridge, profile_for
 from fmp_connector import FmpConnectionError, FmpInputError, load_financial_statements
 from input_pipeline import online_company_facts, parse_identifiers
-from news_connector import load_company_news
+from news_connector import load_company_news, load_company_news_snapshot
 from pdf_export import build_company_pdf
 from research import (
     VALUATION_METRICS,
@@ -212,7 +212,8 @@ def operating_scenarios(company: pd.DataFrame, profile: dict[str, object]) -> pd
 @st.cache_data(ttl=900, show_spinner=False)
 def recent_news(company_name: str, ticker: str, cache_version: str) -> list[dict[str, str]]:
     del cache_version
-    return load_company_news(company_name, ticker, limit=4)
+    snapshot = load_company_news_snapshot(ticker, limit=4)
+    return snapshot or load_company_news(company_name, ticker, limit=4)
 
 
 def resolve_showcase(query: str) -> str | None:
@@ -460,9 +461,9 @@ with executive_tab:
         column.markdown(f"<div class='compact-card'><strong>QUESTION {index:02d}</strong><p>{question}</p></div>", unsafe_allow_html=True)
     st.subheader("Latest annual read-through")
     st.markdown(f"<div class='research-strip'><b>Growth:</b> revenue changed {percent(summary['revenue_growth'])}. <b>Profitability:</b> gross margin is {percent(summary['gross_margin'])} and operating margin is {percent(summary['operating_margin'])}. <b>Reinvestment:</b> capex is {percent(summary['capex_intensity'])} of revenue. <b>Cash:</b> free cash flow is {money_billions(summary['free_cash_flow'], currency)}.</div>", unsafe_allow_html=True)
-    stories = recent_news(str(summary["company"]), ticker, "verified-article-covers-v3")
+    stories = recent_news(str(summary["company"]), ticker, "verified-snapshot-90d-v6")
     st.subheader("Three-month news monitor")
-    st.markdown("<div class='section-deck'>Material coverage published within the latest rolling 90 days, refreshed automatically.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-deck'>Material coverage published within the latest rolling 90 days, checked against original article links.</div>", unsafe_allow_html=True)
     if stories:
         for start in range(0, len(stories), 2):
             columns = st.columns(2)

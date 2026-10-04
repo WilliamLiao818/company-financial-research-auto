@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import http.client
 import re
 import urllib.error
 import urllib.parse
@@ -10,6 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
+from pathlib import Path
 
 
 TRUSTED_DOMAINS = {
@@ -20,6 +22,8 @@ TRUSTED_DOMAINS = {
     "bloomberg.com": "Bloomberg",
     "cnbc.com": "CNBC",
     "apnews.com": "Associated Press",
+    "fortune.com": "Fortune",
+    "axios.com": "Axios",
 }
 
 OFFICIAL_DOMAINS_BY_TICKER = {
@@ -42,7 +46,7 @@ OFFICIAL_DOMAINS_BY_TICKER = {
     "QCOM": {"qualcomm.com": "Qualcomm"},
     "MU": {"micron.com": "Micron"},
     "TXN": {"ti.com": "Texas Instruments"},
-    "ADI": {"analog.com": "Analog Devices"},
+    "ADI": {"analog.com": "Analog Devices", "alifsemi.com": "Alif Semiconductor"},
     "NXPI": {"nxp.com": "NXP Semiconductors"},
     "ARM": {"arm.com": "Arm"},
     "MCHP": {"microchip.com": "Microchip Technology"},
@@ -59,14 +63,14 @@ OFFICIAL_DOMAINS_BY_TICKER = {
     "ANET": {"arista.com": "Arista Networks"},
     "CSCO": {"cisco.com": "Cisco"},
     "DELL": {"dell.com": "Dell Technologies"},
-    "HPE": {"hpe.com": "Hewlett Packard Enterprise"},
+    "HPE": {"hpe.com": "Hewlett Packard Enterprise", "channelnewsasia.com": "Reuters / CNA"},
     "VRT": {"vertiv.com": "Vertiv"},
-    "SMCI": {"supermicro.com": "Supermicro"},
+    "SMCI": {"supermicro.com": "Supermicro", "prnewswire.com": "Super Micro Computer, Inc. / PR Newswire"},
     "WDC": {"westerndigital.com": "Western Digital"},
     "CRM": {"salesforce.com": "Salesforce"},
     "NOW": {"servicenow.com": "ServiceNow"},
     "PANW": {"paloaltonetworks.com": "Palo Alto Networks"},
-    "PLTR": {"palantir.com": "Palantir"},
+    "PLTR": {"palantir.com": "Palantir", "nebius.com": "Nebius"},
     "TSLA": {"tesla.com": "Tesla"},
     "V": {"visa.com": "Visa"},
     "LLY": {"lilly.com": "Eli Lilly"},
@@ -77,15 +81,24 @@ OFFICIAL_DOMAINS_BY_TICKER = {
 
 BUSINESS_TERMS = "earnings OR revenue OR AI OR cloud OR chips OR investment OR acquisition OR regulation OR product OR strategy"
 MATERIAL_TITLE_TERMS = {
-    "acquisition", "ai", "antitrust", "capacity", "ceo", "chip", "cloud",
-    "deal", "demand", "earnings", "export", "forecast", "guidance",
-    "investment", "launch", "lawsuit", "merger", "partnership", "product",
-    "regulation", "revenue", "results", "strategy", "supply", "tariff",
+    "acquire", "acquired", "acquires", "acquisition", "acquisitions", "ai", "annual", "antitrust", "approval",
+    "approved", "capacity", "ceo", "chip", "chips", "cloud", "contract", "contracts", "data center",
+    "data centers", "deal", "deals", "demand", "earnings", "export", "exports", "factories", "factory",
+    "forecast", "forecasts", "guidance", "invested", "investing", "investigation", "investigations", "investment",
+    "investments", "job", "jobs", "launch", "launched", "launches", "lawsuit", "lawsuits", "merger", "mergers",
+    "partnership", "partnerships", "product", "products", "profit", "profits", "quarter", "quarterly", "quarters",
+    "recall", "recalls", "regulation", "regulations", "result", "results", "revenue", "revenues", "sale", "sales",
+    "security", "spend", "spending", "strategy", "strategies", "supply", "supplies", "tariff", "tariffs",
+    "buy", "buys", "purchase", "purchases",
 }
 LOW_VALUE_TITLE_PATTERNS = {
     "an ai oracle", "company announcement", "historical stock price", "magic quadrant", "market cap",
     "marketscape", "named a leader", "share price today", "stock price today",
-    "stock quote", "stocks to watch", "technical analysis",
+    "stock quote", "stocks to watch", "technical analysis", "how to use options",
+    "options to generate income", "should you buy", "is it too late to buy",
+    "price target", "stock pick", "stocks to buy", "top stock", "wall street ends",
+    "wall st week ahead", "the best early deals", "prime big deal days",
+    "could ai chip boom make", "ceo as adviser", "trillion club",
 }
 SEARCH_ALIASES = {
     "MSFT": ["Microsoft"], "ORCL": ["Oracle"], "GOOG": ["Google", "Alphabet"],
@@ -96,7 +109,7 @@ SEARCH_ALIASES = {
     "INTC": ["Intel"], "QCOM": ["Qualcomm"], "MU": ["Micron", "Micron Technology"],
     "TXN": ["Texas Instruments"], "ADI": ["Analog Devices"],
     "NXPI": ["NXP Semiconductors", "NXP"], "ARM": ["Arm Holdings", "Arm Holdings plc"],
-    "MCHP": ["Microchip Technology"], "ON": ["onsemi", "ON Semiconductor"],
+    "MCHP": ["Microchip Technology"], "ON": ["onsemi"],
     "GFS": ["GlobalFoundries"], "KLAC": ["KLA Corporation", "KLA"],
     "LRCX": ["Lam Research"], "TER": ["Teradyne"],
     "CDNS": ["Cadence Design Systems", "Cadence"], "SNPS": ["Synopsys"],
@@ -113,6 +126,7 @@ SEARCH_ALIASES = {
 }
 MEDIA_CONTENT = "{http://search.yahoo.com/mrss/}content"
 MEDIA_THUMBNAIL = "{http://search.yahoo.com/mrss/}thumbnail"
+NEWS_SNAPSHOT_PATH = Path(__file__).resolve().parent / "data" / "recent_news.json"
 
 
 class _ArticleMetadataParser(HTMLParser):
@@ -134,7 +148,10 @@ class _ArticleMetadataParser(HTMLParser):
 
 
 def _valid_cover_url(value: str, *, base_url: str = "") -> str:
-    candidate = urllib.parse.urljoin(base_url, value.strip())
+    raw_value = value.strip()
+    if not raw_value:
+        return ""
+    candidate = urllib.parse.urljoin(base_url, raw_value)
     parsed = urllib.parse.urlparse(candidate)
     hostname = (parsed.hostname or "").lower()
     lowered = candidate.lower()
@@ -183,11 +200,45 @@ def _host_matches(value: str, expected_domain: str) -> bool:
 def _usable_article_url(value: str) -> bool:
     parsed = urllib.parse.urlparse(value)
     hostname = (parsed.hostname or "").lower()
+    normalized_host = hostname.removeprefix("www.")
     if parsed.scheme != "https" or not hostname:
         return False
     if hostname == "markets.ft.com" and parsed.path.startswith("/data/announce"):
         return False
+    if normalized_host == "reuters.com" and parsed.path.startswith("/plus/"):
+        return False
+    if normalized_host.endswith("live.ft.com") or "/agenda/" in parsed.path:
+        return False
     return True
+
+
+def _title_matches_alias(title: str, aliases: list[str]) -> bool:
+    return any(
+        re.search(rf"(?<![a-z0-9]){re.escape(alias.lower())}(?![a-z0-9])", title.lower())
+        for alias in aliases
+    )
+
+
+def _materiality_count(title: str) -> int:
+    lowered = title.lower()
+    return sum(
+        bool(re.search(rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])", lowered))
+        for term in MATERIAL_TITLE_TERMS
+    )
+
+
+def _dated_article_time(url: str, fallback: datetime) -> datetime:
+    """Prefer the publication date embedded in Reuters' canonical article URL."""
+    hostname = (urllib.parse.urlparse(url).hostname or "").lower().removeprefix("www.")
+    if hostname != "reuters.com":
+        return fallback
+    matched = re.search(r"-(\d{4}-\d{2}-\d{2})/?$", urllib.parse.urlparse(url).path)
+    if not matched:
+        return fallback
+    try:
+        return datetime.fromisoformat(matched.group(1)).replace(tzinfo=timezone.utc)
+    except ValueError:
+        return fallback
 
 
 def _decode_google_news_url(url: str) -> str:
@@ -208,7 +259,7 @@ def _decode_google_news_url(url: str) -> str:
     try:
         with urllib.request.urlopen(request, timeout=7) as response:
             page = response.read(1_500_000).decode("utf-8", errors="ignore")
-    except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError, http.client.HTTPException):
         return ""
 
     tag = ""
@@ -250,7 +301,16 @@ def _decode_google_news_url(url: str) -> str:
         outer = json.loads(data)
         inner = json.loads(outer[0][2])
         original_url = str(inner[1])
-    except (urllib.error.URLError, TimeoutError, OSError, ValueError, TypeError, IndexError, json.JSONDecodeError):
+    except (
+        urllib.error.URLError,
+        TimeoutError,
+        OSError,
+        ValueError,
+        TypeError,
+        IndexError,
+        json.JSONDecodeError,
+        http.client.HTTPException,
+    ):
         return ""
     original = urllib.parse.urlparse(original_url)
     if not _usable_article_url(original_url) or original.hostname == "news.google.com":
@@ -272,7 +332,7 @@ def _article_metadata(url: str, expected_domain: str) -> tuple[str, str]:
         with urllib.request.urlopen(request, timeout=7) as response:
             final_url = response.geturl() if hasattr(response, "geturl") else url
             payload = response.read(2_500_000)
-    except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError, http.client.HTTPException):
         return url, ""
     try:
         text = payload.decode("utf-8", errors="ignore")
@@ -300,10 +360,19 @@ def _complete_story(row: tuple[int, datetime, dict[str, str], str]) -> tuple[int
     if not _usable_article_url(decoded_url):
         return None
     article_url, image = _article_metadata(decoded_url, domain)
+    image = image or _valid_cover_url(story.get("image", ""), base_url=article_url)
+    image = image or _bing_cover_for_title(story["title"])
     if not image:
         return None
-    completed = {**story, "url": article_url, "image": image, "image_kind": "article"}
-    return score, published_at, completed
+    article_time = _dated_article_time(article_url, published_at)
+    completed = {
+        **story,
+        "url": article_url,
+        "date": article_time.date().isoformat(),
+        "image": image,
+        "image_kind": "article",
+    }
+    return score, article_time, completed
 
 
 def _domain(value: str, domains: dict[str, str] | None = None) -> str:
@@ -355,6 +424,66 @@ def _bing_thumbnail(value: str) -> str:
     return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(parameters, doseq=True)))
 
 
+def _title_key(value: str) -> str:
+    return "".join(character.lower() for character in value if character.isalnum())[:140]
+
+
+def _bing_cover_for_title(title: str) -> str:
+    """Resolve an article-specific cached thumbnail without replacing the original article URL."""
+    wanted = _title_key(title)
+    broad_terms = " ".join(re.findall(r"[A-Za-z0-9]+", title)[:14])
+    for query in (f'"{title}"', broad_terms):
+        params = urllib.parse.urlencode(
+            {"q": query, "format": "rss", "setlang": "en-us", "cc": "us"}
+        )
+        request = urllib.request.Request(
+            "https://www.bing.com/news/search?" + params,
+            headers={"User-Agent": "Mozilla/5.0 TheCompanyResearch/2.2"},
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=10) as response:
+                root = ET.fromstring(response.read())
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            ET.ParseError,
+            OSError,
+            ValueError,
+            http.client.HTTPException,
+        ):
+            continue
+        for item in root.findall("./channel/item")[:8]:
+            candidate_title = " ".join((item.findtext("title") or "").split())
+            candidate = _title_key(candidate_title)
+            if not wanted or (candidate != wanted and wanted not in candidate and candidate not in wanted):
+                continue
+            image = _valid_cover_url(_bing_thumbnail(_local_child_text(item, "Image")))
+            if image:
+                return image
+    html_params = urllib.parse.urlencode({"q": broad_terms, "setlang": "en-us", "cc": "us"})
+    html_request = urllib.request.Request(
+        "https://www.bing.com/news/search?" + html_params,
+        headers={"User-Agent": "Mozilla/5.0 TheCompanyResearch/2.2"},
+    )
+    try:
+        with urllib.request.urlopen(html_request, timeout=10) as response:
+            page = response.read(1_500_000).decode("utf-8", errors="ignore")
+    except (
+        urllib.error.URLError,
+        TimeoutError,
+        OSError,
+        ValueError,
+        UnicodeError,
+        http.client.HTTPException,
+    ):
+        return ""
+    match = re.search(r'(?:data-src-hq|src)="([^\"]*/th\?id=ONUT\.[^\"]+)"', page)
+    if match:
+        cached = urllib.parse.urljoin("https://www.bing.com", match.group(1).replace("&amp;", "&"))
+        return _valid_cover_url(_bing_thumbnail(cached))
+    return ""
+
+
 def _load_bing_company_news(
     aliases: list[str],
     publishers: dict[str, str],
@@ -363,7 +492,7 @@ def _load_bing_company_news(
     window_days: int,
     current_time: datetime,
 ) -> list[dict[str, str]]:
-    query = f'"{aliases[0]}" earnings AI cloud strategy investment product'
+    query = f'"{aliases[0]}" ({BUSINESS_TERMS})'
     params = urllib.parse.urlencode(
         {"q": query, "format": "rss", "setlang": "en-us", "cc": "us"}
     )
@@ -374,7 +503,7 @@ def _load_bing_company_news(
     try:
         with urllib.request.urlopen(request, timeout=12) as response:
             root = ET.fromstring(response.read())
-    except (urllib.error.URLError, TimeoutError, ET.ParseError, OSError):
+    except (urllib.error.URLError, TimeoutError, ET.ParseError, OSError, http.client.HTTPException):
         return []
 
     cutoff = current_time - timedelta(days=window_days)
@@ -384,18 +513,25 @@ def _load_bing_company_news(
     for item in root.findall("./channel/item"):
         title = " ".join((item.findtext("title") or "").split())
         lowered_title = title.lower()
-        if not any(alias.lower() in lowered_title for alias in aliases):
-            continue
         if any(pattern in lowered_title for pattern in LOW_VALUE_TITLE_PATTERNS):
             continue
         published_at = _published_at(item.findtext("pubDate") or "")
-        if published_at is None or published_at < cutoff or published_at > latest_allowed:
+        if published_at is None:
             continue
         original_url = _bing_original_url(item.findtext("link") or "")
         if not _usable_article_url(original_url):
             continue
+        published_at = _dated_article_time(original_url, published_at)
+        if published_at < cutoff or published_at > latest_allowed:
+            continue
         domain = _domain(original_url, publishers)
         if not domain:
+            continue
+        is_official = domain not in TRUSTED_DOMAINS
+        if not is_official and not _title_matches_alias(title, aliases):
+            continue
+        materiality_count = _materiality_count(title)
+        if not is_official and not materiality_count:
             continue
         raw_image = _bing_thumbnail(_local_child_text(item, "Image"))
         image = _valid_cover_url(raw_image)
@@ -408,7 +544,7 @@ def _load_bing_company_news(
             continue
         seen.add(key)
         editorial_weight = 3 if domain in TRUSTED_DOMAINS and domain != "cnbc.com" else 2 if domain == "cnbc.com" else 1
-        score = editorial_weight * 10 + sum(term in lowered_title for term in MATERIAL_TITLE_TERMS)
+        score = editorial_weight * 10 + materiality_count
         ranked.append(
             (
                 score,
@@ -452,8 +588,8 @@ def load_company_news(
         window_days=window_days,
         current_time=current_time,
     )
-    if indexed_results:
-        return indexed_results
+    if len(indexed_results) >= limit:
+        return indexed_results[:limit]
 
     company_filter = " OR ".join(f'"{alias}"' for alias in aliases)
     site_filter = " OR ".join(f"site:{domain}" for domain in publishers)
@@ -466,11 +602,14 @@ def load_company_news(
     try:
         with urllib.request.urlopen(request, timeout=15) as response:
             root = ET.fromstring(response.read())
-    except (urllib.error.URLError, TimeoutError, ET.ParseError, OSError):
-        return []
+    except (urllib.error.URLError, TimeoutError, ET.ParseError, OSError, http.client.HTTPException):
+        return indexed_results
 
     ranked_results: list[tuple[int, datetime, dict[str, str], str]] = []
-    seen: set[str] = set()
+    seen: set[str] = {
+        "".join(character.lower() for character in story["title"] if character.isalnum())[:100]
+        for story in indexed_results
+    }
     for item in root.findall("./channel/item"):
         source = item.find("source")
         domain = _domain(source.get("url", "") if source is not None else "", publishers)
@@ -482,9 +621,13 @@ def load_company_news(
             if title.endswith(suffix):
                 title = title[: -len(suffix)].strip()
         lowered_title = title.lower()
-        if not any(alias.lower() in lowered_title for alias in aliases):
+        is_official = domain not in TRUSTED_DOMAINS
+        if not is_official and not _title_matches_alias(title, aliases):
             continue
         if any(pattern in lowered_title for pattern in LOW_VALUE_TITLE_PATTERNS):
+            continue
+        materiality_count = _materiality_count(title)
+        if not is_official and not materiality_count:
             continue
         published_at = _published_at(item.findtext("pubDate") or "")
         if published_at is None or published_at < cutoff or published_at > latest_allowed:
@@ -495,7 +638,7 @@ def load_company_news(
             continue
         seen.add(key)
         editorial_weight = 3 if domain in TRUSTED_DOMAINS and domain != "cnbc.com" else 2 if domain == "cnbc.com" else 1
-        materiality_score = editorial_weight * 10 + sum(term in lowered_title for term in MATERIAL_TITLE_TERMS)
+        materiality_score = editorial_weight * 10 + materiality_count
         cover = _rss_cover(item)
         ranked_results.append(
             (
@@ -518,4 +661,83 @@ def load_company_news(
         completed = list(executor.map(_complete_story, candidates))
     available = [row for row in completed if row is not None]
     available.sort(key=lambda row: (row[0], row[1]), reverse=True)
-    return [row[2] for row in available[:limit]]
+    combined = [*indexed_results, *(row[2] for row in available)]
+
+    def priority(story: dict[str, str]) -> tuple[int, str]:
+        domain = _domain(story["url"], publishers)
+        editorial_weight = 3 if domain in TRUSTED_DOMAINS and domain != "cnbc.com" else 2 if domain == "cnbc.com" else 1
+        lowered_title = story["title"].lower()
+        score = editorial_weight * 10 + _materiality_count(story["title"])
+        return score, story["date"]
+
+    combined.sort(key=priority, reverse=True)
+    deduplicated: list[dict[str, str]] = []
+    seen_titles: set[str] = set()
+    seen_urls: set[str] = set()
+    publisher_counts: dict[str, int] = {}
+    for story in combined:
+        title_key = "".join(character.lower() for character in story["title"] if character.isalnum())[:100]
+        parsed_url = urllib.parse.urlparse(story["url"])
+        url_key = urllib.parse.urlunparse(parsed_url._replace(query="", fragment="")).rstrip("/")
+        if title_key in seen_titles or url_key in seen_urls:
+            continue
+        publisher = story["publisher"]
+        if publisher_counts.get(publisher, 0) >= 2:
+            continue
+        seen_titles.add(title_key)
+        seen_urls.add(url_key)
+        publisher_counts[publisher] = publisher_counts.get(publisher, 0) + 1
+        deduplicated.append(story)
+    return deduplicated[:limit]
+
+
+def load_company_news_snapshot(
+    ticker: str,
+    *,
+    limit: int = 4,
+    window_days: int = 90,
+    now: datetime | None = None,
+    path: Path | str = NEWS_SNAPSHOT_PATH,
+) -> list[dict[str, str]]:
+    """Read the latest verified refresh as a fallback when live indexes are unavailable."""
+    try:
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError, json.JSONDecodeError):
+        return []
+    stories = payload.get("companies", {}).get(ticker, [])
+    if not isinstance(stories, list):
+        return []
+    current_time = now or datetime.now(timezone.utc)
+    if current_time.tzinfo is None:
+        current_time = current_time.replace(tzinfo=timezone.utc)
+    current_date = current_time.astimezone(timezone.utc).date()
+    cutoff = current_date - timedelta(days=window_days)
+    latest_allowed = current_date + timedelta(days=1)
+    aliases = SEARCH_ALIASES.get(ticker, [ticker])
+    publishers = {**TRUSTED_DOMAINS, **OFFICIAL_DOMAINS_BY_TICKER.get(ticker, {})}
+    verified: list[dict[str, str]] = []
+    for story in stories:
+        if not isinstance(story, dict):
+            continue
+        try:
+            published = datetime.fromisoformat(str(story.get("date", ""))).date()
+        except ValueError:
+            continue
+        if published < cutoff or published > latest_allowed:
+            continue
+        article_url = str(story.get("url", ""))
+        image_url = str(story.get("image", ""))
+        title = str(story.get("title", ""))
+        lowered_title = title.lower()
+        if story.get("image_kind") != "article" or not _usable_article_url(article_url):
+            continue
+        domain = _domain(article_url, publishers)
+        if not domain or any(pattern in lowered_title for pattern in LOW_VALUE_TITLE_PATTERNS):
+            continue
+        if domain in TRUSTED_DOMAINS and (not _title_matches_alias(title, aliases) or not _materiality_count(title)):
+            continue
+        if image_url == article_url or not _valid_cover_url(image_url):
+            continue
+        verified.append({key: str(story.get(key, "")) for key in ("title", "url", "publisher", "date", "image", "image_kind")})
+    verified.sort(key=lambda story: story["date"], reverse=True)
+    return verified[:limit]
