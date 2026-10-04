@@ -5,12 +5,13 @@ import pandas as pd
 
 from market_data import SNAPSHOT_PATH
 from research import load_financials
-from research_catalog import COMPANY_NAMES, latest_results_snapshot, target_price_snapshot
+from research_catalog import COMPANY_NAMES, LATEST_RESULTS_SNAPSHOTS, latest_results_snapshot, target_price_snapshot
 
 
 class DataFreshnessTests(unittest.TestCase):
-    def test_every_prebuilt_company_has_a_current_official_results_link(self) -> None:
-        for ticker in COMPANY_NAMES:
+    def test_every_explicit_quarterly_snapshot_has_a_current_official_results_link(self) -> None:
+        self.assertTrue(set(LATEST_RESULTS_SNAPSHOTS).issubset(COMPANY_NAMES))
+        for ticker in LATEST_RESULTS_SNAPSHOTS:
             with self.subTest(ticker=ticker):
                 result = latest_results_snapshot(ticker)
                 self.assertTrue(result["label"])

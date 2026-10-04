@@ -12,26 +12,46 @@ import pandas as pd
 
 BENCHMARKS = {"SPY": "SPY", "QQQ": "QQQ"}
 SNAPSHOT_PATH = Path(__file__).resolve().parent / "data" / "market_performance.csv"
+PERFORMANCE_NOTES = {
+    "WDC": (
+        "Western Digital's pre-separation trading history reflects the former combined company. "
+        "Adjusted prices may incorporate the Sandisk distribution, but the earlier operating scope "
+        "is not identical to today's HDD-focused company."
+    ),
+}
 
 
 class MarketDataError(RuntimeError):
     """Historical market data could not be loaded."""
 
 
-def fetch_adjusted_monthly(symbol: str, *, years: int = 10) -> pd.DataFrame:
+def performance_context_note(ticker: str) -> str:
+    return PERFORMANCE_NOTES.get(ticker, "")
+
+
+def fetch_adjusted_monthly(symbol: str, *, years: int = 10, attempts: int = 5) -> pd.DataFrame:
     end = int(time.time())
     start = end - int(years * 365.25 * 24 * 60 * 60)
     encoded = urllib.parse.quote(symbol, safe="")
-    url = (
-        f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}"
-        f"?period1={start}&period2={end}&interval=1mo&events=div%2Csplits&includeAdjustedClose=true"
-    )
-    request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    try:
-        with urllib.request.urlopen(request, timeout=25) as response:
-            payload = json.load(response)
-    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as error:
-        raise MarketDataError(f"Could not load historical prices for {symbol}.") from error
+    last_error: Exception | None = None
+    payload: dict = {}
+    for attempt in range(attempts):
+        host = "query1.finance.yahoo.com" if attempt % 2 == 0 else "query2.finance.yahoo.com"
+        url = (
+            f"https://{host}/v8/finance/chart/{encoded}"
+            f"?period1={start}&period2={end}&interval=1mo&events=div%2Csplits&includeAdjustedClose=true"
+        )
+        request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        try:
+            with urllib.request.urlopen(request, timeout=25) as response:
+                payload = json.load(response)
+            break
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as error:
+            last_error = error
+            if attempt + 1 < attempts:
+                time.sleep(min(2 ** attempt, 12))
+    else:
+        raise MarketDataError(f"Could not load historical prices for {symbol}.") from last_error
     result = payload.get("chart", {}).get("result", [])
     if not result:
         raise MarketDataError(f"No historical prices were returned for {symbol}.")

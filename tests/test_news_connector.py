@@ -6,7 +6,13 @@ import unittest
 from datetime import datetime, timezone
 from unittest.mock import patch
 
-from news_connector import _decode_google_news_url, load_company_news
+from news_connector import (
+    OFFICIAL_DOMAINS_BY_TICKER,
+    SEARCH_ALIASES,
+    _decode_google_news_url,
+    load_company_news,
+)
+from research_catalog import COMPANY_NAMES
 
 
 class _Response(io.BytesIO):
@@ -18,6 +24,13 @@ class _Response(io.BytesIO):
 
 
 class CompanyNewsTests(unittest.TestCase):
+    def test_every_prebuilt_company_has_specific_news_search_metadata(self):
+        self.assertEqual(set(SEARCH_ALIASES), set(COMPANY_NAMES))
+        self.assertEqual(set(OFFICIAL_DOMAINS_BY_TICKER), set(COMPANY_NAMES))
+        for ticker in ("V", "ON", "NOW", "ARM", "GFS", "VRT", "GEV"):
+            with self.subTest(ticker=ticker):
+                self.assertNotIn(ticker.lower(), {alias.lower() for alias in SEARCH_ALIASES[ticker]})
+
     def test_excludes_outdated_and_low_value_articles(self):
         rss = b"""<?xml version='1.0' encoding='UTF-8'?>
         <rss xmlns:media="http://search.yahoo.com/mrss/"><channel>

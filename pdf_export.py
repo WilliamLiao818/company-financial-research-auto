@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import math
 import re
 from html import escape
 
@@ -23,7 +24,7 @@ from reportlab.platypus import (
 )
 from reportlab.platypus.tableofcontents import TableOfContents
 
-from market_data import load_market_performance, performance_summary
+from market_data import load_market_performance, performance_context_note, performance_summary
 from research_catalog import COMPANY_NAMES, market_share_snapshot, target_price_snapshot
 
 
@@ -46,7 +47,7 @@ def _page(canvas, document) -> None:
     canvas.line(18 * mm, 18 * mm, A4[0] - 18 * mm, 18 * mm)
     canvas.setFont("Helvetica-Bold", 7)
     canvas.setFillColor(GREEN)
-    canvas.drawString(18 * mm, 11 * mm, "THE COMPANY · VERSION 2.0")
+    canvas.drawString(18 * mm, 11 * mm, "THE COMPANY · VERSION 2.1")
     canvas.setFont("Helvetica", 7)
     canvas.setFillColor(MUTED)
     canvas.drawRightString(A4[0] - 18 * mm, 11 * mm, f"{document.page}")
@@ -200,16 +201,40 @@ def _ascii(value: object) -> str:
     return str(value).replace("\u2011", "-").replace("\u2013", "-").replace("\u2014", "-").replace("\u2212", "-")
 
 
+def _finite_float(value: object) -> float | None:
+    """Return a finite float without turning unavailable observations into zero."""
+    if value is None:
+        return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
+
+
+def _scaled_values(frame, column: str, scale: float) -> list[float | None]:
+    """Keep chart vectors aligned with fiscal-year labels while preserving gaps."""
+    if column not in frame:
+        return [None] * len(frame)
+    values: list[float | None] = []
+    for raw in frame[column].tolist():
+        value = _finite_float(raw)
+        values.append(None if value is None else value * scale)
+    return values
+
+
 def _fmt_billions(value: object, currency: str = "USD") -> str:
-    if value is None or value != value:
-        return "-"
-    amount = float(value) / 1e9
+    number = _finite_float(value)
+    if number is None:
+        return "N/A"
+    amount = number / 1e9
     symbol = {"USD": "$", "EUR": "€", "GBP": "£", "JPY": "¥", "TWD": "NT$"}.get(currency, f"{currency} ")
     return f"-{symbol}{abs(amount):,.1f}B" if amount < 0 else f"{symbol}{amount:,.1f}B"
 
 
 def _fmt_percent(value: object) -> str:
-    return "-" if value is None or value != value else f"{float(value):.1%}"
+    number = _finite_float(value)
+    return "N/A" if number is None else f"{number:.1%}"
 
 
 def _bar_chart(labels: list[str], series: list[tuple[str, list[float], colors.Color]], *, height: int = 175, suffix: str = "") -> Drawing:
@@ -217,7 +242,15 @@ def _bar_chart(labels: list[str], series: list[tuple[str, list[float], colors.Co
     drawing = Drawing(width, height)
     left, bottom, top = 48, 34, height - 28
     plot_width, plot_height = width - left - 12, top - bottom
-    values = [float(value) for _, items, _ in series for value in items if value is not None]
+    normalized_series = []
+    for name, items, color in series:
+        normalized = [_finite_float(value) for value in items]
+        if any(value is not None for value in normalized):
+            normalized_series.append((name, normalized, color))
+    values = [value for _, items, _ in normalized_series for value in items if value is not None]
+    if not values:
+        drawing.add(String(width / 2, height / 2, "No reported data", fontName="Helvetica-Oblique", fontSize=8, fillColor=MUTED, textAnchor="middle"))
+        return drawing
     minimum = min([0, *values])
     maximum = max([1, *values])
     padding = (maximum - minimum) * .16 or 1
@@ -232,18 +265,20 @@ def _bar_chart(labels: list[str], series: list[tuple[str, list[float], colors.Co
     zero_y = bottom + plot_height * (0 - minimum) / span
     drawing.add(Line(left, zero_y, width - 8, zero_y, strokeColor=colors.HexColor("#A8BBB1"), strokeWidth=.8))
     group_width = plot_width / max(len(labels), 1)
-    bar_width = min(23, group_width / max(len(series) + .7, 2))
+    bar_width = min(23, group_width / max(len(normalized_series) + .7, 2))
     for label_index, label in enumerate(labels):
         center = left + group_width * (label_index + .5)
-        for series_index, (_, items, color) in enumerate(series):
-            value = float(items[label_index]) if label_index < len(items) and items[label_index] is not None else 0
+        for series_index, (_, items, color) in enumerate(normalized_series):
+            value = items[label_index] if label_index < len(items) else None
+            if value is None:
+                continue
             value_y = bottom + plot_height * (value - minimum) / span
             bar_height = max(abs(value_y - zero_y), .7)
-            x = center + (series_index - (len(series) - 1) / 2) * (bar_width + 4) - bar_width / 2
+            x = center + (series_index - (len(normalized_series) - 1) / 2) * (bar_width + 4) - bar_width / 2
             drawing.add(Rect(x, min(zero_y, value_y), bar_width, bar_height, fillColor=color, strokeColor=None, rx=2, ry=2))
         drawing.add(String(center, 13, _ascii(label)[:18], fontName="Helvetica", fontSize=6.7, fillColor=MUTED, textAnchor="middle"))
     legend_x = left
-    for name, _, color in series:
+    for name, _, color in normalized_series:
         drawing.add(Rect(legend_x, height - 13, 7, 7, fillColor=color, strokeColor=None, rx=2, ry=2))
         drawing.add(String(legend_x + 11, height - 12, _ascii(name), fontName="Helvetica", fontSize=7, fillColor=MUTED))
         legend_x += 128
@@ -255,34 +290,51 @@ def _line_chart(labels: list[str], series: list[tuple[str, list[float], colors.C
     drawing = Drawing(width, height)
     left, bottom, top = 48, 34, height - 42
     plot_width, plot_height = width - left - 16, top - bottom
-    values = [float(value) for _, items, _ in series for value in items if value is not None]
-    minimum = min(values or [0])
-    maximum = max(values or [1])
+    normalized_series = []
+    for name, items, color in series:
+        normalized = [_finite_float(value) for value in items]
+        if any(value is not None for value in normalized):
+            normalized_series.append((name, normalized, color))
+    values = [value for _, items, _ in normalized_series for value in items if value is not None]
+    if not values:
+        drawing.add(String(width / 2, height / 2, "No reported data", fontName="Helvetica-Oblique", fontSize=8, fillColor=MUTED, textAnchor="middle"))
+        return drawing
+    minimum = min(values)
+    maximum = max(values)
     padding = (maximum - minimum) * .18 or 1
     minimum = min(0, minimum - padding)
-    maximum += padding
+    maximum = max(0, maximum + padding)
     span = maximum - minimum
     for step in range(5):
         value = minimum + span * step / 4
         y = bottom + plot_height * step / 4
         drawing.add(Line(left, y, width - 8, y, strokeColor=colors.HexColor("#E6EFEA"), strokeWidth=.55))
         drawing.add(String(left - 6, y - 2, f"{value:,.0f}{suffix}", fontName="Helvetica", fontSize=6.4, fillColor=MUTED, textAnchor="end"))
-    for name, items, color in series:
+    for name, items, color in normalized_series:
+        segments = []
         points = []
         for index, raw in enumerate(items):
-            value = float(raw)
+            value = _finite_float(raw)
+            if value is None:
+                if points:
+                    segments.append(points)
+                    points = []
+                continue
             x = left + (plot_width * index / max(len(labels) - 1, 1))
             y = bottom + plot_height * (value - minimum) / span
             points.append((x, y))
-        for first, second in zip(points, points[1:]):
-            drawing.add(Line(first[0], first[1], second[0], second[1], strokeColor=color, strokeWidth=2.3))
-        for x, y in points:
-            drawing.add(Rect(x - 2.4, y - 2.4, 4.8, 4.8, fillColor=color, strokeColor=colors.white, strokeWidth=.6, rx=2.4, ry=2.4))
+        if points:
+            segments.append(points)
+        for segment in segments:
+            for first, second in zip(segment, segment[1:]):
+                drawing.add(Line(first[0], first[1], second[0], second[1], strokeColor=color, strokeWidth=2.3))
+            for x, y in segment:
+                drawing.add(Rect(x - 2.4, y - 2.4, 4.8, 4.8, fillColor=color, strokeColor=colors.white, strokeWidth=.6, rx=2.4, ry=2.4))
     for index, label in enumerate(labels):
         x = left + (plot_width * index / max(len(labels) - 1, 1))
         drawing.add(String(x, 13, _ascii(label), fontName="Helvetica", fontSize=6.7, fillColor=MUTED, textAnchor="middle"))
     legend_x = left
-    for name, _, color in series:
+    for name, _, color in normalized_series:
         drawing.add(Rect(legend_x, height - 18, 8, 8, fillColor=color, strokeColor=None, rx=2, ry=2))
         drawing.add(String(legend_x + 12, height - 17, _ascii(name), fontName="Helvetica-Bold", fontSize=7, fillColor=INK))
         legend_x += min(145, max(82, 8 * len(_ascii(name))))
@@ -293,9 +345,13 @@ def _horizontal_bars(labels: list[str], values: list[float], *, height: int = 18
     width = 470
     drawing = Drawing(width, height)
     left, right, top = 145, 40, height - 22
-    maximum = max([1, *[abs(float(value)) for value in values]])
-    row_height = (top - 18) / max(len(labels), 1)
-    for index, (label, value) in enumerate(zip(labels, values)):
+    observations = [(label, number) for label, value in zip(labels, values) if (number := _finite_float(value)) is not None]
+    if not observations:
+        drawing.add(String(width / 2, height / 2, "No reported data", fontName="Helvetica-Oblique", fontSize=8, fillColor=MUTED, textAnchor="middle"))
+        return drawing
+    maximum = max([1, *[abs(value) for _, value in observations]])
+    row_height = (top - 18) / len(observations)
+    for index, (label, value) in enumerate(observations):
         y = top - row_height * (index + .65)
         drawing.add(String(left - 8, y + 2, _ascii(label)[:28], fontName="Helvetica", fontSize=7.1, fillColor=INK, textAnchor="end"))
         drawing.add(Rect(left, y, width - left - right, 10, fillColor=colors.HexColor("#EDF4F0"), strokeColor=None, rx=5, ry=5))
@@ -307,8 +363,16 @@ def _horizontal_bars(labels: list[str], values: list[float], *, height: int = 18
 def _market_share_pie(snapshot: dict[str, object], *, height: int = 215) -> Drawing:
     width = 470
     drawing = Drawing(width, height)
-    values = list(snapshot.get("values", {}).values())
-    labels = list(snapshot.get("values", {}))
+    observations = []
+    for label, raw in snapshot.get("values", {}).items():
+        value = _finite_float(raw)
+        if value is not None and value > 0:
+            observations.append((label, value))
+    labels = [label for label, _ in observations]
+    values = [value for _, value in observations]
+    if not values:
+        drawing.add(String(width / 2, height / 2, "No reported data", fontName="Helvetica-Oblique", fontSize=8, fillColor=MUTED, textAnchor="middle"))
+        return drawing
     pie = Pie()
     pie.x = 38
     pie.y = 18
@@ -346,10 +410,18 @@ def _score_heatmap(profile: dict[str, object], *, height: int = 190) -> Drawing:
     for row, company_name in enumerate(companies):
         y = top - cell_height * (row + 1)
         drawing.add(String(left - 7, y + cell_height / 2 - 2, _ascii(company_name)[:17], fontName="Helvetica-Bold", fontSize=6.7, fillColor=INK, textAnchor="end"))
-        for column, score in enumerate(profile["competitive_scores"][company_name]):
+        scores = list(profile["competitive_scores"][company_name])
+        for column in range(len(dimensions)):
+            score = _finite_float(scores[column]) if column < len(scores) else None
             x = left + cell_width * column
-            drawing.add(Rect(x + 1, y + 1, cell_width - 2, cell_height - 2, fillColor=fills[int(score) - 1], strokeColor=colors.white, strokeWidth=.7, rx=3, ry=3))
-            drawing.add(String(x + cell_width / 2, y + cell_height / 2 - 2, f"{int(score)}/5", fontName="Helvetica-Bold", fontSize=7, fillColor=colors.white if int(score) >= 4 else INK, textAnchor="middle"))
+            if score is None:
+                fill, label, text_color = colors.HexColor("#F1F4F2"), "N/A", MUTED
+            else:
+                score_value = max(1, min(5, int(round(score))))
+                fill, label = fills[score_value - 1], f"{score_value}/5"
+                text_color = colors.white if score_value >= 4 else INK
+            drawing.add(Rect(x + 1, y + 1, cell_width - 2, cell_height - 2, fillColor=fill, strokeColor=colors.white, strokeWidth=.7, rx=3, ry=3))
+            drawing.add(String(x + cell_width / 2, y + cell_height / 2 - 2, label, fontName="Helvetica-Bold", fontSize=7, fillColor=text_color, textAnchor="middle"))
     return drawing
 
 
@@ -391,7 +463,10 @@ def _metric_cards(items: list[tuple[str, str]]) -> Table:
         alignment=TA_CENTER,
         textColor=INK,
     )
-    cells = [Paragraph(f"<font size='6.7' color='#607068'>{escape(_ascii(label.upper()))}</font><br/><font size='15' color='#087F5B'><b>{escape(_ascii(value))}</b></font>", style) for label, value in items]
+    cells = []
+    for label, value in items:
+        display = "N/A" if value is None or not str(value).strip() or str(value).strip() == "-" else value
+        cells.append(Paragraph(f"<font size='6.7' color='#607068'>{escape(_ascii(label.upper()))}</font><br/><font size='15' color='#087F5B'><b>{escape(_ascii(display))}</b></font>", style))
     table = Table([cells], colWidths=[(A4[0] - 36 * mm) / len(cells)] * len(cells))
     table.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), colors.white), ("BOX", (0, 0), (-1, -1), .55, LINE),
@@ -504,19 +579,19 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     currency = str(summary.get("currency", "USD"))
     currency_label = currency if currency else "USD"
     years = [str(int(value)) for value in company["fiscal_year"].tolist()]
-    revenue = [float(value) / 1e9 for value in company["revenue"].fillna(0)]
-    operating_income = [float(value) / 1e9 for value in company["operating_income"].fillna(0)]
-    net_income = [float(value) / 1e9 for value in company["net_income"].fillna(0)]
-    cfo = [float(value) / 1e9 for value in company["operating_cash_flow"].fillna(0)]
-    capex = [float(value) / 1e9 for value in company["capex"].fillna(0)]
-    fcf = [float(value) / 1e9 for value in company["free_cash_flow"].fillna(0)]
-    gross_margin = [float(value) * 100 for value in company["gross_margin"].fillna(0)]
-    op_margin = [float(value) * 100 for value in company["operating_margin"].fillna(0)]
-    net_margin = [float(value) * 100 for value in company["net_margin"].fillna(0)]
-    fcf_margin = [float(value) * 100 for value in company["fcf_margin"].fillna(0)]
-    capex_intensity = [float(value) * 100 for value in company["capex_intensity"].fillna(0)]
-    assets = [float(value) / 1e9 for value in company["assets"].fillna(0)]
-    liabilities = [float(value) / 1e9 for value in company["liabilities"].fillna(0)]
+    revenue = _scaled_values(company, "revenue", 1 / 1e9)
+    operating_income = _scaled_values(company, "operating_income", 1 / 1e9)
+    net_income = _scaled_values(company, "net_income", 1 / 1e9)
+    cfo = _scaled_values(company, "operating_cash_flow", 1 / 1e9)
+    capex = _scaled_values(company, "capex", 1 / 1e9)
+    fcf = _scaled_values(company, "free_cash_flow", 1 / 1e9)
+    gross_margin = _scaled_values(company, "gross_margin", 100)
+    op_margin = _scaled_values(company, "operating_margin", 100)
+    net_margin = _scaled_values(company, "net_margin", 100)
+    fcf_margin = _scaled_values(company, "fcf_margin", 100)
+    capex_intensity = _scaled_values(company, "capex_intensity", 100)
+    assets = _scaled_values(company, "assets", 1 / 1e9)
+    liabilities = _scaled_values(company, "liabilities", 1 / 1e9)
     fiscal_year = int(summary["fiscal_year"])
     target_snapshot = target_price_snapshot(ticker)
     market_snapshot = market_share_snapshot(ticker)
@@ -524,11 +599,13 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     if scenarios is None:
         defaults = profile["scenario_defaults"]
         scenario_rows = []
-        for case in ["bear", "base", "bull"]:
-            growth = float(defaults[f"{case}_growth"])
-            margin = float(defaults[f"{case}_margin"])
-            projected_revenue = float(summary["revenue"]) * (1 + growth) ** int(defaults["years"])
-            scenario_rows.append({"case": case.title(), "revenue": projected_revenue, "operating_income": projected_revenue * margin, "growth": growth, "margin": margin, "years": int(defaults["years"])})
+        base_revenue = _finite_float(summary.get("revenue"))
+        if base_revenue is not None:
+            for case in ["bear", "base", "bull"]:
+                growth = float(defaults[f"{case}_growth"])
+                margin = float(defaults[f"{case}_margin"])
+                projected_revenue = base_revenue * (1 + growth) ** int(defaults["years"])
+                scenario_rows.append({"case": case.title(), "revenue": projected_revenue, "operating_income": projected_revenue * margin, "growth": growth, "margin": margin, "years": int(defaults["years"])})
         scenarios = scenario_rows
     scenario_records = scenarios.to_dict("records") if hasattr(scenarios, "to_dict") else list(scenarios)
 
@@ -596,7 +673,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
         for row in signals.itertuples(index=False):
             story.append(Paragraph(f"<b>{escape(_ascii(row.signal))}</b><br/>{escape(_ascii(row.observation))}<br/><font color='#607068'>Implication: {escape(_ascii(row.analytical_implication))}<br/>Required review: {escape(_ascii(row.required_review))}</font>", styles["note"]))
     if len(bridge) > 1:
-        story.extend([Paragraph("Reported-to-analytical cash-flow bridge", styles["h2"]), _horizontal_bars([_ascii(value) for value in bridge["step"]], [float(value) for value in bridge["amount_usd_billions"]], height=145, suffix="B"), Paragraph("The adjustment is an analytical view, not a restatement. Definitions must remain consistent across periods and peers.", styles["body"])])
+        story.extend([Paragraph("Reported-to-analytical cash-flow bridge", styles["h2"]), _horizontal_bars([_ascii(value) for value in bridge["step"]], [_finite_float(value) for value in bridge["amount_usd_billions"]], height=145, suffix="B"), Paragraph("The adjustment is an analytical view, not a restatement. Definitions must remain consistent across periods and peers.", styles["body"])])
 
     # 8 | Competition and market share
     story.extend([CondPageBreak(280), Paragraph("Competitive position and market share", styles["page"]), Paragraph("Market share and the competitive rubric answer different questions. Share is a dated category snapshot; scores are explicit judgments about the durability of the company's position.", styles["deck"])])
@@ -615,8 +692,8 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
                 _bar_chart(
                     [str(value) for value in peer_view["ticker"]],
                     [
-                        ("Revenue growth", [float(value) * 100 for value in peer_view["revenue_growth"].fillna(0)], GREEN),
-                        ("Operating margin", [float(value) * 100 for value in peer_view["operating_margin"].fillna(0)], colors.HexColor("#76B89D")),
+                        ("Revenue growth", _scaled_values(peer_view, "revenue_growth", 100), GREEN),
+                        ("Operating margin", _scaled_values(peer_view, "operating_margin", 100), colors.HexColor("#76B89D")),
                     ],
                     height=120,
                     suffix="%",
@@ -631,32 +708,60 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
         annual = market_history.copy()
         annual["year"] = annual["date"].dt.year
         annual = annual.sort_values("date").groupby(["series", "year"], as_index=False).tail(1)
-        annual_pivot = annual.pivot(index="year", columns="series", values="growth_of_100").dropna()
+        annual_pivot = annual.pivot(index="year", columns="series", values="growth_of_100").sort_index().dropna(how="all")
+        annual_pivot = annual_pivot.loc[:, annual_pivot.notna().any(axis=0)]
         performance_colors = {ticker: GREEN, "SPY": colors.HexColor("#173F32"), "QQQ": colors.HexColor("#76B89D")}
-        performance_series = [(name, annual_pivot[name].tolist(), performance_colors.get(name, colors.HexColor("#8AA89A"))) for name in annual_pivot.columns]
+        performance_series = [(name, [_finite_float(value) for value in annual_pivot[name].tolist()], performance_colors.get(name, colors.HexColor("#8AA89A"))) for name in annual_pivot.columns]
         performance_rows = performance_summary(market_history)
-        story.extend([
-            CondPageBreak(470),
-            Paragraph("Long-term market performance", styles["page"]),
-            Paragraph("Adjusted performance is rebased to 100 over the longest common window, capped at ten years. A shorter-listed company automatically uses its available trading history.", styles["deck"]),
-            _line_chart([str(year) for year in annual_pivot.index], performance_series, height=255),
-            Paragraph("Return summary", styles["h2"]),
-            _metric_cards([(str(row["series"]), f"{float(row['total_return']):+.0%} | {float(row['annualized_return']):.1%} p.a.") for row in performance_rows]),
-            Paragraph(f"Comparison window ends {escape(_ascii(performance_rows[0]['as_of']))}.", styles["source"]),
-            Paragraph("How to read it", styles["h2"]),
-            Paragraph("The rebased lines compare compounded investor outcomes over the same dates. A higher ending value indicates outperformance over the selected window; it does not explain whether the result came from earnings growth, valuation change or distributions.", styles["body"]),
-        ])
+        if not annual_pivot.empty and performance_series and performance_rows:
+            story.extend([
+                CondPageBreak(470),
+                Paragraph("Long-term market performance", styles["page"]),
+                Paragraph("Adjusted performance is rebased to 100 over the longest common window, capped at ten years. A shorter-listed company automatically uses its available trading history.", styles["deck"]),
+                _line_chart([str(year) for year in annual_pivot.index], performance_series, height=255),
+                Paragraph("Return summary", styles["h2"]),
+                _metric_cards([
+                    (
+                        str(row["series"]),
+                        "N/A"
+                        if _finite_float(row.get("total_return")) is None or _finite_float(row.get("annualized_return")) is None
+                        else f"{float(row['total_return']):+.0%} | {float(row['annualized_return']):.1%} p.a.",
+                    )
+                    for row in performance_rows
+                ]),
+                Paragraph(f"Comparison window ends {escape(_ascii(performance_rows[0]['as_of']))}.", styles["source"]),
+                Paragraph(escape(_ascii(performance_context_note(ticker))), styles["source"]) if performance_context_note(ticker) else Spacer(1, 0),
+                Paragraph("How to read it", styles["h2"]),
+                Paragraph("The rebased lines compare compounded investor outcomes over the same dates. A higher ending value indicates outperformance over the selected window; it does not explain whether the result came from earnings growth, valuation change or distributions.", styles["body"]),
+            ])
 
     # 10 | Operating scenarios
-    story.extend([CondPageBreak(470), Paragraph("Operating scenarios", styles["page"]), Paragraph("Bear, base and bull cases isolate the operating assumptions that matter most. They are not forecasts and do not imply probabilities.", styles["deck"]), Paragraph("Illustrative revenue outcome", styles["h2"]), _bar_chart([record["case"] for record in scenario_records], [(f"Revenue | {currency_label} B", [float(record["revenue"]) / 1e9 for record in scenario_records], GREEN), (f"Operating income | {currency_label} B", [float(record["operating_income"]) / 1e9 for record in scenario_records], colors.HexColor("#76B89D"))], height=220), Paragraph("Assumptions", styles["h2"])])
-    scenario_rows = [[Paragraph("Case", _table_style(True)), Paragraph("Revenue CAGR", _table_style(True)), Paragraph("Operating margin", _table_style(True)), Paragraph("Horizon", _table_style(True))]]
-    for record in scenario_records:
-        scenario_rows.append([Paragraph(escape(_ascii(record["case"])), _table_style(False)), Paragraph(f"{float(record['growth']):.1%}", _table_style(False)), Paragraph(f"{float(record['margin']):.1%}", _table_style(False)), Paragraph(f"{int(record['years'])} years", _table_style(False))])
-    scenario_table = Table(scenario_rows, colWidths=[(A4[0] - 36 * mm) / 4] * 4)
-    scenario_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), GREEN), ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F4F8F6")]), ("GRID", (0, 0), (-1, -1), .4, LINE), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"), ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
-    story.extend([scenario_table, Paragraph("What would change the case", styles["h2"]), Paragraph("The scenarios should move only when new evidence changes demand, pricing, operating leverage, capacity requirements or competitive intensity. A share-price move alone does not change the operating case.", styles["body"])])
-    story.append(Paragraph("Scenario guardrails", styles["h2"]))
-    story.append(Paragraph("Bear, base and bull cases use the same starting period and horizon. Growth and operating margin change independently so the output remains attributable to visible assumptions rather than an opaque model adjustment.", styles["body"]))
+    story.extend([CondPageBreak(470), Paragraph("Operating scenarios", styles["page"]), Paragraph("Bear, base and bull cases isolate the operating assumptions that matter most. They are not forecasts and do not imply probabilities.", styles["deck"])])
+    if scenario_records:
+        revenue_scenarios = []
+        operating_income_scenarios = []
+        for record in scenario_records:
+            revenue_value = _finite_float(record.get("revenue"))
+            operating_income_value = _finite_float(record.get("operating_income"))
+            revenue_scenarios.append(None if revenue_value is None else revenue_value / 1e9)
+            operating_income_scenarios.append(None if operating_income_value is None else operating_income_value / 1e9)
+        story.extend([Paragraph("Illustrative revenue outcome", styles["h2"]), _bar_chart([record["case"] for record in scenario_records], [(f"Revenue | {currency_label} B", revenue_scenarios, GREEN), (f"Operating income | {currency_label} B", operating_income_scenarios, colors.HexColor("#76B89D"))], height=220), Paragraph("Assumptions", styles["h2"])])
+        scenario_rows = [[Paragraph("Case", _table_style(True)), Paragraph("Revenue CAGR", _table_style(True)), Paragraph("Operating margin", _table_style(True)), Paragraph("Horizon", _table_style(True))]]
+        for record in scenario_records:
+            years_value = _finite_float(record.get("years"))
+            scenario_rows.append([
+                Paragraph(escape(_ascii(record.get("case", "N/A"))), _table_style(False)),
+                Paragraph(_fmt_percent(record.get("growth")), _table_style(False)),
+                Paragraph(_fmt_percent(record.get("margin")), _table_style(False)),
+                Paragraph("N/A" if years_value is None else f"{int(years_value)} years", _table_style(False)),
+            ])
+        scenario_table = Table(scenario_rows, colWidths=[(A4[0] - 36 * mm) / 4] * 4)
+        scenario_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), GREEN), ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F4F8F6")]), ("GRID", (0, 0), (-1, -1), .4, LINE), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"), ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
+        story.extend([scenario_table, Paragraph("What would change the case", styles["h2"]), Paragraph("The scenarios should move only when new evidence changes demand, pricing, operating leverage, capacity requirements or competitive intensity. A share-price move alone does not change the operating case.", styles["body"])])
+        story.append(Paragraph("Scenario guardrails", styles["h2"]))
+        story.append(Paragraph("Bear, base and bull cases use the same starting period and horizon. Growth and operating margin change independently so the output remains attributable to visible assumptions rather than an opaque model adjustment.", styles["body"]))
+    else:
+        story.append(Paragraph("Scenario outputs are N/A because no reported revenue base is available.", styles["note"]))
 
     # 11 | 12-month price framework
     if target_snapshot.get("street"):

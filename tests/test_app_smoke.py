@@ -7,7 +7,7 @@ from research_catalog import COMPANY_NAMES
 
 
 class AppSmokeTests(unittest.TestCase):
-    def test_app_opens_with_search_and_fifteen_prebuilt_packs(self) -> None:
+    def test_app_opens_with_search_and_paginated_prebuilt_packs(self) -> None:
         app_path = Path(__file__).resolve().parents[1] / "app.py"
         app = AppTest.from_file(str(app_path), default_timeout=20)
         app.run()
@@ -15,7 +15,8 @@ class AppSmokeTests(unittest.TestCase):
         self.assertEqual([title.value for title in app.title], ["Start with a company."])
         self.assertEqual(app.selectbox[0].label, "Search ticker or company")
         button_labels = [button.label for button in app.button]
-        self.assertEqual(button_labels.count("Open"), 15)
+        self.assertEqual(len(COMPANY_NAMES), 50)
+        self.assertEqual(button_labels.count("Open"), min(12, len(COMPANY_NAMES)))
         self.assertIn("Open company", button_labels)
 
     def test_prebuilt_company_opens_full_research_architecture(self) -> None:

@@ -27,6 +27,9 @@ from research import (
 from research_catalog import (
     CIKS,
     COMPANY_NAMES,
+    COMPANY_SECTORS,
+    EXPANDED_PEERS,
+    FOREIGN_PRIVATE_ISSUERS,
     latest_results_snapshot,
     market_share_snapshot,
     sec_filings_url,
@@ -40,6 +43,7 @@ from sec_connector import SecConfigurationError, SecConnectionError, SecInputErr
 market_data_module = importlib.reload(market_data_module)
 load_market_performance = market_data_module.load_market_performance
 performance_summary = market_data_module.performance_summary
+performance_context_note = market_data_module.performance_context_note
 
 
 SHOWCASES = COMPANY_NAMES
@@ -49,17 +53,18 @@ PEER_MAP = {
     "GOOG": ["MSFT", "ORCL"],
     "AVGO": ["NVDA"],
     "NVDA": ["AVGO"],
-    "SNDK": ["NVDA", "AVGO"],
+    "SNDK": ["MU", "WDC", "NVDA"],
     "MRVL": ["AVGO", "NVDA", "AMD"],
     "AAPL": ["GOOG", "MSFT"],
     "AMZN": ["MSFT", "GOOG", "META"],
     "META": ["GOOG", "AMZN"],
-    "LITE": ["MRVL", "AVGO"],
-    "AMAT": ["ASML", "TSM"],
-    "TSM": ["ASML", "AMAT", "NVDA"],
-    "ASML": ["AMAT", "TSM"],
-    "AMD": ["NVDA", "AVGO", "MRVL"],
+    "LITE": ["COHR", "MRVL", "AVGO"],
+    "AMAT": ["LRCX", "KLAC", "ASML"],
+    "TSM": ["GFS", "INTC", "ASML"],
+    "ASML": ["AMAT", "LRCX", "KLAC"],
+    "AMD": ["NVDA", "INTC", "ARM"],
 }
+PEER_MAP.update(EXPANDED_PEERS)
 METRIC_LABELS = {
     "revenue": "Revenue",
     "operating_income": "Operating Income",
@@ -76,7 +81,7 @@ METRIC_LABELS = {
 }
 
 
-st.set_page_config(page_title="The Company · Version 2.0", page_icon="C", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="The Company · Version 2.1", page_icon="C", layout="wide", initial_sidebar_state="collapsed")
 st.markdown(
     """
     <style>
@@ -275,7 +280,7 @@ def render_custom_loader(query: str) -> None:
 
 
 def render_landing(prebuilt: pd.DataFrame) -> None:
-    st.caption("THE COMPANY / FUNDAMENTALS, QUALITY, PERFORMANCE & VALUATION · VERSION 2.0")
+    st.caption("THE COMPANY / FUNDAMENTALS, QUALITY, PERFORMANCE & VALUATION · VERSION 2.1")
     st.title("Start with a company.")
     query = st.selectbox(
         "Search ticker or company",
@@ -301,25 +306,35 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
     if custom_query:
         render_custom_loader(str(custom_query))
 
-    st.subheader("Prebuilt research packs")
-    tickers = list(SHOWCASES)
-    for start in range(0, len(tickers), 3):
+    st.subheader("50 prebuilt research packs")
+    filters = st.columns([2.4, 1])
+    sector_options = ["All sectors", *dict.fromkeys(COMPANY_SECTORS.values())]
+    selected_sector = filters[0].selectbox("Sector", sector_options)
+    tickers = [ticker for ticker in SHOWCASES if selected_sector == "All sectors" or COMPANY_SECTORS[ticker] == selected_sector]
+    page_size = 12
+    page_count = max(1, (len(tickers) + page_size - 1) // page_size)
+    page_number = int(filters[1].selectbox("Page", list(range(1, page_count + 1)), format_func=lambda value: f"Page {value} of {page_count}"))
+    visible_tickers = tickers[(page_number - 1) * page_size:page_number * page_size]
+    st.caption(f"{len(tickers)} companies in this view · PDFs are available after opening a company.")
+    for start in range(0, len(visible_tickers), 3):
         columns = st.columns(3)
-        for column, ticker in zip(columns, tickers[start:start + 3]):
+        for column, ticker in zip(columns, visible_tickers[start:start + 3]):
             summary = latest_company_summary(prebuilt, ticker)
             latest_result = latest_results_snapshot(ticker)
+            latest_line = (
+                f"<br/>Latest official update {latest_result['label']} · {latest_result['period_end']}"
+                if latest_result["label"] else ""
+            )
             with column:
                 st.markdown(
                     f"<div class='company-card'><strong>{ticker}</strong><h3>{SHOWCASES[ticker]}</h3>"
                     f"<p>Latest annual FY{summary['fiscal_year']} · Revenue {money_billions(summary['revenue'], summary.get('currency', 'USD'))}"
                     f"<br/>Operating margin {percent(summary['operating_margin'])}"
-                    f"<br/>Latest official update {latest_result['label']} · {latest_result['period_end']}</p></div>",
+                    f"{latest_line}</p></div>",
                     unsafe_allow_html=True,
                 )
-                actions = st.columns(2)
-                if actions[0].button("Open", key=f"open-{ticker}", width="stretch"):
+                if st.button("Open", key=f"open-{ticker}", width="stretch"):
                     open_company(ticker)
-                actions[1].download_button("PDF", base_pdf(prebuilt, ticker), f"{ticker.lower()}-company-report.pdf", "application/pdf", key=f"pdf-{ticker}", width="stretch")
 
 
 prebuilt = load_financials()
@@ -377,7 +392,7 @@ with download:
 filing_links = st.columns([1, 1, 1.25, 2.75])
 latest_result = latest_results_snapshot(ticker)
 if ticker in CIKS:
-    annual_form, interim_form = (("20-F", "6-K") if ticker in {"TSM", "ASML"} else ("10-K", "10-Q"))
+    annual_form, interim_form = (("20-F", "6-K") if ticker in FOREIGN_PRIVATE_ISSUERS else ("10-K", "10-Q"))
     filing_links[0].link_button(f"Recent {annual_form} filings", sec_filings_url(ticker, annual_form), width="stretch")
     filing_links[1].link_button(f"Recent {interim_form} filings", sec_filings_url(ticker, interim_form), width="stretch")
     if latest_result["url"]:
@@ -491,7 +506,10 @@ with earnings_tab:
     style_figure(growth_chart, title="Revenue growth · year over year", height=330)
     growth_chart.update_xaxes(dtick=1, title="Fiscal Year")
     growth_chart.update_yaxes(title="Percent", ticksuffix="%")
-    growth_chart.update_yaxes(range=[0, max(1, float(growth["Revenue Growth"].max()) * 1.25)])
+    growth_minimum = min(0.0, float(growth["Revenue Growth"].min()))
+    growth_maximum = max(0.0, float(growth["Revenue Growth"].max()))
+    growth_padding = max(1.0, (growth_maximum - growth_minimum) * 0.18)
+    growth_chart.update_yaxes(range=[growth_minimum - growth_padding, growth_maximum + growth_padding])
     growth_chart.update_traces(texttemplate="%{y:.1f}%", textposition="outside", cliponaxis=False, hovertemplate="<b>Revenue Growth</b><br>Fiscal Year %{x}<br>%{y:.1f}%<extra></extra>")
     _, center, _ = st.columns([.7, 5.8, .7])
     center.plotly_chart(growth_chart, width="stretch", theme=None)
@@ -618,6 +636,8 @@ with performance_tab:
         first_date = pd.Timestamp(history["date"].min()).date().isoformat()
         last_date = pd.Timestamp(history["date"].max()).date().isoformat()
         st.caption(f"Common comparison window: {first_date} to {last_date}. The window shortens automatically when a company has less than ten years of trading history.")
+        if note := performance_context_note(ticker):
+            st.caption(note)
 
 with target_tab:
     target = target_price_snapshot(ticker)

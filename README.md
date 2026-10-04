@@ -1,6 +1,6 @@
 # The Company
 
-**Fundamentals, Accounting Quality, Market Performance & Valuation · Version 2.0**
+**Fundamentals, Accounting Quality, Market Performance & Valuation · Version 2.1**
 
 The Company is a public-source research system for U.S.-listed companies. It separates reported facts, deterministic calculations, dated market observations, accounting-quality signals and analytical scenarios.
 
@@ -9,7 +9,15 @@ The Company is a public-source research system for U.S.-listed companies. It sep
 
 ## Prebuilt research packs
 
-Fifteen companies are bundled as ready-to-use snapshots and require no API key: MSFT, ORCL, GOOG, AVGO, SNDK, NVDA, MRVL, AAPL, AMZN, META, LITE, AMAT, TSM, ASML and AMD. Each pack includes:
+Fifty companies are bundled as ready-to-use snapshots and require no API key. The expanded universe follows the cloud, AI-compute and semiconductor value chain while adding a small set of cross-sector companies for comparison:
+
+- **Cloud and software:** MSFT, ORCL, GOOG, AMZN, META, CRM, NOW, PANW and PLTR;
+- **Semiconductors:** AVGO, SNDK, NVDA, MRVL, LITE, TSM, AMD, INTC, QCOM, MU, TXN, ADI, NXPI, ARM, MCHP, ON, GFS and WDC;
+- **Chip equipment, design and manufacturing support:** AMAT, ASML, KLAC, LRCX, TER, CDNS, SNPS, AMKR, ENTG and COHR;
+- **Systems and infrastructure:** AAPL, ANET, CSCO, DELL, HPE, VRT and SMCI;
+- **Cross-sector complements:** TSLA, V, LLY, WMT, GEV and CAT.
+
+Each pack includes:
 
 - an executive thesis and counter-thesis;
 - pivotal questions and explicit decision rules;
@@ -25,7 +33,7 @@ Fifteen companies are bundled as ready-to-use snapshots and require no API key: 
 - transparent operating scenarios and valuation sensitivity;
 - catalysts, downside risks and an updateable monitoring dashboard;
 - direct links to recent 10-K/10-Q or 20-F/6-K filings;
-- a 9–11 page chart-led PDF with a table of contents, available from the landing page and the company view.
+- a chart-led PDF with a table of contents, available after opening the company view.
 
 The bundled annual series and the latest official quarter are intentionally separated. Annual charts remain comparable across fiscal years; the latest-quarter cards use explicit three-month statement columns and link directly to the verified 10-Q, 6-K or SEC-filed earnings exhibit. They are never annualized or substituted into annual history.
 
