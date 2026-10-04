@@ -20,17 +20,41 @@ class PrivacyBoundaryTests(unittest.TestCase):
             "interactive " + "brokers",
             "ib_" + "insync",
             "ib" + "api",
+            "account_" + "id",
+            "account_" + "number",
+            "position_" + "quantity",
+            "realized_" + "pnl",
+            "unrealized_" + "pnl",
             "net_" + "liquidation",
             "buying_" + "power",
+            "cash_" + "balance",
+            "net_" + "asset_value",
+            "clipboard-" + "read",
+            "clipboard-" + "write",
         )
+        deployable_suffixes = {
+            ".csv",
+            ".html",
+            ".json",
+            ".md",
+            ".py",
+            ".toml",
+            ".txt",
+            ".yaml",
+            ".yml",
+        }
+        excluded_parts = {".git", "__pycache__", "output", "tests"}
         runtime_files = [
-            *ROOT.glob("*.py"),
-            *ROOT.joinpath("scripts").glob("*.py"),
+            path
+            for path in ROOT.rglob("*")
+            if path.is_file()
+            and path.suffix.casefold() in deployable_suffixes
+            and not excluded_parts.intersection(path.relative_to(ROOT).parts)
         ]
         for path in runtime_files:
-            source = path.read_text(encoding="utf-8").casefold()
+            source = path.read_text(encoding="utf-8", errors="ignore").casefold()
             for fingerprint in restricted_fingerprints:
-                with self.subTest(path=path.name, fingerprint=fingerprint):
+                with self.subTest(path=str(path.relative_to(ROOT)), fingerprint=fingerprint):
                     self.assertNotIn(fingerprint, source)
 
         requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8").casefold()

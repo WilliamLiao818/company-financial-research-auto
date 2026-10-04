@@ -7,12 +7,34 @@ tmp/
 private_data/
 broker_exports/
 *activity-statement*
+*activity_statement*
+*activity statement*
+*account-statement*
+*account_statement*
+*account statement*
+*flex-query*
+*flex_query*
+*flex query*
 *portfolio*.csv
+*portfolio*.xlsx
+*portfolio*.xls
 *positions*.csv
+*positions*.xlsx
+*positions*.xls
 *orders*.csv
+*orders*.xlsx
+*orders*.xls
 *trades*.csv
+*trades*.xlsx
+*trades*.xls
 *transactions*.csv
+*transactions*.xlsx
+*transactions*.xls
 *pnl*.csv
+*pnl*.xlsx
+*pnl*.xls
+*realized*pnl*
+*unrealized*pnl*
 *.ofx
 *.qfx
 output/pdf/*

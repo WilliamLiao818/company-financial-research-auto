@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from input_pipeline import parse_identifiers  # noqa: E402
+from research import validate_financials  # noqa: E402
 from research_catalog import COMPANY_NAMES  # noqa: E402
 from sec_connector import company_facts_to_frame, fetch_company_facts  # noqa: E402
 
@@ -58,6 +59,9 @@ def main() -> None:
         frames.append(frame)
 
     output = pd.concat(frames, ignore_index=True)
+    validation_errors = validate_financials(output)
+    if validation_errors:
+        raise ValueError("; ".join(validation_errors))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     output.to_csv(args.output, index=False)
     print(f"Wrote {len(output)} company-year rows to {args.output}")
