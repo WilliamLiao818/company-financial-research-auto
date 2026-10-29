@@ -188,7 +188,7 @@ def accounting_quality_signals(frame: pd.DataFrame, ticker: str) -> pd.DataFrame
                 "Economic cash flow",
                 f"Reported capex increased {change:.1%} year over year.",
                 "Simple FCF is absorbing a larger investment cycle; maintenance and growth capex should not be assumed equivalent.",
-                "Reconcile the increase to data centers, equipment, construction commitments and management capacity commentary.",
+                "Reconcile the increase to facilities, equipment, technology investment, construction commitments and management capacity commentary.",
                 "High",
                 source,
             )

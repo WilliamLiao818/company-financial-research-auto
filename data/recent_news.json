@@ -1,102 +1,150 @@
 {
-  "generated_at": "2026-10-04T13:13:39+00:00",
+  "generated_at": "2026-10-29T04:02:27+00:00",
   "window_days": 90,
   "companies": {
     "MSFT": [
       {
-        "title": "Microsoft revamps Copilot with code generation, agentic AI tools",
-        "url": "https://www.reuters.com/technology/microsoft-revamps-copilot-with-code-generation-agentic-ai-tools-2026-09-25/",
-        "publisher": "Reuters",
-        "date": "2026-09-25",
-        "image": "https://www.bing.com/th?id=ONUT.p9gym0c9iTrFnDOFKAyFNA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Microsoft Quarterly Profit Soars as Cloud Growth Accelerates",
+        "url": "https://www.wsj.com/tech/microsoft-msft-q1-earnings-report-2027-stock-5809ce40",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.DW7FODiPF15VUWoJHXVBTA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "New Microsoft data innovations unlock what only your business knows",
-        "url": "https://blogs.microsoft.com/blog/2026/09/28/new-microsoft-data-innovations-unlock-what-only-your-business-knows/",
-        "publisher": "Microsoft",
-        "date": "2026-09-28",
-        "image": "https://blogs.microsoft.com/wp-content/uploads/2026/09/OMB-FabCon-26-Final-Hero-9_24-1024x683.jpg",
+        "title": "Microsoft's cloud growth, cash flow offer respite from AI spending fears",
+        "url": "https://www.reuters.com/business/retail-consumer/microsoft-beats-quarterly-cloud-revenue-estimates-2026-10-28/",
+        "publisher": "Reuters",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.obuTxeLGB0Yzw9GWSFeOXg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Microsoft’s Profit Jumps 32% Despite Big Increase in Spending",
+        "url": "https://www.nytimes.com/2026/10/28/technology/microsoft-earnings-ai.html",
+        "publisher": "The New York Times",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.4KxuiyJ56ytNH54c0p1YAA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Microsoft pulls out of UK Nscale data centre deal over power delay",
+        "url": "https://www.reuters.com/business/media-telecom/microsoft-pulls-out-uk-data-center-deal-with-nscale-telegraph-reports-2026-10-18/",
+        "publisher": "Reuters",
+        "date": "2026-10-18",
+        "image": "https://www.bing.com/th?id=ONUT.kE1B6gJGERm0wC2t09iHXA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "ORCL": [
       {
-        "title": "China’s Tencent leases 100,000 chips from Oracle to accelerate AI push, FT reports",
-        "url": "https://www.reuters.com/world/china/chinas-tencent-leases-100000-chips-oracle-accelerate-ai-push-ft-reports-2026-10-01/",
+        "title": "Oracle eases AI spending worries with plan to turn cash flow positive",
+        "url": "https://www.reuters.com/business/oracle-expects-turn-cash-flow-positive-second-half-fiscal-2028-2026-10-28/",
         "publisher": "Reuters",
-        "date": "2026-10-01",
-        "image": "https://www.bing.com/th?id=ONUT.WNsZDAIyaKGUHdOJNDpfUg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.uy58kEY5f-cpI4BcFAKWoQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Oracle tops estimates as AI demand tempers cash-burn fears",
-        "url": "https://www.reuters.com/technology/oracles-quarterly-revenue-beats-estimates-ai-boom-drives-cloud-demand-2026-09-10/",
-        "publisher": "Reuters",
-        "date": "2026-09-10",
-        "image": "https://www.bing.com/th?id=ONUT.tk-xZOrj-f3hjWHPPCP_PQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Oracle rallies after telling investors its AI bet will pay off sooner than expected",
+        "url": "https://www.ft.com/content/fb08df06-da63-4e94-822d-a47b94616871?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.gRMhNqBm3wDUEqs1FNj7iQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Cracks in Oracle’s AI Data-Center Build-Out Appear in Massive New Mexico Project",
-        "url": "https://www.wsj.com/finance/investing/cracks-in-oracles-ai-data-center-build-out-appear-in-massive-new-mexico-project-effb51c2",
+        "title": "Oracle Creates AI Workspace on ChatGPT",
+        "url": "https://www.wsj.com/cio-journal/oracle-creates-ai-workspace-on-chatgpt-30d37410",
         "publisher": "The Wall Street Journal",
-        "date": "2026-09-25",
-        "image": "https://www.bing.com/th?id=ONUT.B7EjHF0LZY61FCPgC3sh3w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.9dqMLqpRmL0aCJ6Axz4lcw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Oracle expands chip supply deal with Nvidia, adds Google and Cerebras offerings",
+        "url": "https://www.reuters.com/business/oracle-expands-chip-supply-deal-with-nvidia-adds-google-cerebras-offerings-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Sg40P9h-FSjsyW01jTZkcQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "GOOG": [
       {
-        "title": "Google Rolls Out New AI Model Gradually Amid Safety Concerns | The Morning Download for Oct. 1",
-        "url": "https://www.wsj.com/cio-journal/google-rolls-out-new-ai-model-gradually-amid-safety-concerns-38db8d1c",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-10-01",
-        "image": "https://www.bing.com/th?id=ONUT.fuGs7tqprB0ph3TY_fuWQw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Alphabet’s Revenue Rises 25% as Profit Falls",
+        "url": "https://www.nytimes.com/2026/10/28/technology/alphabet-earnings-google-ai.html",
+        "publisher": "The New York Times",
+        "date": "2026-10-29",
+        "image": "https://www.bing.com/th?id=ONUT.M9HcHnWnJexRABexx5A1Uw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Google announces Gemini 4 flagship AI model after months of delays",
-        "url": "https://www.reuters.com/legal/litigation/google-announces-gemini-4-flagship-ai-model-after-months-delays-2026-09-30/",
+        "title": "OpenAI plans to buy Google's AI chips, The Information reports",
+        "url": "https://www.reuters.com/business/openai-plans-buy-googles-ai-chips-information-reports-2026-10-28/",
         "publisher": "Reuters",
-        "date": "2026-09-30",
-        "image": "https://www.bing.com/th?id=ONUT.LtYAolJDjdP3tYAzFRE0xA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.xymfA6ufLvgPBC44_yr21Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Google Appeals EU Requests on Android AI Access, Search Data Sharing",
-        "url": "https://www.wsj.com/tech/google-appeals-eu-requests-on-android-ai-access-search-data-sharing-4a281f71",
+        "title": "Google Shares Fall 10% as Growth in Search Revenue Slows",
+        "url": "https://www.wsj.com/tech/ai/alphabet-googl-q3-earnings-report-2026-stock-fa41392d",
         "publisher": "The Wall Street Journal",
-        "date": "2026-09-29",
-        "image": "https://www.bing.com/th?id=ONUT.GNXA6OKNuIIqhwJrw3_RFQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.X-1eXNaqpXCZNx4jHxlW5A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Oracle expands chip supply deal with Nvidia, adds Google and Cerebras offerings",
+        "url": "https://www.reuters.com/business/oracle-expands-chip-supply-deal-with-nvidia-adds-google-cerebras-offerings-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Sg40P9h-FSjsyW01jTZkcQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "AVGO": [
       {
-        "title": "China surveys Broadcom switch use in state data centers, FT reports",
-        "url": "https://www.reuters.com/world/china/china-surveys-broadcom-switch-use-state-data-centers-ft-reports-2026-09-23/",
-        "publisher": "Reuters",
-        "date": "2026-09-23",
-        "image": "https://www.bing.com/th?id=ORMS.3f91b227e56f1c10dcaec4ddff73eeff&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Exclusive | Broadcom CEO Intervened to Seal $63 Billion Anthropic Debt Deal",
+        "url": "https://www.wsj.com/finance/broadcom-ceo-intervened-to-seal-63-billion-anthropic-debt-deal-c807754f",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.LMQxAy-E5X79ougLgZc8uQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "EXCLUSIVE: Broadcom to lend Anthropic up to $42 billion to lease its chips, filing says",
-        "url": "https://www.reuters.com/business/broadcom-lend-anthropic-up-42-billion-lease-its-chips-filing-says-2026-10-01/",
+        "title": "Broadcom and Anthropic Announce Biggest Ever AI Debt Deal",
+        "url": "https://www.wsj.com/podcasts/minute-briefing/broadcom-and-anthropic-announce-biggest-ever-ai-debt-deal/2705db5c-bcb6-41de-b3e7-5b72babdb96e",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.3EWrTjfOBRRY07Xiobeu3A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Wall Street banks, Blackstone line up $63 billion to finance Broadcom AI chips for Anthropic",
+        "url": "https://www.reuters.com/legal/transactional/wall-street-banks-blackstone-line-up-63-billion-finance-broadcom-chips-anthropic-2026-10-26/",
         "publisher": "Reuters",
-        "date": "2026-10-01",
-        "image": "https://www.bing.com/th?id=ONUT.Wlt_WR6dD3G6KcoEHjdxrQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.d4RE2zXkOL1J0S5XMKshog&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Broadcom raises AI chip forecast as Big Tech keeps writing bigger checks",
+        "url": "https://www.reuters.com/business/broadcom-forecasts-quarterly-revenue-below-estimates-2026-09-02/",
+        "publisher": "Reuters",
+        "date": "2026-09-02",
+        "image": "https://www.bing.com/th?id=ONUT.OZM1yEix6DFLiNz1aGikfg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "SNDK": [
       {
-        "title": "Sandisk forecasts upbeat quarterly revenue on AI-driven demand",
-        "url": "https://www.reuters.com/business/sandisk-forecasts-upbeat-quarterly-revenue-ai-driven-demand-2026-08-05/",
+        "title": "Kioxia, Sandisk to invest over $31 billion in Japan amid AI boom",
+        "url": "https://www.reuters.com/world/asia-pacific/kioxia-sandisk-invest-over-31-billion-japan-amid-ai-boom-2026-08-27/",
         "publisher": "Reuters",
-        "date": "2026-08-05",
-        "image": "https://www.bing.com/th?id=ONUT.DWra9swy7TVyLFUe_mffPA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-08-27",
+        "image": "https://www.bing.com/th?id=ONUT.MmbKxS8e262hGpHGpftDLQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -106,43 +154,67 @@
         "date": "2026-08-13",
         "image": "https://www.bing.com/th?id=ONUT.T_MdbO7DO4ea-DJ8M9PJoQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
+      },
+      {
+        "title": "Sandisk forecasts upbeat quarterly revenue on AI-driven demand",
+        "url": "https://www.reuters.com/business/sandisk-forecasts-upbeat-quarterly-revenue-ai-driven-demand-2026-08-05/",
+        "publisher": "Reuters",
+        "date": "2026-08-05",
+        "image": "https://www.bing.com/th?id=ONUT.-oW7O8-ceAwX7P0U7rjxaQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Sandisk Revenue Soars on AI Data Storage Demand",
+        "url": "https://www.wsj.com/business/earnings/sandisk-revenue-soars-on-ai-data-storage-demand-1fe50937",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-05",
+        "image": "https://www.bing.com/th?id=ONUT.-oW7O8-ceAwX7P0U7rjxaQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "NVDA": [
       {
-        "title": "Nvidia's bet that its chips can finance the AI boom gets a Wall Street reality check",
-        "url": "https://www.reuters.com/legal/transactional/nvidias-bet-that-its-chips-can-finance-ai-boom-gets-wall-street-reality-check-2026-10-01/",
+        "title": "Oracle expands chip supply deal with Nvidia, adds Google and Cerebras offerings",
+        "url": "https://www.reuters.com/business/oracle-expands-chip-supply-deal-with-nvidia-adds-google-cerebras-offerings-2026-10-27/",
         "publisher": "Reuters",
-        "date": "2026-10-01",
-        "image": "https://www.bing.com/th?id=ONUT.mAW8gt57XCDemlR4wWWUkA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Sg40P9h-FSjsyW01jTZkcQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Netlist seeks U.S. import ban on Micron chips used in Google, Nvidia AI computing",
-        "url": "https://www.reuters.com/legal/litigation/netlist-seeks-us-import-ban-micron-chips-used-google-nvidia-ai-computing-2026-09-29/",
+        "title": "Nvidia, Meta deepen AI ties with $3 billion investment deal",
+        "url": "https://www.reuters.com/technology/nvidia-meta-partner-muse-agent-nvidia-invests-3-billion-2026-10-27/",
         "publisher": "Reuters",
-        "date": "2026-09-29",
-        "image": "https://www.bing.com/th?id=ONUT.T6sYYALmBMCgDTIahBia_A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.dm5Jxe7UWK9ncYbd4wM4JQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Amazon seeks to offload $8bn of Nvidia chips to investors",
-        "url": "https://www.ft.com/content/97d8d346-519e-48fb-8df8-66cf5f12ef62?syn-25a6b1a6=1",
-        "publisher": "Financial Times",
-        "date": "2026-10-02",
-        "image": "https://www.bing.com/th?id=ONUT.k6cYfhOB5vKZ7NoQs9xj9A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "Samsung Commits $1.0 Billion to AI Infrastructure Firm Backed by KKR, Nvidia",
-        "url": "https://www.wsj.com/tech/ai/samsung-commits-1-billion-to-ai-infrastructure-firm-backed-by-kkr-nvidia-d1039c57",
+        "title": "Nvidia to Invest $3 Billion in Meta’s Equity Offering as They Expand AI Partnership",
+        "url": "https://www.wsj.com/tech/ai/nvidia-to-invest-3-billion-in-metas-equity-offering-as-they-expand-ai-partnership-e8d3850a",
         "publisher": "The Wall Street Journal",
-        "date": "2026-09-29",
-        "image": "https://www.bing.com/th?id=ONUT.6Ko9uc9dIdT6IhdZV5wW6w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Bec8bb34I_oIom6c38yEIg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Audi Announces Its First U.S. Factory; Nvidia, Micron Drive Earnings Boom",
+        "url": "https://www.wsj.com/cfo-journal/audi-announces-its-first-u-s-factory-nvidia-micron-drive-earnings-boom-281693e0",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.fv9mXP9tzxL1pHUnd68iZA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "MRVL": [
+      {
+        "title": "Marvell Technology in advanced talks to buy optics maker Lumentum, source says",
+        "url": "https://www.reuters.com/business/marvell-advanced-talks-buy-lumentum-bloomberg-news-reports-2026-10-28/",
+        "publisher": "Reuters",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.cKuroD2NwqmVbiyDNB1gtw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Marvell Advances AI Memory Infrastructure Portfolio to Accelerate Agentic AI Inference",
         "url": "https://investor.marvell.com/news-events/press-releases/detail/1030/marvell-advances-ai-memory-infrastructure-portfolio-to-accelerate-agentic-ai-inference",
@@ -154,29 +226,61 @@
     ],
     "AAPL": [
       {
-        "title": "Apple, Amazon face revived UK consumer lawsuit over product sales",
-        "url": "https://www.reuters.com/legal/litigation/apple-amazon-face-revived-uk-consumer-lawsuit-over-product-sales-2026-09-28/",
-        "publisher": "Reuters",
-        "date": "2026-09-28",
-        "image": "https://www.bing.com/th?id=ONUT.2E6ZI5fDAXF4sHhpfvYyHg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "The Beleaguered Chip Sellers Getting Their Revenge on Apple",
+        "url": "https://www.wsj.com/tech/apple-iphone-memory-chips-ai-c0084cc9",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-29",
+        "image": "https://www.bing.com/th?id=ONUT.foAa6-UBaJ6GT1PBmILJrw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Apple Pay launches in India with Axis Bank partnership",
-        "url": "https://www.reuters.com/world/india/apple-pay-launches-india-with-axis-bank-partnership-2026-09-30/",
+        "title": "Apple expected to show first touchscreen laptops amid product blitz",
+        "url": "https://www.reuters.com/business/retail-consumer/apple-expected-show-first-touchscreen-laptops-amid-product-blitz-2026-10-28/",
         "publisher": "Reuters",
-        "date": "2026-09-30",
-        "image": "https://www.bing.com/th?id=ONUT.MEgS4F7s29VrclSzYSFKBg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.CCQCRSB2AQTIAh-HuWhgHQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Apple launches M6 MacBook Pro and iMac, pitches faster on-device AI",
+        "url": "https://www.reuters.com/business/retail-consumer/apple-launches-m6-macbook-pro-imac-pitches-faster-on-device-ai-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.yY1vn_RD_xj2QWNgUW0Idg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Apple looks to AI capabilities to drive its new foldable phone sales",
+        "url": "https://www.ft.com/content/944fd36f-8f91-4178-b05a-2b961c44e310?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-09-08",
+        "image": "https://www.bing.com/th?id=ONUT.bbGtks7I5BjAUSW53ErJ8g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "AMZN": [
       {
-        "title": "Synopsys, Amazon Web Services sign chip design licensing deal worth more than $1 billion",
-        "url": "https://www.reuters.com/business/retail-consumer/synopsys-amazon-web-services-sign-chip-design-licensing-deal-worth-more-than-1-2026-09-30/",
+        "title": "Amazon cuts more jobs, in devices unit, after flurry of product rollouts",
+        "url": "https://www.reuters.com/business/world-at-work/amazon-cuts-more-jobs-devices-unit-after-flurry-product-rollouts-2026-10-28/",
         "publisher": "Reuters",
-        "date": "2026-09-30",
-        "image": "https://www.bing.com/th?id=ONUT.CVuBMVqz4i5McUYAtwtf5A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.Ea8cPYiGduRbGerbi3F5Ag&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Verizon Lifts Outlook, Inks Amazon Deal Worth More Than $2 Billion",
+        "url": "https://www.wsj.com/business/earnings/verizon-lifts-outlook-inks-amazon-deal-worth-more-than-2-billion-989c8e0f",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.Wn9KK-PdlWXz0FJyUaD4KQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Amazon cloud capacity largely sold out through 2027, CEO Jassy says",
+        "url": "https://www.reuters.com/business/retail-consumer/amazon-cloud-capacity-sold-out-through-2027-ceo-jassy-says-2026-10-23/",
+        "publisher": "Reuters",
+        "date": "2026-10-23",
+        "image": "https://www.bing.com/th?id=ONUT.BkIA1AJxDvUQq8eFOrPcyQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -190,39 +294,47 @@
     ],
     "META": [
       {
-        "title": "Meta taps Australia's Firmus for AI computing capacity in Southeast Asia",
-        "url": "https://www.reuters.com/world/asia-pacific/meta-taps-australias-firmus-ai-computing-capacity-southeast-asia-2026-09-28/",
+        "title": "Nvidia, Meta deepen AI ties with $3 billion investment deal",
+        "url": "https://www.reuters.com/technology/nvidia-meta-partner-muse-agent-nvidia-invests-3-billion-2026-10-27/",
         "publisher": "Reuters",
-        "date": "2026-09-28",
-        "image": "https://www.bing.com/th?id=ONUT.nl-fehTuF5aW3tUQNwY_XA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.dm5Jxe7UWK9ncYbd4wM4JQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Meta taps MongoDB CEO Desai to drive enterprise AI push",
-        "url": "https://www.reuters.com/technology/mongodb-ceo-desai-steps-down-lead-metas-enterprise-platform-2026-09-28/",
-        "publisher": "Reuters",
-        "date": "2026-09-28",
-        "image": "https://www.bing.com/th?id=ONUT.LNhFdcYSh9H9fL0yyN2ylQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "The Mulleted, Meme-Loving Billionaire Behind Meta’s Hit AI App",
-        "url": "https://www.wsj.com/tech/ai/alexandr-wang-muse-meta-efae7659",
+        "title": "Nvidia to Invest $3 Billion in Meta’s Equity Offering as They Expand AI Partnership",
+        "url": "https://www.wsj.com/tech/ai/nvidia-to-invest-3-billion-in-metas-equity-offering-as-they-expand-ai-partnership-e8d3850a",
         "publisher": "The Wall Street Journal",
-        "date": "2026-10-02",
-        "image": "https://www.bing.com/th?id=ONUT.a_tf8vsGJXgtbBkrxEDT1g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Bec8bb34I_oIom6c38yEIg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "How Meta Uses A.I. Data Centers to Avoid Billions in Federal Taxes",
-        "url": "https://www.nytimes.com/2026/09/30/technology/meta-ai-data-centers-taxes.html",
-        "publisher": "The New York Times",
-        "date": "2026-09-30",
-        "image": "https://www.bing.com/th?id=ONUT.Iow3N5rxTHU4ML53Bb3OhA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Meta Plans up to $95 Billion in Financing to Power Its AI Growth",
+        "url": "https://www.wsj.com/tech/ai/meta-plans-35-billion-stock-offering-to-power-ai-buildout-eyes-95-billion-total-plan-10b8947e",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT._FDMKPz45Dj8dS8low8-eQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Meta shares slide, default insurance hits record as AI spending alarms investors",
+        "url": "https://www.reuters.com/business/meta-falls-investors-balance-muse-growth-with-rising-ai-costs-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.miqzekCrGfED8WsdxHzb8Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "LITE": [
+      {
+        "title": "Marvell Technology in advanced talks to buy optics maker Lumentum, source says",
+        "url": "https://www.reuters.com/business/marvell-advanced-talks-buy-lumentum-bloomberg-news-reports-2026-10-28/",
+        "publisher": "Reuters",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.WNg8JWr-4_1KINXSV13O2w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Lumentum, Qualcomm, and Corning to Demonstrate High-Density 1060 nm VCSEL Optical D2D Connectivity for AI Scale-Up at ECOC 2026",
         "url": "https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Qualcomm-and-Corning-to-Demonstrate-High-Density-1060-nm-VCSEL-Optical-D2D-Connectivity-for-AI-Scale-Up-at-ECOC-2026/default.aspx",
@@ -234,57 +346,105 @@
     ],
     "AMAT": [
       {
-        "title": "Applied Materials Appoints Akash Palkhiwala to Board of Directors",
-        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-appoints-akash-palkhiwala-board-directors/",
-        "publisher": "Applied Materials",
-        "date": "2026-08-27",
-        "image": "https://ml.globenewswire.com/Resource/Download/6053f01f-c6a8-4f48-8850-1c97770d5a4b?size=3",
+        "title": "Dutch chip tool maker Besi soars after Applied Materials moves to double stake",
+        "url": "https://www.reuters.com/business/shares-be-semiconductor-jump-over-9-after-applied-materials-raises-stake-20-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.W3eBKDaT58GlxqNUP0UGMQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Applied Materials forecasts revenue above estimates, shares fall on high expectations",
+        "url": "https://www.reuters.com/business/applied-materials-forecasts-quarterly-revenue-above-estimates-2026-08-13/",
+        "publisher": "Reuters",
+        "date": "2026-08-13",
+        "image": "https://www.bing.com/th?id=ONUT.LEx6XCqyQElw5DjnqW_wPA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "TSM": [
       {
-        "title": "TSMC evaluates potential Texas investment, sources say",
-        "url": "https://www.reuters.com/world/asia-pacific/tsmc-evaluates-potential-texas-investment-sources-say-2026-09-30/",
-        "publisher": "Reuters",
-        "date": "2026-09-30",
-        "image": "https://www.bing.com/th?id=ONUT.gpoXqDPUJP_1r6WG_1pDeg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "TSMC chip capacity is ‘fierce’ battleground for AI customers, amid record quarter",
+        "url": "https://www.cnbc.com/2026/10/15/nvidia-apple-broadcom-in-fierce-battle-to-make-chips-at-tsmc.html",
+        "publisher": "CNBC",
+        "date": "2026-10-15",
+        "image": "https://www.bing.com/th?id=ONUT.xDjHrGwYCsG_WYEDJnkHoQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "TSMC to add 2 advanced chip packaging plants in Chiayi, Taiwan minister says",
-        "url": "https://www.reuters.com/world/asia-pacific/tsmc-add-2-advanced-chip-packaging-plants-chiayi-taiwan-minister-says-2026-07-13/",
+        "title": "TSMC 'prudent' going into 2027 after posting sixth straight quarter of record profit",
+        "url": "https://www.reuters.com/world/asia-pacific/tsmc-expected-report-sixth-straight-quarter-record-profit-thanks-ai-boom-2026-10-14/",
         "publisher": "Reuters",
-        "date": "2026-07-13",
-        "image": "https://www.bing.com/th?id=ONUT.JrrKlzDRGV8KscTxgdhhlA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-14",
+        "image": "https://www.bing.com/th?id=ONUT.ijsQBP-noHf0xVvB0VUySw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "TSMC posts record profit for a sixth straight quarter, beating estimates on AI boom",
+        "url": "https://www.cnbc.com/2026/10/15/tsmc-third-quarter-profit-global-ai-.html",
+        "publisher": "CNBC",
+        "date": "2026-10-14",
+        "image": "https://image.cnbcfm.com/api/v1/image/108131996-17447197412025-04-15t062815z_1969410792_rc25ydai7qeg_rtrmadp_0_usa-trump-tariffs-taiwan.jpeg?v=1744719807&w=1920&h=1080",
+        "image_kind": "article"
+      },
+      {
+        "title": "TSMC's third-quarter revenue surges to record, beating market forecast",
+        "url": "https://www.reuters.com/world/asia-pacific/tsmcs-third-quarter-revenue-surges-50-yy-beating-market-forecast-2026-10-08/",
+        "publisher": "Reuters",
+        "date": "2026-10-08",
+        "image": "https://www.bing.com/th?id=ONUT.u6fCd0qy0aeizLXiE-0iyg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "ASML": [
       {
-        "title": "Chip toolmaker ASML expected to shine light on capacity and China challenges",
-        "url": "https://www.reuters.com/world/china/chip-toolmaker-asml-expected-shine-light-capacity-china-challenges-2026-07-14/",
+        "title": "Besi beats order forecasts, says ASML not a hybrid bonding rival",
+        "url": "https://www.reuters.com/business/besis-quarterly-orders-beat-expectations-ai-data-centre-demand-stays-strong-2026-10-22/",
         "publisher": "Reuters",
-        "date": "2026-07-14",
-        "image": "https://www.bing.com/th?id=ONUT.anJJ_X7ckooraeFa76_UTg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.GtMvwz3MZIaGg7af54AG2w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Chip-Machine Supplier ASML Boosts Guidance for Third Time on Surging AI Demand",
+        "url": "https://www.wsj.com/business/earnings/chip-machine-supplier-asml-boosts-guidance-for-third-time-on-surging-ai-demand-7ea173d9",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-14",
+        "image": "https://www.bing.com/th?id=ONUT.tvDQqGvLjdGrTAYks-VPog&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "ASML's strong orders ease fears AI spending boom is running out of steam",
+        "url": "https://www.reuters.com/business/asml-forecasts-q4-sales-above-expectations-ai-chip-demand-2026-10-14/",
+        "publisher": "Reuters",
+        "date": "2026-10-14",
+        "image": "https://www.bing.com/th?id=ONUT.13O4_LinHqe1bnvJhIPlPQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "AI demand to exceed supply for 2 more years, says ASML",
+        "url": "https://www.ft.com/content/2fc239ae-b0d4-41e8-81d0-cc2c0b3aba01?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-10-13",
+        "image": "https://www.bing.com/th?id=ONUT.UNzGbcU3MJGghVkNvqcdqA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "AMD": [
       {
-        "title": "AMD's AI-powered revenue forecast fails to wow investors",
-        "url": "https://www.reuters.com/business/amd-forecasts-upbeat-revenue-ai-data-center-demand-beats-quarterly-estimates-2026-08-04/",
+        "title": "AMD plans to substantially increase supply in 2027, CEO says",
+        "url": "https://www.reuters.com/world/asia-pacific/amd-plans-substantially-increase-supply-2027-ceo-says-2026-10-06/",
         "publisher": "Reuters",
-        "date": "2026-08-04",
-        "image": "https://www.bing.com/th?id=ONUT.ZDrUG1jKJG3_th-QjJ6AUg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-06",
+        "image": "https://www.bing.com/th?id=ONUT.W4p2_9Oj2IdyB56sy3Rm4g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "AMD signs AI data center deal with Core Scientific",
-        "url": "https://www.reuters.com/business/core-scientific-signs-ai-infrastructure-deal-with-amd-2026-07-28/",
-        "publisher": "Reuters",
-        "date": "2026-07-28",
-        "image": "https://www.bing.com/th?id=ONUT.CaueAfEA__RFK_l0vuE0KQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "AMD to Acquire World Labs for $8.2 Billion",
+        "url": "https://www.wsj.com/tech/ai/amd-to-acquire-world-labs-for-8-2-billion-a8d03d11",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-28",
+        "image": "https://www.bing.com/th?id=ONUT.VsMo5WouhqZjxT_eYX1qfg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -294,19 +454,67 @@
         "date": "2026-09-28",
         "image": "https://www.bing.com/th?id=ONUT.8tEjilP_m6m7rPNvRMAyhA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
+      },
+      {
+        "title": "AMD's AI-powered revenue forecast fails to wow investors",
+        "url": "https://www.reuters.com/business/amd-forecasts-upbeat-revenue-ai-data-center-demand-beats-quarterly-estimates-2026-08-04/",
+        "publisher": "Reuters",
+        "date": "2026-08-04",
+        "image": "https://www.bing.com/th?id=ONUT.z3_IglQXCA5F3vN2gIYDRQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "INTC": [
       {
-        "title": "Intel forecast crushes estimates as AI boom boosts chip demand; shares jump",
-        "url": "https://www.reuters.com/business/intel-forecasts-upbeat-quarterly-revenue-profit-strong-ai-driven-server-chip-2026-07-23/",
+        "title": "Intel to buy quantum firm Classiq for about $2.3 billion, Bloomberg News reports",
+        "url": "https://www.reuters.com/technology/intel-buy-quantum-firm-classiq-about-23-billion-bloomberg-news-reports-2026-10-27/",
         "publisher": "Reuters",
-        "date": "2026-07-23",
-        "image": "https://www.bing.com/th?id=ONUT.ut_o3MLLv1PE1YM_q5mkAA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.fGhj4iLzmqhYP52oi8aBZQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Intel hits construction milestone at Ohio chip fab that’s at least 5 years behind schedule",
+        "url": "https://www.cnbc.com/2026/10/21/intel-hits-construction-milestone-at-delayed-ohio-chip-fab-.html",
+        "publisher": "CNBC",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.hcwCZ2RD9MAXtxWWPhY8pw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "EXCLUSIVE: SK Hynix in talks with Intel about deal to make memory chips in US for the first time, sources say",
+        "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-talks-with-intel-about-deal-make-memory-chips-us-first-time-sources-say-2026-09-16/",
+        "publisher": "Reuters",
+        "date": "2026-09-16",
+        "image": "https://www.bing.com/th?id=ONUT.L906XiFROpWc3_vuqNBe3g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "QCOM": [
+      {
+        "title": "EXCLUSIVE: Qualcomm to cut jobs worldwide in performance-focused layoffs, internal memo shows",
+        "url": "https://www.reuters.com/business/qualcomm-cut-jobs-worldwide-performance-focused-layoffs-internal-memo-shows-2026-10-20/",
+        "publisher": "Reuters",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.-Sgjv5M_uC6hjLK4-VR9ag&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Qualcomm to cut jobs worldwide in performance-focused layoffs, internal memo shows",
+        "url": "https://www.cnbc.com/2026/10/20/qualcomm-performance-focused-layoffs-reuters.html",
+        "publisher": "CNBC",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.BG8suvnyDka5mvxH2fGSXg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Qualcomm and Arm kick off trial, potential for huge damages in focus",
+        "url": "https://www.reuters.com/business/media-telecom/qualcomm-arm-head-trial-again-potential-huge-damages-focus-2026-10-05/",
+        "publisher": "Reuters",
+        "date": "2026-10-05",
+        "image": "https://www.bing.com/th?id=ONUT.iDG1-eFKpMF9HoyWaIZA0Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Inside Snapdragon Summit 2026: Agentic AI PCs, Googlebooks and Linux are here",
         "url": "https://www.qualcomm.com/news/onq/2026/09/snapdragon-summit-agentic-ai-pcs-linux",
@@ -318,11 +526,11 @@
     ],
     "MU": [
       {
-        "title": "Micron's AI-fueled revenue forecast blows past estimates, backlog swells",
-        "url": "https://www.reuters.com/business/micron-forecasts-quarterly-revenue-above-estimates-2026-09-30/",
-        "publisher": "Reuters",
-        "date": "2026-09-30",
-        "image": "https://www.bing.com/th?id=ONUT.8cI1mFTYYhqH-pOUliNnlQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Audi Announces Its First U.S. Factory; Nvidia, Micron Drive Earnings Boom",
+        "url": "https://www.wsj.com/cfo-journal/audi-announces-its-first-u-s-factory-nvidia-micron-drive-earnings-boom-281693e0",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.fv9mXP9tzxL1pHUnd68iZA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -330,11 +538,43 @@
         "url": "https://www.reuters.com/legal/litigation/netlist-seeks-us-import-ban-micron-chips-used-google-nvidia-ai-computing-2026-09-29/",
         "publisher": "Reuters",
         "date": "2026-09-29",
-        "image": "https://www.bing.com/th?id=ONUT.T6sYYALmBMCgDTIahBia_A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.K7NgiWT2SIj-KdDf9DFDrQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Micron earnings this week could test whether the memory boom has more room to run",
+        "url": "https://www.cnbc.com/2026/09/29/micron-earnings-this-week-could-test-whether-the-memory-boom-has-more-room-to-run.html",
+        "publisher": "CNBC",
+        "date": "2026-09-29",
+        "image": "https://image.cnbcfm.com/api/v1/image/108324212-1781811916539-gettyimages-2277830149-boivin-notitle260527_npBEE.jpeg?v=1781811984&w=1920&h=1080",
+        "image_kind": "article"
+      },
+      {
+        "title": "Micron Taiwan union presses profit-sharing demand, keeps strike preparations alive",
+        "url": "https://www.reuters.com/business/world-at-work/micron-taiwan-union-presses-profit-sharing-demand-keeps-strike-preparations-2026-09-15/",
+        "publisher": "Reuters",
+        "date": "2026-09-15",
+        "image": "https://www.bing.com/th?id=ONUT.wByaeCs-qBHLWTLNU5nS-w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "TXN": [
+      {
+        "title": "Texas Instruments Posts Higher Profit, Revenue",
+        "url": "https://www.wsj.com/business/earnings/texas-instruments-posts-higher-profit-revenue-23a867a6",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT._xCxGjKLUxs1PXB0iD3UzA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Analog chipmaker Texas Instruments sees quarterly sales above estimates",
+        "url": "https://www.reuters.com/business/analog-chipmaker-texas-instruments-sees-quarterly-sales-above-estimates-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ORMS.21d77a472bbf38556ca893555c0d80bb&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "TI expands Zephyr RTOS support to its broad embedded portfolio",
         "url": "https://www.ti.com/about-ti/newsroom/news-releases/2026/ti-expands-zephyr-rtos-support-to-its-broad-embedded-portfolio.html",
@@ -346,29 +586,45 @@
     ],
     "ADI": [
       {
-        "title": "Alif Semiconductor to Join Analog Devices",
-        "url": "https://alifsemi.com/alif-semiconductor-to-join-analog-devices/",
-        "publisher": "Alif Semiconductor",
-        "date": "2026-09-09",
-        "image": "https://alifsemi.com/wp-content/uploads/2026/09/ADI-PR-Image-1.jpg",
+        "title": "Analog Devices Profit, Revenue Up on Surging AI Data Center Demand",
+        "url": "https://www.wsj.com/business/earnings/analog-devices-profit-revenue-up-on-surging-ai-data-center-demand-47c508fe",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-19",
+        "image": "https://www.bing.com/th?id=ONUT.DoKmV5mpXtR59koGAEdGHQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Analog Devices' quarterly forecast tops estimates on AI-fueled chip demand",
+        "url": "https://www.reuters.com/technology/analog-devices-quarterly-forecast-tops-estimates-ai-fueled-chip-demand-2026-08-19/",
+        "publisher": "Reuters",
+        "date": "2026-08-19",
+        "image": "https://www.bing.com/th?id=ONUT.DoKmV5mpXtR59koGAEdGHQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "NXPI": [
+      {
+        "title": "NXP Semiconductors Profit Jumps on Automotive, Industrial Growth",
+        "url": "https://www.wsj.com/business/earnings/nxp-semiconductors-profit-jumps-on-automotive-industrial-growth-590e0491",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.-sDyZtpAuPOoj9UPe5h1aA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "NXP Semiconductors shares slide despite beating on revenue and earnings",
+        "url": "https://www.cnbc.com/video/2026/10/27/nxp-semiconductors-shares-slide-despite-beating-on-revenue-and-earnings.html",
+        "publisher": "CNBC",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Sg14OPuXRUN10CxAdrm94Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "NXP Semiconductors Breaks Ground on Assembly and Test Site Expansion in Malaysia",
         "url": "https://investors.nxp.com/news-releases/news-release-details/nxp-semiconductors-breaks-ground-assembly-and-test-site",
         "publisher": "NXP Semiconductors",
         "date": "2026-08-12",
         "image": "https://ml.globenewswire.com/media/YjY3NmUyMDMtNjFkZi00NWUyLWEzZmUtYzk3ZGI4NjFlNzZkLTEwMjE0NjAtMjAyNi0wOC0xMi1lbg%3D%3D/tiny/NXP-USA-Inc-.png",
-        "image_kind": "article"
-      },
-      {
-        "title": "NXP Semiconductors Second-Quarter Profit, Revenue Climb on Growth Across End Markets",
-        "url": "https://www.wsj.com/business/earnings/nxp-semiconductors-second-quarter-profit-revenue-climb-on-growth-across-end-markets-d2b6d87a",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-07-28",
-        "image": "https://www.bing.com/th?id=ONUT.E7PdmGQ33twzkeZQuxkl8Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -404,8 +660,8 @@
         "url": "https://ir.microchip.com/news-events/press-releases/detail/1417/microchip-expands-single-pair-ethernet-portfolio-with-new-10baset1s-devices-enabling-scalable-edge-connectivity",
         "publisher": "Microchip Technology",
         "date": "2026-09-29",
-        "image": "https://live.staticflickr.com/65535/55399498402_7cdf602f4d_b.jpg",
-        "image_kind": "article"
+        "image": "",
+        "image_kind": ""
       }
     ],
     "ON": [
@@ -420,31 +676,38 @@
     ],
     "GFS": [
       {
+        "title": "Japan to invest up to $21 billion in two GlobalFoundries chip factories in New York",
+        "url": "https://www.reuters.com/business/retail-consumer/japan-invest-up-21-billion-two-us-chip-factories-be-run-by-globalfoundries-2026-10-14/",
+        "publisher": "Reuters",
+        "date": "2026-10-14",
+        "image": "https://www.bing.com/th?id=ONUT.lF-Alcy-khMcSQCfC4ZAMw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
         "title": "GlobalFoundries and Marvell expand collaboration for next-generation optical connectivity",
         "url": "https://gf.com/news-and-events/news/globalfoundries-and-marvell-expand-collaboration-fornext-generation-optical-connectivity/",
         "publisher": "GlobalFoundries",
         "date": "2026-09-17",
         "image": "https://assets.gf.com/image/328833518282/image_2b4a27eh897k177ggn8l1igf4a/-B800-FWEBP",
         "image_kind": "article"
-      }
-    ],
-    "KLAC": [
+      },
       {
-        "title": "KLA Announces June Quarter Earnings",
-        "url": "https://www.kla.com/advance/leadership/kla-announces-june-quarter-earnings-2026",
-        "publisher": "KLA Corporation",
-        "date": "2026-07-28",
-        "image": "https://www.kla.com/wp-content/uploads/26-IR_Earnings.avif",
+        "title": "GlobalFoundries tops second quarter estimates on AI chip demand",
+        "url": "https://www.reuters.com/business/globalfoundries-tops-second-quarter-estimates-ai-chip-demand-2026-08-05/",
+        "publisher": "Reuters",
+        "date": "2026-08-05",
+        "image": "https://www.bing.com/th?id=ONUT.tMf9gPU7SaSW-V8O_G11uw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
+    "KLAC": [],
     "LRCX": [
       {
-        "title": "Chip equipment maker Lam Research forecasts strong revenue on AI boom",
-        "url": "https://www.reuters.com/technology/chip-equipment-maker-lam-research-forecasts-strong-revenue-ai-boom-2026-07-29/",
-        "publisher": "Reuters",
-        "date": "2026-07-29",
-        "image": "https://www.bing.com/th?id=ONUT.tvDQqGvLjdGrTAYks-VPog&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Why I see a buying opportunity in Lam Research ahead of earnings",
+        "url": "https://www.cnbc.com/video/2026/10/15/why-i-see-a-buying-opportunity-in-lam-research-ahead-of-earnings.html",
+        "publisher": "CNBC",
+        "date": "2026-10-15",
+        "image": "https://www.bing.com/th?id=ONUT.ngkwSIO-bNJqcaCLO9vB7g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -452,21 +715,29 @@
         "url": "https://www.reuters.com/technology/chip-equipment-maker-lam-research-invest-more-than-3-billion-expand-rd-labs-2026-08-13/",
         "publisher": "Reuters",
         "date": "2026-08-13",
-        "image": "https://www.bing.com/th?id=ONUT.qGuX3e2PNEIXN3r79qYmFw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.F9c1S60MIeWIBlhFarRC4Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "TER": [
       {
-        "title": "Teradyne forecasts upbeat revenue on strong chip equipment demand, shares jump",
-        "url": "https://www.reuters.com/technology/teradyne-forecasts-upbeat-revenue-strong-chip-equipment-demand-shares-jump-2026-07-28/",
-        "publisher": "Reuters",
-        "date": "2026-07-28",
-        "image": "https://www.bing.com/th?id=ONUT.9LS-2lepb_AaSmosj4pbIA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Teradyne Revenue, Profit Jump on Semiconductor Test Growth",
+        "url": "https://www.wsj.com/business/earnings/teradyne-revenue-profit-jump-on-semiconductor-test-growth-33b949a7",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.DPliZOfQO7GhrBeseqOxgA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "CDNS": [
+      {
+        "title": "Cadence unveils suite of AI models that chipmakers can run in-house",
+        "url": "https://www.reuters.com/business/cadence-unveils-nvidia-backed-ai-models-that-chipmakers-can-run-in-house-2026-10-26/",
+        "publisher": "Reuters",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.YsBkXuWp6FS8p1wSF06DLA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Cadence Expands ChipStack AI Super Agent with a New Agent for RTL Generation and Early PPA Optimization",
         "url": "https://login.cadence.com/content/cadence-www/global/en_US/home/company/newsroom/press-releases/pr/2026/cadence-expands-chipstack-ai-super-agent-with-a-new-agent-for.html",
@@ -482,7 +753,7 @@
         "url": "https://www.reuters.com/business/synopsys-shares-jump-robust-growth-outlook-openai-aws-deals-2026-10-01/",
         "publisher": "Reuters",
         "date": "2026-10-01",
-        "image": "https://www.bing.com/th?id=ONUT.7Ru7sp8UO-UFYO0AcpBV2A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.CTg5x-rWZkPA3unj0MEblg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -502,16 +773,7 @@
         "image_kind": "article"
       }
     ],
-    "AMKR": [
-      {
-        "title": "Amkor Joins Arizona Economic Delegation to the Republic of Korea",
-        "url": "https://amkor.com/blog/arizona-korea-semiconductor-delegation/",
-        "publisher": "Amkor Technology",
-        "date": "2026-08-13",
-        "image": "https://amkormarcomexternal.blob.core.windows.net/amkordotcom/wp-content/uploads/2026/08/1-EKIM0017-1-scaled-e1786636190275-1024x605.jpg",
-        "image_kind": "article"
-      }
-    ],
+    "AMKR": [],
     "ENTG": [
       {
         "title": "Entegris Reports Results for Second Quarter of 2026",
@@ -534,23 +796,31 @@
     ],
     "ANET": [
       {
+        "title": "Memory is the new gold, says Arista Networks CEO Jayshree Ullal",
+        "url": "https://www.cnbc.com/video/2026/08/05/memory-is-the-new-gold-says-arista-networks-ceo-jayshree-ullal.html",
+        "publisher": "CNBC",
+        "date": "2026-08-05",
+        "image": "https://image.cnbcfm.com/api/v1/image/108345715-4ED3-MM-B-BLOCK-080526.jpg?v=1785971550&w=1920&h=1080",
+        "image_kind": "article"
+      },
+      {
         "title": "Arista Networks, Inc. Reports Second Quarter 2026 Financial Results",
         "url": "https://www.arista.com/company/news/press-release/24401-pr-20260804",
         "publisher": "Arista Networks",
         "date": "2026-08-04",
-        "image": "https://www.arista.com/assets/images/FinancialPR.jpg",
-        "image_kind": "article"
-      },
-      {
-        "title": "Arista Networks Introduces AI-Driven Zero Trust Branch",
-        "url": "https://www.arista.com/company/news/press-release/24357-pr-20260721",
-        "publisher": "Arista Networks",
-        "date": "2026-07-21",
-        "image": "https://www.arista.com/assets/images/banner/news_room/2026-ETM-Launch-Blog-PR.jpg",
-        "image_kind": "article"
+        "image": "",
+        "image_kind": ""
       }
     ],
     "CSCO": [
+      {
+        "title": "Cisco Gave All 90,000 Employees Their Own AI Agent",
+        "url": "https://www.wsj.com/cio-journal/cisco-gave-all-90-000-employees-their-own-ai-agent-1a4ad8bc",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-27",
+        "image": "https://www.bing.com/th?id=ONUT.s7xiMdlZLbDCps4RTGw2_A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Cisco Expands Secure AI Factory with NVIDIA for the Rack-Scale Era",
         "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m08/cisco-secure-ai-factory-nvidia-rack-scale.html",
@@ -561,6 +831,30 @@
       }
     ],
     "DELL": [
+      {
+        "title": "Michael Dell, a Dot-Com Era Survivor, Has Tips to Beat an AI Bust",
+        "url": "https://www.wsj.com/tech/ai/michael-dell-a-dot-com-era-survivor-has-tips-to-beat-an-ai-bust-7987db49",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-16",
+        "image": "https://www.bing.com/th?id=ONUT.XJ6HzCXfodmpGcml1QtdGw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "JERA teams up with Dell, RHAELM on Japan's AI infrastructure, building data centre near Tokyo",
+        "url": "https://www.reuters.com/business/energy/jera-teams-up-with-dell-rhaelm-ai-infrastructure-development-japan-2026-10-01/",
+        "publisher": "Reuters",
+        "date": "2026-10-01",
+        "image": "https://www.bing.com/th?id=ONUT.G91cAjB9W3WJJsKdUKfEiQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Dell's DFO Management and Sequence to take Baldwin private in $7.7 billion deal",
+        "url": "https://www.reuters.com/legal/transactional/dfo-management-sequence-take-baldwin-private-77-billion-deal-2026-09-14/",
+        "publisher": "Reuters",
+        "date": "2026-09-14",
+        "image": "https://www.bing.com/th?id=ONUT.fvoNrcQb3ptVSKw13KNTAQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Firebird AI and Dell Advance Sovereign AI in Armenia with New AI Cluster",
         "url": "https://www.dell.com/en-us/blog/firebird-ai-and-dell-advance-sovereign-ai-in-armenia-with-new-ai-cluster/",
@@ -588,19 +882,43 @@
         "date": "2026-09-24",
         "image": "https://www.vertiv.com/4a78fd/contentassets/d4eb093046414d43a34e73675ec85991/vertiv-king-press-release_image_1601x1088.png",
         "image_kind": "article"
+      },
+      {
+        "title": "Vertiv to buy Utility Innovation Group for up to $2.6 billion in data center push",
+        "url": "https://www.reuters.com/legal/transactional/vertiv-strikes-145-billion-deal-microgrid-firm-utility-innovation-group-2026-09-02/",
+        "publisher": "Reuters",
+        "date": "2026-09-02",
+        "image": "https://www.bing.com/th?id=ONUT.CX6acp5Lqq1ljb-Rjr7eKg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "SMCI": [
       {
-        "title": "Supermicro Now Shipping NVIDIA Vera Rubin NVL72 Racks",
-        "url": "https://www.prnewswire.com/news-releases/supermicro-now-shipping-nvidia-vera-rubin-nvl72-racks-302886839.html",
+        "title": "Supermicro Brings NVIDIA Aerial RAN Computer Solutions to the Network Edge with Nokia to Enable Low-latency AI Services",
+        "url": "https://www.prnewswire.com/news-releases/supermicro-brings-nvidia-aerial-ran-computer-solutions-to-the-network-edge-with-nokia-to-enable-low-latency-ai-services-302914853.html",
         "publisher": "Super Micro Computer, Inc. / PR Newswire",
-        "date": "2026-09-23",
-        "image": "https://mmx.prnewswire.com/media/MS1994462/PR_Image_Vera_Rubin_Shipping.jpg?id=OA2965336&p=original",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.fFBvLOjtdzk6LTZIt03ldQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Super Micro Computer Shares Up as Preliminary Revenue Tops Guidance",
+        "url": "https://www.wsj.com/business/earnings/super-micro-computer-shares-up-as-preliminary-revenue-tops-guidance-be7f5f1f",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.MXQD6pcgD8TBfF_Pfdn69A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "WDC": [
+      {
+        "title": "Western Digital Profit Grows on Data Storage Demand, Higher Pricing",
+        "url": "https://www.wsj.com/business/earnings/western-digital-profit-grows-on-data-storage-demand-28a69a7d",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.FXR59r41LGc5ViwuLLqgkw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "WD and Tohoku University Launch AI Data Infrastructure Lab to Accelerate the Future of AI Storage",
         "url": "https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-08-19-wd-and-tohoku-university-launch-ai-data-infrastructure-lab",
@@ -608,27 +926,67 @@
         "date": "2026-08-19",
         "image": "https://www.westerndigital.com/content/dam/western-digital/en-us/assets/newsroom/press-release-aug19-tohoku.jpg",
         "image_kind": "article"
+      },
+      {
+        "title": "Western Digital Profit Surges as Revenue Grows",
+        "url": "https://www.wsj.com/business/earnings/western-digital-profit-surges-as-revenue-grows-8837d0bf",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-05",
+        "image": "https://www.bing.com/th?id=ONUT.FXR59r41LGc5ViwuLLqgkw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "CRM": [
       {
-        "title": "Salesforce issues revenue target of over $63 billion for fiscal 2030, beating estimates",
-        "url": "https://www.cnbc.com/2026/09/16/salesforce-issues-revenue-target-of-63-billion-for-fiscal-2030.html",
-        "publisher": "CNBC",
-        "date": "2026-09-16",
-        "image": "https://image.cnbcfm.com/api/v1/image/108364034-1789589336289-gettyimages-2294936771-DREAMFORCE_2026.jpeg?v=1789589480&w=1920&h=1080",
+        "title": "Salesforce deepens AI bets with $5.66 billion Braze deal",
+        "url": "https://www.reuters.com/business/salesforce-acquire-braze-566-billion-deal-2026-10-20/",
+        "publisher": "Reuters",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.VqoBVp4py3iPdDTJ6v7vjA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Salesforce Signs Definitive Agreement to Acquire Listen Labs",
-        "url": "https://www.salesforce.com/news/stories/salesforce-signs-definitive-agreement-to-acquire-listen-labs/",
-        "publisher": "Salesforce",
-        "date": "2026-09-29",
-        "image": "https://www.bing.com/th?id=ONUT.BJxjSFOVxqcPOiZZT_n0PA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Salesforce to Buy Customer-Engagement Platform for Nearly $5.7 Billion",
+        "url": "https://www.wsj.com/business/deals/salesforce-to-buy-customer-engagement-platform-for-nearly-5-7-billion-aba17cfe",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.N2zQTHQhwzD1WveeDI_VZw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Salesforce raises annual forecasts, expands AI partnership with Anthropic",
+        "url": "https://www.reuters.com/technology/salesforce-raises-annual-revenue-forecast-2026-08-26/",
+        "publisher": "Reuters",
+        "date": "2026-08-26",
+        "image": "https://www.bing.com/th?id=ONUT.7GT3nJYJfjVF-UrGdi6p-A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Salesforce Profit, Revenue Rise, Expands Partnership with Anthropic’s Claude",
+        "url": "https://www.wsj.com/business/earnings/salesforce-profit-revenue-rise-expands-partnership-with-anthropics-claude-f17aa26f",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-26",
+        "image": "https://www.bing.com/th?id=ONUT.7GT3nJYJfjVF-UrGdi6p-A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "NOW": [
+      {
+        "title": "ServiceNow shares plummet in extended trading on mixed Q3 results",
+        "url": "https://www.cnbc.com/video/2026/10/28/servicenow-shares-plummet-in-extended-trading-on-mixed-q3-results.html",
+        "publisher": "CNBC",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.VSiMHBte1q0IJDwzwQY93w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "ServiceNow CEO Bill McDermott: This is a unicorn growth company",
+        "url": "https://www.cnbc.com/video/2026/10/28/servicenow-ceo-bill-mcdermott-this-is-a-unicorn-growth-company.html",
+        "publisher": "CNBC",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.EdrLEqL4d30QSJCT5VBvnA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "ServiceNow delivers Autonomous Security, the industry's most complete security offering",
         "url": "https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-delivers-Autonomous-Security-the-industrys-most-complete-security-offering/default.aspx",
@@ -644,11 +1002,35 @@
         "url": "https://www.reuters.com/technology/palo-alto-networks-unveils-ai-powered-cybersecurity-service-using-claude-gpt-2026-09-22/",
         "publisher": "Reuters",
         "date": "2026-09-22",
-        "image": "https://www.bing.com/th?id=ONUT.s9SfZylmpixEaikSbrAjyg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.2dm7cVdL2pdmY9id5DZeFQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Palo Alto Networks beats quarterly earnings estimates, acquires AI platform Console",
+        "url": "https://www.reuters.com/business/palo-alto-networks-beats-quarterly-earnings-estimates-acquires-ai-platform-2026-09-01/",
+        "publisher": "Reuters",
+        "date": "2026-09-01",
+        "image": "https://www.bing.com/th?id=ONUT.1RSnJbc83WHbeDod7bpH4Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "PLTR": [
+      {
+        "title": "Palantir says it cannot shut off NATO AI system as Europeans fear US tech dependence",
+        "url": "https://www.reuters.com/business/media-telecom/palantir-says-it-cannot-shut-off-nato-ai-system-europeans-fear-us-tech-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.LmCqxobOZxWZ7mwACsD8vg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Palantir and London mayor's office settle lawsuit over UK police contract",
+        "url": "https://www.reuters.com/legal/litigation/palantir-london-mayors-office-settle-lawsuit-over-uk-police-contract-2026-10-14/",
+        "publisher": "Reuters",
+        "date": "2026-10-14",
+        "image": "https://www.bing.com/th?id=ONUT.cySaX6bMpp4XMQ_Xc7mZJA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Palantir and Nebius partner to deliver a complete sovereign AI stack to Palantir customers",
         "url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers",
@@ -660,51 +1042,155 @@
     ],
     "TSLA": [
       {
-        "title": "Tesla's car business back on growth path as deliveries beat forecasts",
-        "url": "https://www.reuters.com/business/autos-transportation/tesla-posts-stronger-than-expected-quarterly-deliveries-2026-10-02/",
+        "title": "Musk’s Tesla-SpaceX Merger Would Formalize a Decadeslong Partnership",
+        "url": "https://www.wsj.com/business/musks-tesla-spacex-merger-would-formalize-a-decadeslong-partnership-3b83e542",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.DSwjOVvEvnIKEhIRsp_UKQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "SpaceX says potential Tesla merger would need Elon Musk's approval",
+        "url": "https://www.reuters.com/legal/transactional/spacex-says-tesla-merger-would-need-musks-approval-2026-10-22/",
         "publisher": "Reuters",
-        "date": "2026-10-02",
-        "image": "https://www.bing.com/th?id=ONUT.UPpchrfF2Bjq6s2e1-CYkg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.crxYTJQw_0ZlMcEEclnQ8Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Tesla Logs Surge in European Monthly Sales",
+        "url": "https://www.wsj.com/business/autos/tesla-logs-surge-in-european-monthly-sales-add7427d",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.Ow4_UhVKiB7z3jOnP84WPQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Tesla cuts spending before potential SpaceX deal even as Musk bets future on AI, robots",
+        "url": "https://www.reuters.com/business/media-telecom/tesla-revenue-beats-estimates-deliveries-rebound-energy-storage-grows-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.s9GvNMgsf5sKKYhKuwYUdA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "V": [
       {
-        "title": "Why Visa is willing to spend $2.4 billion on BioCatch",
-        "url": "https://fortune.com/2026/08/04/visa-is-willing-spend-2-4-billion-biocatch/",
-        "publisher": "Fortune",
-        "date": "2026-08-04",
-        "image": "https://fortune.com/img-assets/wp-content/uploads/2026/08/GettyImages-2284902437.jpg?format=webp&quality=75&w=1440",
+        "title": "Visa results beat estimates as resilient customers keep up spending",
+        "url": "https://www.reuters.com/technology/visa-quarterly-profit-jumps-resilient-consumer-spending-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.XzNam5mb_dmjRJpSnFME2A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Visa Reports Higher Profit on Payment Volumes, Transactions Growth",
+        "url": "https://www.wsj.com/business/earnings/visa-reports-higher-profit-on-payment-volumes-transactions-growth-f07ed804",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Q2Z7Sa4cGnH-ZSK5VJD2tA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Visa Wins Approval to Prepare for China Payments Business",
+        "url": "https://www.wsj.com/business/visa-wins-approval-to-prepare-for-china-payments-business-c96bab06",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.P3aWxLv_7dOPvmN2dKauRw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "CodeCoin Launches the World's First \"Licensed Stablecoin + Quantum Encryption\" Visa Consumer Card During the IMF Annual Meetings",
+        "url": "https://www.reuters.com/press-releases/codecoin-launches-licensed-stablecoin-visa-card-imf-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.xP4ro5Dmrl1_XT8WhxYwjQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "LLY": [
       {
-        "title": "Eli Lilly agrees to $3.8B psychedelic buy",
-        "url": "https://www.axios.com/2026/07/16/eli-lilly-ataibeckley-psychedelic-buy",
-        "publisher": "Axios",
-        "date": "2026-07-16",
-        "image": "https://images.axios.com/8ge5ItFCGykQ7_HW2rm0aGiUDqI%3D/1920x1080/smart/2021/04/25/205236-1619383956054.gif?w=3840",
+        "title": "Lilly's retatrutide outshines Ozempic on weight loss, blood sugar control in trial",
+        "url": "https://www.reuters.com/legal/litigation/lillys-next-gen-drug-outshines-ozempic-weight-loss-blood-sugar-control-trial-2026-10-28/",
+        "publisher": "Reuters",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.fHdiNjItbEqvEozdNL-lrQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "HK-listed Metis TechBio, Eli Lilly strike drug-delivery deal worth up to $1.1 billion",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/metis-techbio-inks-up-11-billion-deal-with-eli-lilly-drug-delivery-tech-2026-10-19/",
+        "publisher": "Reuters",
+        "date": "2026-10-19",
+        "image": "https://www.bing.com/th?id=ONUT.pUUbDy1jlWnqp_4znZhkQw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "WMT": [
       {
-        "title": "Walmart's Q3 operating income, revenue soars",
-        "url": "https://www.reuters.com/graphics/WALMART-RESULTS/lbpgjjyrkvq/",
+        "title": "Walmart's margins in Mexico tighten as costs outpace sales growth",
+        "url": "https://www.reuters.com/world/americas/walmarts-margins-mexico-tighten-costs-outpace-sales-growth-2026-10-27/",
         "publisher": "Reuters",
-        "date": "2026-08-23",
-        "image": "https://www.reuters.com/graphics/WALMART-RESULTS/lbpgjjyrkvq/chart.png",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.MlmruMPPW64osOwsUD5kMQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Walmart says AI training is boosting confidence with the technology among its 2.1 million associates",
+        "url": "https://www.cnbc.com/2026/10/27/walmart-ai-training-workers.html",
+        "publisher": "CNBC",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.QpwczJNJCXDOjJTqhTkJ8g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Walmart launches tools for AI agents to shop for customers",
+        "url": "https://www.reuters.com/business/finance/walmart-launches-tools-ai-agents-shop-customers-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ORMS.09fa4dd3eb16c94807fbc863f5c00cba&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "The 30 Best Deals From Walmart’s Fall Sales Event",
+        "url": "https://www.nytimes.com/wirecutter/deals-highlights/best-walmart-deals-2026/",
+        "publisher": "The New York Times",
+        "date": "2026-10-07",
+        "image": "https://www.bing.com/th?id=ONUT.DNsW2gQjC-ELc9WC-cBeXA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "GEV": [
       {
-        "title": "NRC issues first U.S. construction permit for a BWRX-300 small modular reactor at Tennessee Valley Authority's Clinch River site",
-        "url": "https://www.gevernova.com/news/press-releases/nrc-issues-first-us-construction-permit-bwrx-300-small-modular-reactor-tva-clinch-river",
-        "publisher": "GE Vernova",
-        "date": "2026-09-29",
-        "image": "https://www.gevernova.com/news/sites/default/files/2026-09/tva-nrc-signing-09-29-2026.JPG",
+        "title": "GE Vernova to Buy Grid-Equipment Manufacturer for $9 Billion as Energy Demand Grows",
+        "url": "https://www.wsj.com/business/energy-oil/ge-vernova-to-buy-high-voltage-grid-equipment-manufacturer-for-9-billion-b29dd2ef",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.Scy2cCV4aysVquA21HxjsQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "GE Vernova boosts grid push with $9 billion Trench deal, lifts revenue forecast",
+        "url": "https://www.reuters.com/legal/transactional/ge-vernova-buy-trench-group-triton-partners-9-billion-2026-10-28/",
+        "publisher": "Reuters",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.QNUYcpvYwiJkUhZwLlOpKQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Venture Global inks deals with GE Vernova, Baker Hughes for power expansion",
+        "url": "https://www.reuters.com/business/energy/venture-global-inks-deals-with-ge-vernova-baker-hughes-power-expansion-2026-10-15/",
+        "publisher": "Reuters",
+        "date": "2026-10-15",
+        "image": "https://www.bing.com/th?id=ONUT.cak-A53WdZgZsUwa4_QEfw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "GE Vernova CEO on Energy Demand and Economic Stability",
+        "url": "https://www.wsj.com/video/ge-vernova-ceo-on-energy-demand-and-economic-stability/440740DB-58B5-4959-92E5-6314252AB64E",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-23",
+        "image": "https://www.bing.com/th?id=ONUT.YCNOyuovSayXlznVxuMR2A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -716,7 +1202,1066 @@
         "date": "2026-09-02",
         "image": "https://s7d2.scene7.com/is/image/Caterpillar/CM20260901-52e99-65320",
         "image_kind": "article"
+      },
+      {
+        "title": "Caterpillar Says the AI Boom Continues to Drive Construction Demand",
+        "url": "https://www.wsj.com/business/earnings/caterpillar-posts-higher-profit-sales-on-increased-orders-990788a5",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-04",
+        "image": "https://www.bing.com/th?id=ONUT.msU8IbeKuzdw07fKDPAmdA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
-    ]
+    ],
+    "ADBE": [
+      {
+        "title": "Adobe Analysts Have Never Been So Bearish as AI Fears Mount",
+        "url": "https://www.bloomberg.com/news/articles/2026-10-16/adobe-analysts-have-never-been-so-bearish-as-ai-fears-mount",
+        "publisher": "Bloomberg",
+        "date": "2026-10-16",
+        "image": "https://www.bing.com/th?id=ONUT.gO2G_CQOJ_P751AH9ChzFA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "US holiday online sales to grow 6.7% as discounts attract shoppers, Adobe Analytics forecasts",
+        "url": "https://www.reuters.com/business/retail-consumer/us-holiday-online-sales-grow-67-discounts-attract-shoppers-adobe-analytics-2026-09-28/",
+        "publisher": "Reuters",
+        "date": "2026-09-28",
+        "image": "https://www.bing.com/th?id=ONUT.h9gaxO6gAOTZc1ekJ6G2rA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "ADSK": [
+      {
+        "title": "Autodesk and NVIDIA accelerate engineering feedback loop for automotive designers",
+        "url": "https://adsknews.autodesk.com/en/news/autodesk-navpack-nvidia/",
+        "publisher": "Autodesk",
+        "date": "2026-10-21",
+        "image": "https://adsknews.autodesk.com/app/uploads/2026/10/IMG_1486-1-1.png",
+        "image_kind": "article"
+      }
+    ],
+    "INTU": [
+      {
+        "title": "Wells Fargo, Intuit latest companies to object to their shares being tokenized, document shows",
+        "url": "https://www.reuters.com/legal/government/wells-fargo-intuit-others-object-their-shares-being-tokenized-regulatory-2026-10-23/",
+        "publisher": "Reuters",
+        "date": "2026-10-23",
+        "image": "https://www.bing.com/th?id=ONUT.sN7EyN6Cy_4Sb7hz6Yaf0w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "IBM": [
+      {
+        "title": "IBM falls as analysts question staying power of software rebound",
+        "url": "https://www.reuters.com/business/ibm-falls-analysts-question-staying-power-software-rebound-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ORMS.066c743056fed1c0c4b50f29c9115d94&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "IBM raises annual software revenue outlook as deal delays ease",
+        "url": "https://www.reuters.com/business/ibm-raises-annual-software-revenue-outlook-deal-delays-ease-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.0O65tmUQE4Qc4cVg24GNCw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "IBM beats on top and bottom lines as CEO Krishna touts 'Super Intelligence' traction",
+        "url": "https://www.cnbc.com/2026/10/21/ibm-q3-earnings-report-2026.html",
+        "publisher": "CNBC",
+        "date": "2026-10-21",
+        "image": "https://image.cnbcfm.com/api/v1/image/108325136-1782163700943-gettyimages-2282299477-TRUMP_QUANTUM.jpeg?v=1792620023&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "ACN": [
+      {
+        "title": "Accenture's forecast eases AI disruption fears, lifts battered IT services stocks",
+        "url": "https://www.reuters.com/business/accenture-forecasts-annual-revenue-growth-above-estimates-2026-10-01/",
+        "publisher": "Reuters",
+        "date": "2026-10-01",
+        "image": "https://www.bing.com/th?id=ONUT.QxtV_btohKj9NMPiOnWDrg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Anthropic, Accenture to invest $2 billion in AI model evaluation as safety concerns rise",
+        "url": "https://www.reuters.com/business/anthropic-accenture-invest-2-billion-ai-model-evaluation-safety-concerns-rise-2026-09-18/",
+        "publisher": "Reuters",
+        "date": "2026-09-18",
+        "image": "https://www.bing.com/th?id=ONUT.dufxgSXe6XfHuQiyqmG_DQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "CRWD": [
+      {
+        "title": "The session token is basically like the card key for a hotel, says CrowdStrike CEO George Kurtz",
+        "url": "https://www.cnbc.com/investingclub/video/2026/10/26/the-session-token-is-basically-like-the-card-key-for-a-hotel-says-crowdstrike-ceo-george-kurtz.html",
+        "publisher": "CNBC",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.YQ0aX41SokwgDpr0Ga6cHA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "CrowdStrike CEO: 'A lot of breaches happening in the coming months' from PHP vulnerabilities",
+        "url": "https://www.cnbc.com/video/2026/10/23/crowdstrike-ceo-a-lot-of-breaches-happening-in-the-coming-months-from-php-vulnerabilities.html",
+        "publisher": "CNBC",
+        "date": "2026-10-23",
+        "image": "https://www.bing.com/th?id=ONUT.KP-q38PLVUy3d8fh0VCgFQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "CrowdStrike CEO's alarming prediction — plus, the sell-off spreads beyond tech",
+        "url": "https://www.cnbc.com/investingclub/2026/10/23/crowdstrikes-alarming-prediction-plus-sell-off-spreads-beyond-tech.html",
+        "publisher": "CNBC",
+        "date": "2026-10-23",
+        "image": "https://image.cnbcfm.com/api/v1/image/108217884-1761665721330-gettyimages-2243356966-AFP_829T3E8.jpeg?v=1767895191&w=1920&h=1080",
+        "image_kind": "article"
+      },
+      {
+        "title": "Nvidia and CrowdStrike Develop New Cybersecurity AI Models | The Morning Download for Sept. 2",
+        "url": "https://www.wsj.com/cio-journal/nvidia-and-crowdstrike-develop-new-cybersecurity-ai-models-937bb2aa",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-02",
+        "image": "https://www.bing.com/th?id=ONUT.bmzkuyzjxbok32g-fXpusA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "FTNT": [],
+    "ZS": [
+      {
+        "title": "Trade Tracker: Hightower's Stephanie Link buys Zscaler, buys more Wells Fargo and sells Dover",
+        "url": "https://www.cnbc.com/video/2026/10/23/trade-tracker-stephanie-link-buys-zscaler-buys-more-wells-fargo-sells-dover.html",
+        "publisher": "CNBC",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.ZDWdZCxoe07d5vr0RP-MqQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Zscaler beats earnings expectations, issues upbeat guidance but stock falls",
+        "url": "https://www.cnbc.com/2026/09/03/zscaler-zs-q4-earnings-2026.html",
+        "publisher": "CNBC",
+        "date": "2026-09-03",
+        "image": "https://image.cnbcfm.com/api/v1/image/108356949-1788264251122-gettyimages-2232147647-img_4823.jpeg?v=1788264292&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "NET": [
+      {
+        "title": "Cloudflare faces 234 billion cyberattacks a day. AI will handle 95% in 5 years, its co-founder says",
+        "url": "https://www.cnbc.com/video/2026/10/20/cloudflare-faces-234-billion-cyberattacks-a-day-ai-will-stop-95percent-in-5-years.html",
+        "publisher": "CNBC",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.9BAHw20r8Wcq2HecMRUIoQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "DDOG": [],
+    "SNOW": [],
+    "MDB": [
+      {
+        "title": "MongoDB CEO Dev Ittycheria: The board asked me to step in, and I agreed to do so",
+        "url": "https://www.cnbc.com/video/2026/09/29/mongodb-ceo-dev-ittycheria-the-board-asked-me-to-step-in-and-i-agreed-to-do-so.html",
+        "publisher": "CNBC",
+        "date": "2026-09-29",
+        "image": "https://image.cnbcfm.com/api/v1/image/108369402-17906921961790692193-48683016106-1080pnbcnews.jpg?v=1790692195&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "TEAM": [],
+    "SHOP": [
+      {
+        "title": "Shopify Is All In on AI (and Likes the Results)",
+        "url": "https://www.wsj.com/cfo-journal/shopify-is-all-in-on-ai-and-likes-the-results-0ca87600",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-05",
+        "image": "https://www.bing.com/th?id=ONUT.PfNNqa6CDJ5O4N_YVGNUqw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Meta Shares Rally on Muse Success, Shopify Deal",
+        "url": "https://www.wsj.com/podcasts/minute-briefing/meta-shares-rally-on-muse-success-shopify-deal/ba18b8de-65ea-44aa-9012-3b82b6231686",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-22",
+        "image": "https://www.bing.com/th?id=ONUT.0Qu1K_2CXugIq__maMHitQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "UBER": [
+      {
+        "title": "Instacart in talks with DoorDash and Uber for sale, The Information reports",
+        "url": "https://www.reuters.com/business/instacart-talks-sale-information-reports-2026-10-23/",
+        "publisher": "Reuters",
+        "date": "2026-10-23",
+        "image": "https://www.bing.com/th?id=ONUT.UZurXPsIxirjVy1IflKL2w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Uber defeats High Court lawsuit brought by London’s black-cab drivers",
+        "url": "https://www.ft.com/content/22290706-ab59-4766-b604-ddff94a71bcf?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-10-19",
+        "image": "https://www.bing.com/th?id=ONUT.Zp_0s4rm4A3DZ56xifCHsg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Uber wins bid to throw out UK mass lawsuit by black cab drivers",
+        "url": "https://www.reuters.com/legal/litigation/uber-wins-bid-throw-out-uk-mass-lawsuit-by-black-cab-drivers-2026-10-19/",
+        "publisher": "Reuters",
+        "date": "2026-10-19",
+        "image": "https://www.bing.com/th?id=ONUT.cuYz5jNTnrvG4eyFwlw2wQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Uber stock sinks 5% after weak guidance despite revenue growth",
+        "url": "https://www.cnbc.com/2026/08/05/uber-stock-q2-2026-earnings.html",
+        "publisher": "CNBC",
+        "date": "2026-08-05",
+        "image": "https://image.cnbcfm.com/api/v1/image/108255725-1769094685480-7VYxj_8U.jpg?v=1769094774&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "ABNB": [
+      {
+        "title": "Chesky says Airbnb will spend ‘a lot more’ on AI as earnings beat and stock surges 15%",
+        "url": "https://www.cnbc.com/2026/08/07/chesky-airbnb-ai-earnings.html",
+        "publisher": "CNBC",
+        "date": "2026-08-07",
+        "image": "https://image.cnbcfm.com/api/v1/image/108310073-1779306507208-gettyimages-2276716958-AIRBNB_SUMMER_RELEASE.jpeg?v=1779306647&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "BKNG": [
+      {
+        "title": "Booking.com targeted in EU investigation into phishing scams, fraudulent listings",
+        "url": "https://www.reuters.com/business/media-telecom/bookingcom-targeted-eu-investigation-into-phishing-scams-fraudulent-listings-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.BAfbt0FsQnmThGyuGFrw6w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "NFLX": [
+      {
+        "title": "Netflix co-CEO Sarandos says 'we could do better' after weak forecast",
+        "url": "https://www.reuters.com/business/media-telecom/netflix-issues-weak-fourth-quarter-forecast-company-seeks-kick-start-growth-2026-10-20/",
+        "publisher": "Reuters",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.Zyu2-G5mJxIDijLiq6JWvQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Netflix Revenue Growth Slows as It Overhauls Programming Units",
+        "url": "https://www.wsj.com/business/earnings/netflix-revenue-growth-slows-as-it-overhauls-programming-units-d6eac0b5",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.P6LThaz8H5NVPDdzYdbWsg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Netflix faces questions on user engagement ahead of third-quarter report",
+        "url": "https://www.reuters.com/business/media-telecom/netflix-faces-questions-user-engagement-ahead-third-quarter-report-2026-10-19/",
+        "publisher": "Reuters",
+        "date": "2026-10-19",
+        "image": "https://www.bing.com/th?id=ONUT.6qt1HSIhwW3_alBWdg4j8Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Netflix Eliminates About 1,000 Jobs in Biggest Cuts Since 2022",
+        "url": "https://www.wsj.com/business/media/netflix-eliminates-about-6-of-staff-in-biggest-cuts-since-2022-0a2d8ec3",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-14",
+        "image": "https://www.bing.com/th?id=ONUT.AzagJB86cMIbDixh1cuk9g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "SPOT": [
+      {
+        "title": "Swiss AI drug trial start-up receives funding from Spotify-backer Creandum",
+        "url": "https://www.reuters.com/legal/litigation/swiss-ai-drug-trial-start-up-receives-funding-spotify-backer-creandum-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.UZTXUWVXM35zBMONGsf8Gg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Spotify forecasts strong profit as AI features start to pay off, shares surge",
+        "url": "https://www.reuters.com/business/spotify-forecasts-fourth-quarter-profit-above-estimates-ai-bets-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.9EpS2lrSxC_91l3AGGwW9g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "PYPL": [
+      {
+        "title": "PayPal CEO touts turnaround progress as annual profit forecast rises",
+        "url": "https://www.reuters.com/business/paypal-raises-2026-profit-forecast-turnaround-gains-traction-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.ajK-REfxchErLzrWbnTPbA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "PayPal Lifts Full-Year Outlook, CEO Stresses Turnaround Plan",
+        "url": "https://www.wsj.com/business/retail/paypal-lifts-full-year-outlook-ceo-stresses-turnaround-plan-15cd0e2e",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.QKxsoIV4sBjCEfNbjxWL3g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "STM": [],
+    "MPWR": [],
+    "SWKS": [],
+    "STX": [
+      {
+        "title": "Seagate Posts Soaring Profit on Continued Data-Storage Demand",
+        "url": "https://www.wsj.com/business/earnings/seagate-posts-soaring-profit-on-continued-data-storage-demand-97d495f8",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.tf7PgUBdz1CLa7L9czaoug&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Seagate falls in extended trading on quarterly results",
+        "url": "https://www.cnbc.com/video/2026/10/27/seagate-falls-in-extended-trading-on-quarterly-results.html",
+        "publisher": "CNBC",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.Lykm7loWXdBpf7sfEpdUFg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Wamsi Mohan: Expect solid earnings season for Western Digital, Seagate, Dell",
+        "url": "https://www.cnbc.com/video/2026/10/21/wamsi-mohan-expect-solid-earnings-season-for-western-digital-seagate-dell.html",
+        "publisher": "CNBC",
+        "date": "2026-10-21",
+        "image": "https://image.cnbcfm.com/api/v1/image/108442889-17926065371792606533-49145686516-1080pnbcnews.jpg?v=1792606536&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "ALGM": [],
+    "LSCC": [],
+    "RMBS": [],
+    "MTSI": [],
+    "CRUS": [],
+    "FN": [],
+    "JNJ": [
+      {
+        "title": "Johnson & Johnson's prostate cancer drug shrinks tumors in early-stage trial",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/johnson-johnsons-prostate-cancer-drug-shrinks-tumors-early-stage-trial-2026-10-24/",
+        "publisher": "Reuters",
+        "date": "2026-10-24",
+        "image": "https://www.bing.com/th?id=ONUT.YTwibxOiaXyDL1RLUoa2MA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Smith & Nephew orthopaedics deal talks with J&J fail over CEO choice, source says",
+        "url": "https://www.reuters.com/legal/transactional/smith-nephew-merger-talks-with-jj-orthopaedics-unit-collapse-over-ceo-role-ft-2026-10-23/",
+        "publisher": "Reuters",
+        "date": "2026-10-23",
+        "image": "https://www.bing.com/th?id=ONUT.cZkfuW3ir7I0Tsikt2wPjw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "MRK": [
+      {
+        "title": "Merck drug extends survival in endometrial cancer trial, wins US priority review",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/mercks-therapy-extends-survival-hard-to-treat-uterine-cancer-patients-2026-10-26/",
+        "publisher": "Reuters",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.C-VVXJVr0ofKR31NvEPR5Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Merck CEO tells CNBC he expects breakthrough cancer vaccine will become faster to make",
+        "url": "https://www.cnbc.com/2026/10/14/merck-moderna-cancer-vaccine-manufacturing-time.html",
+        "publisher": "CNBC",
+        "date": "2026-10-14",
+        "image": "https://image.cnbcfm.com/api/v1/image/107370990-1707414387296-gettyimages-1995499516-247a0388_agtnstai.jpeg?v=1736898742&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "ABBV": [
+      {
+        "title": "AbbVie's skin disease drug reduces lesions in trial, company eyes weight-loss combination",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/abbvies-skin-disease-drug-reduces-lesions-trial-company-eyes-weight-loss-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.d60PNnCN1ZcH38HDPcEOcQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "US FDA approves AbbVie's drug for Parkinson's disease",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/us-fda-approves-abbvies-drug-parkinsons-disease-2026-09-25/",
+        "publisher": "Reuters",
+        "date": "2026-09-25",
+        "image": "https://www.bing.com/th?id=ONUT.2O0i52gWditJ-Vdc99X30A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "PFE": [
+      {
+        "title": "Pfizer beats earnings estimates, targets $2.5 billion in additional cost cuts",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/pfizer-beats-quarterly-profit-estimates-strong-demand-blood-thinner-eliquis-2026-08-04/",
+        "publisher": "Reuters",
+        "date": "2026-08-04",
+        "image": "https://www.bing.com/th?id=ONUT.3UjvJgQK0VdzFAq5MEj0jQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "AMGN": [
+      {
+        "title": "FDA warns Amgen over cancer drug promotional video",
+        "url": "https://www.reuters.com/legal/litigation/fda-warns-amgen-over-cancer-drug-promotional-video-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.6r3E7h79f9w--1keKwF3Rg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Amgen drug combined with immunotherapy extends survival in lung cancer trial",
+        "url": "https://www.reuters.com/legal/litigation/amgen-drug-combined-with-immunotherapy-extends-survival-lung-cancer-trial-2026-10-24/",
+        "publisher": "Reuters",
+        "date": "2026-10-24",
+        "image": "https://www.bing.com/th?id=ONUT.JJp_aB54Fdl4y4C7ZRPXNw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Amgen says drug combo cuts risk of death by 58% in patients with aggressive lung cancer",
+        "url": "https://www.cnbc.com/2026/10/24/amgen-imdelltra-lung-cancer-data.html",
+        "publisher": "CNBC",
+        "date": "2026-10-24",
+        "image": "https://image.cnbcfm.com/api/v1/image/107243224-1684411224877-gettyimages-1491059980-mt_15744_opmy4ayv.jpeg?v=1750872566&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "GILD": [
+      {
+        "title": "Gilead to buy PepStar's inflammation drug program in $1.28 billion deal",
+        "url": "https://www.reuters.com/legal/litigation/gilead-buy-pepstars-inflammation-drug-program-128-billion-deal-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.X9JgRPpNtH-ny-LjXADkXw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "BioNTech, Gilead to test drug combination in advanced breast cancer trial",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/biontech-gilead-test-drug-combination-advanced-breast-cancer-trial-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.xFxXHzTzFFSMJFGQY--Nkw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "REGN": [
+      {
+        "title": "Regeneron extends US agreement for additional supply of Ebola treatment",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/regeneron-extends-us-agreement-additional-supply-ebola-treatment-2026-10-26/",
+        "publisher": "Reuters",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.77qbZhWH0bjHWTcLjfeIXQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Regeneron weight-loss drug halves muscle loss in combination with Novo's semaglutide in trial",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/regeneron-drug-halves-muscle-loss-combination-with-novos-semaglutide-trial-2026-09-30/",
+        "publisher": "Reuters",
+        "date": "2026-09-30",
+        "image": "https://www.bing.com/th?id=ONUT.kki2VUSfAJLINYVESDamPw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "VRTX": [],
+    "NVO": [
+      {
+        "title": "US judge refuses to block Eli Lilly weight-loss drug ads, rules against Novo Nordisk",
+        "url": "https://www.reuters.com/world/us-judge-lets-eli-lilly-continue-ads-weight-loss-drugs-rules-against-novo-2026-10-26/",
+        "publisher": "Reuters",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.9Uhn3XiHuT__rcpPOqSDCg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Novo Nordisk Will Use Anthropic’s Claude for Drug Research",
+        "url": "https://www.wsj.com/tech/ai/novo-partners-with-anthropic-to-speed-up-drug-discovery-using-claude-a6000d9f",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-16",
+        "image": "https://www.bing.com/th?id=ONUT.mLtFPbIj2vS94ak9PVE4YQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "How Novo Nordisk’s CEO Says He Is Shifting the Company’s Perspective",
+        "url": "https://www.wsj.com/business/how-novo-nordisks-ceo-says-he-is-shifting-the-companys-perspective-44451656",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-06",
+        "image": "https://www.bing.com/th?id=ONUT.iSG3dnrFY_ByA8TIwqG3vA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "AZN": [
+      {
+        "title": "AstraZeneca Partners With Oracle to Refine Clinical Research With AI",
+        "url": "https://www.wsj.com/tech/biotech/astrazeneca-partners-with-oracle-to-refine-clinical-research-with-ai-55cab932",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.7x90JTziqsFmjkhn2yyTvQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "AstraZeneca Strikes Up to $1.5 Billion AI Drug Discovery Deal With Insitro",
+        "url": "https://www.wsj.com/tech/biotech/astrazeneca-strikes-up-to-1-5-billion-ai-drug-discovery-deal-with-insitro-b125a3fd",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-15",
+        "image": "https://www.bing.com/th?id=ONUT.Ashuk91RvvJyXyJpGgYjiw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "AstraZeneca strikes $40 million AI drug discovery deal with insitro",
+        "url": "https://www.reuters.com/legal/litigation/astrazeneca-strikes-40-million-ai-drug-discovery-deal-with-insitro-2026-10-15/",
+        "publisher": "Reuters",
+        "date": "2026-10-15",
+        "image": "https://www.bing.com/th?id=ONUT.mkBbGxCW0uXS584xnSpirA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "AstraZeneca files for US FDA approval of HUTCHMED lung cancer drug combination",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/astrazeneca-files-us-fda-application-hutchmed-lung-cancer-drug-combination-2026-09-29/",
+        "publisher": "Reuters",
+        "date": "2026-09-29",
+        "image": "https://www.bing.com/th?id=ONUT.WQzT4ek6rtdZlyaN0Av5hQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "TMO": [],
+    "DHR": [
+      {
+        "title": "Danaher says it has 'building blocks' for AI drug discovery growth",
+        "url": "https://www.reuters.com/legal/litigation/danaher-says-it-has-building-blocks-ai-drug-discovery-growth-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.JdPF0zbw5LPo5t1arvgd3w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Danaher Reports Third Quarter 2026 Results",
+        "url": "https://investors.danaher.com/2026-10-21-Danaher-Reports-Third-Quarter-2026-Results",
+        "publisher": "Danaher",
+        "date": "2026-10-20",
+        "image": "",
+        "image_kind": ""
+      }
+    ],
+    "ABT": [
+      {
+        "title": "Abbott Laboratories to spin off nutrition unit at centre of baby formula lawsuits",
+        "url": "https://www.ft.com/content/7f407bde-ef26-4914-bcbe-baf858bc81d7?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.mfMkqDL7yhL81JUBE1NJLQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Nestle, Zydus, Abbott face India scrutiny over claims on children's products",
+        "url": "https://www.reuters.com/legal/litigation/nestle-zydus-abbott-face-india-scrutiny-over-claims-childrens-products-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.9u-NjY5dgYrm-YbVvcI5zQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Abbott cuts 2026 sales growth view, plans to spin off nutrition business",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/abbott-lowers-2026-sales-growth-forecast-medical-device-weakness-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "https://www.bing.com/th?id=ONUT.nU2CZFs_smsZWTrv3H1Y6w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "MDT": [
+      {
+        "title": "Medtronic boosts fiscal 2027 forecasts on heart device demand",
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/medtronic-boosts-fiscal-2027-forecasts-heart-device-demand-2026-09-01/",
+        "publisher": "Reuters",
+        "date": "2026-09-01",
+        "image": "https://www.bing.com/th?id=ONUT.cTG0MeMge_6JwNy-82UTyA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "ISRG": [],
+    "BSX": [
+      {
+        "title": "Boston Scientific Stock Drops on Sales Softness",
+        "url": "https://www.wsj.com/livecoverage/fed-meeting-interest-rate-decision-10-28-2026/card/7M3fqyIUFJn3lmwXAXWt",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.JB0QjreyDyolI9KzBLVkQQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Boston Scientific says unlikely to meet 2026 sales, profit forecast after cyberattack",
+        "url": "https://www.reuters.com/technology/boston-scientific-says-cyberattack-likely-hurt-2026-sales-profit-2026-09-08/",
+        "publisher": "Reuters",
+        "date": "2026-09-08",
+        "image": "https://www.bing.com/th?id=ONUT.zVM3wzZvAqPM49qVhOgMVQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Boston Scientific Won’t Meet Guidance Due to Cyberattack",
+        "url": "https://www.wsj.com/business/boston-scientific-wont-meet-guidance-due-to-cyberattack-feb29ee1",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-08",
+        "image": "https://www.bing.com/th?id=ONUT.gWrbBBRZAJDCpgmLCs2_cA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "GE": [
+      {
+        "title": "GE Aerospace Continues to See High Demand Despite Supply-Chain Delays",
+        "url": "https://www.wsj.com/business/earnings/ge-aerospace-once-again-lifts-outlook-as-profit-revenue-climb-e836d130",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.G7Ycfxa383yaWtq6rRSHQg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Honeywell Aero CEO calls planned GE Aerospace-CPP deal positive for industry",
+        "url": "https://www.reuters.com/legal/transactional/honeywell-aero-ceo-calls-planned-ge-aerospace-cpp-deal-positive-industry-2026-09-15/",
+        "publisher": "Reuters",
+        "date": "2026-09-15",
+        "image": "https://www.bing.com/th?id=ONUT.kayhNF5Kl1O6ztMGZAZFOg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Howmet CEO \"fine\" with GE Aerospace deal, working to meet demand for engine parts",
+        "url": "https://www.reuters.com/legal/transactional/howmet-ceo-fine-with-ge-aerospace-deal-working-meet-demand-engine-parts-2026-09-09/",
+        "publisher": "Reuters",
+        "date": "2026-09-09",
+        "image": "https://www.bing.com/th?id=ONUT.WDAgevQwFOldwra_wVn0fg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "RTX": [
+      {
+        "title": "RTX lifts 2026 forecasts as aerospace, defense demand drives record backlog",
+        "url": "https://www.reuters.com/business/aerospace-defense/rtx-lifts-2026-forecasts-aerospace-defense-demand-drives-record-backlog-2026-10-20/",
+        "publisher": "Reuters",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.ctQHJ3Mm34U1D5FVR5YAPg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "RTX Lifts Forecast for Third Time This Year on Aerospace, Defense Demand",
+        "url": "https://www.wsj.com/business/earnings/rtx-lifts-forecast-for-third-time-this-year-on-aerospace-defense-demand-e40e03e0",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.SAp9maFa5s5tGurPtWcZpQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Nvidia sets October launch for RTX Spark AI PCs",
+        "url": "https://www.reuters.com/world/china/nvidia-sets-october-launch-rtx-spark-ai-pcs-2026-09-03/",
+        "publisher": "Reuters",
+        "date": "2026-09-03",
+        "image": "https://www.bing.com/th?id=ONUT.qYQsyDYN4iFNlvhRT2dhgg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "LMT": [
+      {
+        "title": "Lockheed Martin Bumps Up Yearly Outlook as Backlog Hits Record",
+        "url": "https://www.wsj.com/business/earnings/lockheed-martin-bumps-up-yearly-outlook-as-backlog-hits-record-b2e58e35",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.wBDnwsfMZc7Qt6A-wL25vA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Lockheed Martin will surge nearly 40% after new Pentagon deal, says Morgan Stanley",
+        "url": "https://www.cnbc.com/2026/10/26/lockheed-martin-will-surge-nearly-40percent-after-new-pentagon-deal-says-morgan-stanley.html",
+        "publisher": "CNBC",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.HVwa6DtagnVQ5694X-8gWw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Ukraine's Zelenskiy discusses speeding up supplies of Patriots with Lockheed Martin",
+        "url": "https://www.reuters.com/business/aerospace-defense/ukraines-zelenskiy-discusses-speeding-up-supplies-patriots-with-lockheed-martin-2026-10-19/",
+        "publisher": "Reuters",
+        "date": "2026-10-19",
+        "image": "https://www.bing.com/th?id=ONUT.methlLd6yWARFLoJCG0x_w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Lockheed Martin Investing Millions to Develop Hypersonic Weapons System",
+        "url": "https://www.wsj.com/tech/lockheed-martin-investing-millions-to-develop-hypersonic-weapons-system-f2d5794a",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-11",
+        "image": "https://www.bing.com/th?id=ONUT.2-9nMcMNsGNZzY54lFAC1Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "NOC": [
+      {
+        "title": "Northrop Grumman Expects Growth to Accelerate Next Year on Defense Demand",
+        "url": "https://www.wsj.com/business/earnings/northrop-grumman-raises-outlook-on-higher-earnings-sales-15b4fda3",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.y3j6ErYoXbPKlWQ00iFAIA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "GD": [],
+    "HON": [
+      {
+        "title": "Honeywell Aerospace Logs Higher Third-Quarter Profit, Revenue on Continued Demand",
+        "url": "https://www.wsj.com/business/earnings/honeywell-aerospace-logs-higher-third-quarter-profit-revenue-on-continued-demand-bff3bfd1",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.6vBuXqWmVpNkVGr008Pi9w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Honeywell Technologies launches new AI platform at Dangote's Nigeria refinery",
+        "url": "https://www.reuters.com/business/energy/honeywell-technologies-launches-new-ai-platform-dangotes-nigeria-refinery-2026-10-26/",
+        "publisher": "Reuters",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.aUIdOgTs-CUEbhyDeCCJSg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Honeywell Aero CEO calls planned GE Aerospace-CPP deal positive for industry",
+        "url": "https://www.reuters.com/legal/transactional/honeywell-aero-ceo-calls-planned-ge-aerospace-cpp-deal-positive-industry-2026-09-15/",
+        "publisher": "Reuters",
+        "date": "2026-09-15",
+        "image": "https://www.bing.com/th?id=ONUT.kayhNF5Kl1O6ztMGZAZFOg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Honeywell Aerospace Cuts Full-Year Growth Guidance as Supply Constraints Dampen Second-Quarter Sales",
+        "url": "https://www.wsj.com/business/earnings/honeywell-aerospace-cuts-full-year-growth-guidance-as-supply-constraints-dampen-second-quarter-sales-c45776ad",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-05",
+        "image": "https://www.bing.com/th?id=ONUT.fXuC3lZvnhA03-o69M9yPA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "ETN": [
+      {
+        "title": "Inside Eaton’s $9.5 billion bet to dominate the AI infrastructure boom",
+        "url": "https://www.cnbc.com/investingclub/2026/09/04/inside-eatons-9point5-billion-bet-to-dominate-the-ai-infrastructure-boom.html",
+        "publisher": "CNBC",
+        "date": "2026-09-04",
+        "image": "https://image.cnbcfm.com/api/v1/image/108266818-17714311152026-02-18t160038z_265227484_rc2mnjat5apz_rtrmadp_0_microsoft-energy-datacentres.jpeg?v=1771431257&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "PH": [],
+    "ROK": [
+      {
+        "title": "Rockwell Automation CEO Blake Moret: Q3 results represent a broadening of growth",
+        "url": "https://www.cnbc.com/video/2026/08/05/rockwell-automation-ceo-blake-moret-q3-results-represent-a-broadening-of-growth.html",
+        "publisher": "CNBC",
+        "date": "2026-08-05",
+        "image": "https://image.cnbcfm.com/api/v1/image/108345158-1785929614181-1785927772-47590392275-hd.jpg?v=1785929615&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "EMR": [],
+    "DE": [
+      {
+        "title": "Deere raises 2026 profit view as AI construction boom lifts quarterly income, shares jump",
+        "url": "https://www.reuters.com/business/deere-raises-lower-end-2026-net-income-forecast-range-2026-08-20/",
+        "publisher": "Reuters",
+        "date": "2026-08-20",
+        "image": "https://www.bing.com/th?id=ONUT.aW1CmJBYD_yi51gQp0OHDA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "CMI": [],
+    "COST": [],
+    "TGT": [
+      {
+        "title": "Equinor's profit doubles on soaring oil and gas prices, raises output target",
+        "url": "https://www.reuters.com/business/equinor-profit-jumps-middle-east-war-lifts-oil-gas-prices-2026-10-28/",
+        "publisher": "Reuters",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.BmXyXxrIj8PE08Ee7xsEYw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "China's lab-grown diamond makers target AI, chip sectors for next wave of growth",
+        "url": "https://www.reuters.com/world/china/chinas-lab-grown-diamond-makers-target-ai-chip-sectors-next-wave-growth-2026-10-26/",
+        "publisher": "Reuters",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.TkhZzk0HljxaIN5ZCLpfpg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "HD": [],
+    "LOW": [],
+    "MCD": [
+      {
+        "title": "McDonald's India operator's quarterly loss narrows as deals lure customers",
+        "url": "https://www.reuters.com/world/india/mcdonalds-india-operator-westlife-posts-narrower-quarterly-loss-2026-10-23/",
+        "publisher": "Reuters",
+        "date": "2026-10-23",
+        "image": "https://www.bing.com/th?id=ONUT.zH-ScUHevSvJ3BTn-IokeA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "AI pricing lawsuit against McDonald's raises new antitrust questions",
+        "url": "https://www.reuters.com/business/ai-pricing-lawsuit-against-mcdonalds-raises-new-antitrust-questions-2026-10-08/",
+        "publisher": "Reuters",
+        "date": "2026-10-08",
+        "image": "https://www.bing.com/th?id=ONUT.fR-GrWcMyC09afHVxg1Drw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "SBUX": [
+      {
+        "title": "Bearista cups are returning at Starbucks. Can the viral sensation boost holiday sales again?",
+        "url": "https://www.cnbc.com/investingclub/2026/10/28/bearista-cups-are-back-at-starbucks-can-they-boost-holiday-sales-again.html",
+        "publisher": "CNBC",
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.Iadx0PoEjgtgoUCTh19tAg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Starbucks China Will Require Purchases to Sit in Its Cafes",
+        "url": "https://www.bloomberg.com/news/articles/2026-10-21/starbucks-china-will-require-purchases-to-sit-in-its-cafes",
+        "publisher": "Bloomberg",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.APhCCb34RhetRAA7N3sfCg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Power Check: Estee Lauder and Starbucks",
+        "url": "https://www.cnbc.com/video/2026/10/16/power-check-estee-lauder-and-starbucks.html",
+        "publisher": "CNBC",
+        "date": "2026-10-16",
+        "image": "https://www.bing.com/th?id=ONUT.bnIrKEKy_X6q7v1s0rfHeA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "KO": [
+      {
+        "title": "Coca-Cola lifts profit forecast on international soda demand, flags higher costs",
+        "url": "https://www.reuters.com/business/retail-consumer/coca-cola-lifts-annual-profit-target-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.MkUasDgTj1BfzW0ZThAxCg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Coca-Cola Raises Outlook as Increased Volumes, Prices Boost Results",
+        "url": "https://www.wsj.com/business/earnings/coca-cola-raises-outlook-as-increased-volumes-prices-boost-results-323f3710",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.zYa5JJ3SkQWOvTTCm8gg9g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "PEP": [
+      {
+        "title": "PepsiCo warns 'energy drink' ban could run its India supplies dry as Red Bull sells on",
+        "url": "https://www.reuters.com/legal/litigation/pepsico-warns-energy-drink-ban-could-run-its-india-supplies-dry-red-bull-sells-2026-10-15/",
+        "publisher": "Reuters",
+        "date": "2026-10-15",
+        "image": "https://www.bing.com/th?id=ONUT.85lSeyfGvM1sBG5JP6sh1A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "PG": [
+      {
+        "title": "Procter & Gamble’s Sales Offset Rising Fuel Costs",
+        "url": "https://www.wsj.com/business/earnings/procter-gambles-sales-offset-rising-fuel-costs-463656a0",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.WGgV1yIEaDVX8RK9jro2Rg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Procter & Gamble earnings beat as sales rise 4%, boosted by laundry and home products",
+        "url": "https://www.cnbc.com/2026/10/22/procter-gamble-pg-q1-2027-earnings.html",
+        "publisher": "CNBC",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.hjrJ88CfrevhrcLrQwJEHg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Procter & Gamble CFO Andre Schulten: Headwinds driven by oil prices",
+        "url": "https://www.cnbc.com/video/2026/10/22/procter-gamble-cfo-andre-schulten-headwinds-driven-by-oil-prices.html",
+        "publisher": "CNBC",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.C4IKPa-6ouRSuSKT866EKQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "CL": [
+      {
+        "title": "Colgate-Palmolive India's quarterly profit rises on oral care demand",
+        "url": "https://www.reuters.com/world/india/colgate-palmolive-indias-quarterly-profit-rises-oral-care-demand-2026-10-22/",
+        "publisher": "Reuters",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.iEP47HiIl7ARIB7rXQGFTg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "NKE": [
+      {
+        "title": "7-Eleven ends lawsuit against Nike over shoes with store's colors",
+        "url": "https://www.reuters.com/legal/legalindustry/7-eleven-ends-lawsuit-against-nike-over-shoes-with-stores-colors-2026-10-20/",
+        "publisher": "Reuters",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.oprwHwBKS6qUtehcDYjpgA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Nike to cut jobs as it forecasts revenue decline in the coming year",
+        "url": "https://www.ft.com/content/08eeee4a-903b-4889-92ef-61ebaeea682a?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-10-01",
+        "image": "https://www.bing.com/th?id=ONUT.YGwU5hHM1-bH-CuV8x1KOg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Nike shares drop as retailer posts disappointing sales, announces layoffs as part of restructuring",
+        "url": "https://www.cnbc.com/2026/10/01/nike-nke-q1-2027-earnings.html",
+        "publisher": "CNBC",
+        "date": "2026-10-01",
+        "image": "https://image.cnbcfm.com/api/v1/image/108369711-1790707248567-gettyimages-2297751509-emaz-1_em28393.jpeg?v=1790869522&w=1920&h=1080",
+        "image_kind": "article"
+      }
+    ],
+    "DIS": [
+      {
+        "title": "Channel 4 strikes streaming deal with Disney",
+        "url": "https://www.ft.com/content/ae3a1dfb-d7ba-4c88-a6da-cb28b2a1139a?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-10-26",
+        "image": "https://www.bing.com/th?id=ONUT.rsxqjIgTed2V3ud5l30Hzw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "New F1 Academy documentary to launch on Disney+",
+        "url": "https://www.nytimes.com/athletic/7713343/2026/10/22/f1-academy-documentary-disney/",
+        "publisher": "The New York Times",
+        "date": "2026-10-22",
+        "image": "https://www.bing.com/th?id=ONUT.YdyL7i0IOE895wLcVd39wg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Disney’s Former CEO Is Getting $100,000 a Month as Activist’s Nominee for Vail Board",
+        "url": "https://www.wsj.com/business/bob-chapek-is-getting-100-000-a-month-as-activists-nominee-for-vail-board-b3585fcd",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-20",
+        "image": "https://www.bing.com/th?id=ONUT.a3mMyPNqq6XsGiYVDpwtjQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "XOM": [
+      {
+        "title": "First Venezuelan oil from US-NABEP deal arrives in Texas, to be sold to Exxon, Citgo",
+        "url": "https://www.reuters.com/business/energy/first-venezuelan-oil-us-nabep-deal-arrives-texas-be-sold-exxon-citgo-2026-10-27/",
+        "publisher": "Reuters",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.bWHGIc0ngzDn8_rjh_y7UQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Trump says Exxon is 'going in' to Venezuela as US pushes oil deals",
+        "url": "https://www.reuters.com/business/energy/trump-says-exxon-is-going-in-venezuela-us-pushes-oil-deals-2026-08-31/",
+        "publisher": "Reuters",
+        "date": "2026-08-31",
+        "image": "https://www.bing.com/th?id=ONUT.vG3Irz4itA4aHNEPMxctpA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "CVX": [
+      {
+        "title": "Chevron's Eimear Bonner: 'The AI challenge is an energy challenge'",
+        "url": "https://www.cnbc.com/video/2026/10/27/chevrons-eimear-bonner-the-ai-challenge-is-an-energy-challenge.html",
+        "publisher": "CNBC",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.6fLu8bVlvRi_xOaE7_ZY9w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Chevron CEO says depleted crude oil buffers could lead to higher prices",
+        "url": "https://www.reuters.com/business/energy/chevron-ceo-says-depleted-crude-oil-buffers-could-lead-higher-prices-2026-09-11/",
+        "publisher": "Reuters",
+        "date": "2026-09-11",
+        "image": "https://www.bing.com/th?id=ONUT.i2LRdkNX2tsjcwNJII3njg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Chevron, Shell sign preliminary agreement with Ghana as country reviews oil and gas sector",
+        "url": "https://www.reuters.com/business/energy/chevron-shell-sign-preliminary-agreement-with-ghana-country-reviews-oil-gas-2026-09-03/",
+        "publisher": "Reuters",
+        "date": "2026-09-03",
+        "image": "https://www.bing.com/th?id=ONUT.GqTwvWwgvORWbhWn4Uu6cA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Chevron to Invest $7 Billion in Venezuela, Doubling Production",
+        "url": "https://www.wsj.com/business/energy-oil/chevron-readies-plans-to-invest-7-billion-double-production-in-venezuela-3a66530e",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-02",
+        "image": "https://www.bing.com/th?id=ONUT.no0CjrfxvyKpufeOEZGUxw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "COP": [
+      {
+        "title": "ConocoPhillips CEO Ryan Lance to Retire, as Finance Chief Takes the Helm",
+        "url": "https://www.wsj.com/business/energy-oil/conocophillips-ceo-ryan-lance-to-retire-as-finance-chief-takes-the-helm-28e421be",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-08-06",
+        "image": "https://www.bing.com/th?id=ONUT.zK51GYWK29GNFw3eayz5Lg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "SLB": [
+      {
+        "title": "SLB Revenue Rises as Data-Center Demand Grows, Middle East Business Recovers",
+        "url": "https://www.wsj.com/business/earnings/slb-logs-higher-revenue-as-business-in-the-middle-east-recovers-f1b81666",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-27",
+        "image": "https://www.bing.com/th?id=ONUT.ZzLPx_99uFRImi7rGRXymw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "SLB expands data center business with $4.1 billion deal for Kelvion",
+        "url": "https://www.reuters.com/business/energy/slb-acquire-kelvion-34-billion-2026-08-31/",
+        "publisher": "Reuters",
+        "date": "2026-08-31",
+        "image": "https://www.bing.com/th?id=ONUT.ZzLPx_99uFRImi7rGRXymw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "EOG": [
+      {
+        "title": "US shale producer EOG Resources beats quarterly profit estimates on higher crude prices",
+        "url": "https://www.reuters.com/business/energy/us-shale-producer-eog-resources-beats-second-quarter-profit-estimates-2026-08-04/",
+        "publisher": "Reuters",
+        "date": "2026-08-04",
+        "image": "https://www.bing.com/th?id=ONUT.2_RadX3XhVEttCL2kzot1A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "NEE": [
+      {
+        "title": "NextEra Energy, DOE Close on $1.9 Billion Loan for Nuclear Power Plant in Iowa",
+        "url": "https://www.wsj.com/business/energy-oil/nextera-energy-doe-close-on-1-9-billion-loan-for-nuclear-power-plant-in-iowa-381c2994",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-09-08",
+        "image": "https://www.bing.com/th?id=ONUT.SFy-bhwbsvkLaJYgyJqIHg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      }
+    ],
+    "DUK": [],
+    "SO": []
   }
 }

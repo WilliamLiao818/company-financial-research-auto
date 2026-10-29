@@ -24,10 +24,10 @@ def main() -> None:
         stories = load_company_news(company, ticker)
         for story in stories:
             published = date.fromisoformat(story["date"])
-            if published < cutoff:
+            if published < cutoff or published > date.today():
                 raise RuntimeError(f"Outdated article for {ticker}: {story['date']} · {story['title']}")
-            if story.get("image_kind") != "article" or not story.get("image", "").startswith("https://"):
-                raise RuntimeError(f"Missing article cover for {ticker}: {story['title']}")
+            if story.get("image") and (story.get("image_kind") != "article" or not story["image"].startswith("https://")):
+                raise RuntimeError(f"Invalid article cover for {ticker}: {story['title']}")
             article_host = (urlparse(story["url"]).hostname or "").lower()
             image_host = (urlparse(story["image"]).hostname or "").lower()
             if article_host == "news.google.com":

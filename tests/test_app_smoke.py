@@ -1,6 +1,7 @@
 import re
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from streamlit.testing.v1 import AppTest
 
@@ -8,6 +9,12 @@ from research_catalog import COMPANY_NAMES
 
 
 class AppSmokeTests(unittest.TestCase):
+    def setUp(self) -> None:
+        # Rendering tests must not depend on live publisher response times.
+        news = patch("news_connector.load_company_news", return_value=[])
+        news.start()
+        self.addCleanup(news.stop)
+
     def test_app_opens_with_search_and_all_prebuilt_packs_sorted_a_to_z(self) -> None:
         app_path = Path(__file__).resolve().parents[1] / "app.py"
         app = AppTest.from_file(str(app_path), default_timeout=30)
@@ -17,7 +24,7 @@ class AppSmokeTests(unittest.TestCase):
         self.assertEqual(app.selectbox[0].label, "Search ticker or company")
         self.assertNotIn("Page", [selectbox.label for selectbox in app.selectbox])
         button_labels = [button.label for button in app.button]
-        self.assertEqual(len(COMPANY_NAMES), 50)
+        self.assertEqual(len(COMPANY_NAMES), 128)
         self.assertEqual(button_labels.count("Open"), len(COMPANY_NAMES))
         self.assertIn("Open company", button_labels)
 

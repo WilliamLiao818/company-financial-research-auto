@@ -2,7 +2,7 @@ import unittest
 
 from company_profiles import PROFILES, accounting_quality_signals, fcf_bridge
 from research import load_financials
-from research_catalog import COMPANY_NAMES
+from research_catalog import COMPANY_NAMES, COMPANY_SECTORS, CIKS, EXPANDED_PEERS
 
 
 class CompanyProfileTests(unittest.TestCase):
@@ -10,7 +10,7 @@ class CompanyProfileTests(unittest.TestCase):
         self.frame = load_financials()
 
     def test_prebuilt_snapshot_contains_the_full_company_catalog(self) -> None:
-        self.assertEqual(len(COMPANY_NAMES), 50)
+        self.assertEqual(len(COMPANY_NAMES), 128)
         self.assertEqual(set(self.frame["ticker"]), set(COMPANY_NAMES))
         self.assertEqual(set(PROFILES), set(COMPANY_NAMES))
 
@@ -18,6 +18,15 @@ class CompanyProfileTests(unittest.TestCase):
         periods = self.frame.groupby("ticker")["fiscal_year"].nunique()
         self.assertEqual(set(periods.index), set(COMPANY_NAMES))
         self.assertTrue((periods >= 2).all(), periods.loc[periods < 2].to_dict())
+
+    def test_catalog_entries_have_consistent_identity_sector_and_peers(self) -> None:
+        self.assertEqual(set(COMPANY_SECTORS), set(COMPANY_NAMES))
+        self.assertEqual(set(CIKS), set(COMPANY_NAMES))
+        for ticker, peers in EXPANDED_PEERS.items():
+            with self.subTest(ticker=ticker):
+                self.assertNotIn(ticker, peers)
+                self.assertTrue(set(peers).issubset(COMPANY_NAMES))
+                self.assertRegex(CIKS[ticker], r"^\d{10}$")
 
     def test_oracle_gross_margin_is_derived_from_reported_direct_costs(self) -> None:
         oracle = self.frame.loc[self.frame["ticker"] == "ORCL"].sort_values("fiscal_year")

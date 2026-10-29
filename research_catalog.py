@@ -2,6 +2,11 @@ from __future__ import annotations
 
 from datetime import date
 
+from coverage128 import (
+    ADDITIONAL_COMPANIES, ADDITIONAL_FOREIGN_PRIVATE_ISSUERS,
+    ADDITIONAL_RESEARCH_CONTEXT, additional_profile,
+)
+
 
 COMPANY_NAMES = {
     "MSFT": "Microsoft Corporation",
@@ -137,6 +142,18 @@ CIKS = {
     "GEV": "0001996810",
     "CAT": "0000018230",
 }
+
+
+COMPANY_NAMES.update({ticker: row[0] for ticker, row in ADDITIONAL_COMPANIES.items()})
+CIKS.update({ticker: row[1] for ticker, row in ADDITIONAL_COMPANIES.items()})
+COMPANY_SECTORS.update({ticker: row[2] for ticker, row in ADDITIONAL_COMPANIES.items()})
+COMPANY_SECTORS.update({
+    "TSLA": "Industrials & aerospace", "V": "Digital platforms & payments",
+    "LLY": "Healthcare & life sciences", "WMT": "Consumer & retail",
+    "GEV": "Industrials & aerospace", "CAT": "Industrials & aerospace",
+    "WDC": "Systems & infrastructure",
+})
+FOREIGN_PRIVATE_ISSUERS.update(ADDITIONAL_FOREIGN_PRIVATE_ISSUERS)
 
 
 def sec_filings_url(ticker: str, form: str) -> str:
@@ -798,6 +815,16 @@ def _expanded_profile(ticker: str) -> dict[str, object]:
 
 
 EXTENDED_PROFILES.update({ticker: _expanded_profile(ticker) for ticker in EXPANDED_COMPANY_CONTEXT})
+EXTENDED_PROFILES.update({ticker: additional_profile(ticker) for ticker in ADDITIONAL_COMPANIES})
+EXPANDED_PEERS.update({ticker: list(context["peers"]) for ticker, context in ADDITIONAL_RESEARCH_CONTEXT.items()})
+EXPANDED_PEERS.update({
+    "TSLA": ["ON", "NXPI", "STM"],
+    "V": ["PYPL", "SHOP", "AAPL"],
+    "LLY": ["NVO", "ABBV", "MRK"],
+    "WMT": ["COST", "TGT", "AMZN"],
+    "GEV": ["ETN", "VRT", "CMI"],
+    "CAT": ["DE", "CMI", "PH"],
+})
 
 
 def target_price_snapshot(

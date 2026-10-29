@@ -25,7 +25,7 @@ from reportlab.platypus import (
 from reportlab.platypus.tableofcontents import TableOfContents
 
 from market_data import load_market_performance, performance_context_note, performance_summary
-from research_catalog import COMPANY_NAMES, market_share_snapshot, target_price_snapshot
+from research_catalog import COMPANY_NAMES, EXPANDED_PEERS, market_share_snapshot, target_price_snapshot
 
 
 GREEN = colors.HexColor("#087F5B")
@@ -681,7 +681,7 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
         score_names = " ".join(str(name).lower() for name in profile["competitive_scores"])
         peer_view = peers.loc[
             peers.apply(
-                lambda row: str(row.get("ticker", "")) == ticker
+                lambda row: str(row.get("ticker", "")) in {ticker, *EXPANDED_PEERS.get(ticker, [])}
                 or any(part.lower() in score_names for part in str(COMPANY_NAMES.get(str(row.get("ticker", "")), "")).replace(",", "").split() if len(part) >= 5),
                 axis=1,
             )
@@ -701,7 +701,8 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
             ])
     if market_snapshot.get("values"):
         story.append(KeepTogether([Paragraph(f"{escape(_ascii(market_snapshot['title']))} | {escape(_ascii(market_snapshot['period']))}", styles["h2"]), _market_share_pie(market_snapshot, height=170), Paragraph(f"Data through {escape(_ascii(market_snapshot['period']))}.", styles["source"])]))
-    story.append(KeepTogether([Paragraph("Competitive rubric | 1 to 5", styles["h2"]), _score_heatmap(profile, height=145), Paragraph("Read across a row to compare one company across dimensions. Application Reach measures the breadth of first-party applications and installed workflows available to distribute adjacent cloud, data and AI services. Scores are revisable judgments, not reported facts.", styles["source"])]))
+    if profile["competitive_scores"] and profile["competitive_dimensions"]:
+        story.append(KeepTogether([Paragraph("Competitive rubric | 1 to 5", styles["h2"]), _score_heatmap(profile, height=145), Paragraph("Read across a row to compare one company across dimensions. Application Reach measures the breadth of first-party applications and installed workflows available to distribute adjacent cloud, data and AI services. Scores are revisable judgments, not reported facts.", styles["source"])]))
 
     # 9 | Market performance
     if not market_history.empty:

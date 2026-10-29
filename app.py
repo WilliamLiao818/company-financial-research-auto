@@ -310,7 +310,7 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
     if custom_query:
         render_custom_loader(str(custom_query))
 
-    st.subheader("50 prebuilt research packs")
+    st.subheader(f"{len(SHOWCASES)} prebuilt research packs")
     sector_options = ["All sectors", *sorted(set(COMPANY_SECTORS.values()), key=str.casefold)]
     selected_sector = st.selectbox("Sector", sector_options)
     tickers = [
@@ -461,7 +461,7 @@ with executive_tab:
         column.markdown(f"<div class='compact-card'><strong>QUESTION {index:02d}</strong><p>{question}</p></div>", unsafe_allow_html=True)
     st.subheader("Latest annual read-through")
     st.markdown(f"<div class='research-strip'><b>Growth:</b> revenue changed {percent(summary['revenue_growth'])}. <b>Profitability:</b> gross margin is {percent(summary['gross_margin'])} and operating margin is {percent(summary['operating_margin'])}. <b>Reinvestment:</b> capex is {percent(summary['capex_intensity'])} of revenue. <b>Cash:</b> free cash flow is {money_billions(summary['free_cash_flow'], currency)}.</div>", unsafe_allow_html=True)
-    stories = recent_news(str(summary["company"]), ticker, "verified-snapshot-90d-v6")
+    stories = recent_news(str(summary["company"]), ticker, "company128-snapshot-90d-v7")
     st.subheader("Three-month news monitor")
     st.markdown("<div class='section-deck'>Material coverage published within the latest rolling 90 days, checked against original article links.</div>", unsafe_allow_html=True)
     if stories:
@@ -614,13 +614,14 @@ with competition_tab:
         reference_label = "Historical reference — not a current market-share estimate. " if market.get("historical") else ""
         competition_columns[0].caption(f"{reference_label}Data through {market['period']}. {market.get('note', '')}")
 
-    scores = pd.DataFrame(profile["competitive_scores"], index=profile["competitive_dimensions"]).T
-    heatmap = go.Figure(go.Heatmap(z=scores.values, x=list(scores.columns), y=list(scores.index), zmin=1, zmax=5, colorscale=[[0,"#edf7f2"],[.5,"#76b89d"],[1,"#087f5b"]], text=scores.values, texttemplate="%{text}/5", hovertemplate="%{y}<br>%{x}: %{z}/5<extra></extra>", colorbar={"title":"Score","tickvals":[1,2,3,4,5]}))
-    style_figure(heatmap, title="Competitive rubric · explicit analyst judgment", height=440)
-    heatmap.update_xaxes(title="", tickangle=-18)
-    heatmap.update_yaxes(title="", autorange="reversed")
-    competition_columns[1].plotly_chart(heatmap, width="stretch", theme=None)
-    competition_columns[1].caption("Read across a row to compare one company across dimensions. Application Reach measures the breadth of first-party business applications and installed workflows available to distribute adjacent cloud, data and AI services. All 1–5 scores are revisable analyst judgments, not market-share data.")
+    if profile["competitive_scores"] and profile["competitive_dimensions"]:
+        scores = pd.DataFrame(profile["competitive_scores"], index=profile["competitive_dimensions"]).T
+        heatmap = go.Figure(go.Heatmap(z=scores.values, x=list(scores.columns), y=list(scores.index), zmin=1, zmax=5, colorscale=[[0,"#edf7f2"],[.5,"#76b89d"],[1,"#087f5b"]], text=scores.values, texttemplate="%{text}/5", hovertemplate="%{y}<br>%{x}: %{z}/5<extra></extra>", colorbar={"title":"Score","tickvals":[1,2,3,4,5]}))
+        style_figure(heatmap, title="Competitive rubric · explicit analyst judgment", height=440)
+        heatmap.update_xaxes(title="", tickangle=-18)
+        heatmap.update_yaxes(title="", autorange="reversed")
+        competition_columns[1].plotly_chart(heatmap, width="stretch", theme=None)
+        competition_columns[1].caption("Read across a row to compare one company across dimensions. Application Reach measures the breadth of first-party business applications and installed workflows available to distribute adjacent cloud, data and AI services. All 1–5 scores are revisable analyst judgments, not market-share data.")
 
 with performance_tab:
     st.subheader("Long-term market performance")

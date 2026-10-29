@@ -13,6 +13,17 @@ import pandas as pd
 BENCHMARKS = {"SPY": "SPY", "QQQ": "QQQ"}
 SNAPSHOT_PATH = Path(__file__).resolve().parent / "data" / "market_performance.csv"
 PERFORMANCE_NOTES = {
+    # GE's April 2, 2024 announcement and Danaher's September 30, 2023
+    # separation release confirm these changes in business perimeter.
+    "GE": (
+        "GE's earlier trading history includes the former conglomerate before the "
+        "GE HealthCare and GE Vernova separations. Adjusted historical performance "
+        "does not represent a decade of the current standalone aerospace business."
+    ),
+    "DHR": (
+        "Danaher's history includes businesses separated into Veralto in 2023. "
+        "The earlier operating scope differs from today's life-sciences and diagnostics portfolio."
+    ),
     "WDC": (
         "Western Digital's pre-separation trading history reflects the former combined company. "
         "Adjusted prices may incorporate the Sandisk distribution, but the earlier operating scope "

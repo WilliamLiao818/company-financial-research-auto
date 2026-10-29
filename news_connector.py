@@ -99,6 +99,7 @@ LOW_VALUE_TITLE_PATTERNS = {
     "price target", "stock pick", "stocks to buy", "top stock", "wall street ends",
     "wall st week ahead", "the best early deals", "prime big deal days",
     "could ai chip boom make", "ceo as adviser", "trillion club",
+    "invitation to join", "conference call date", "announce earnings date", "announces earnings date",
 }
 SEARCH_ALIASES = {
     "MSFT": ["Microsoft"], "ORCL": ["Oracle"], "GOOG": ["Google", "Alphabet"],
@@ -124,6 +125,119 @@ SEARCH_ALIASES = {
     "LLY": ["Eli Lilly", "Lilly"], "WMT": ["Walmart"],
     "GEV": ["GE Vernova"], "CAT": ["Caterpillar"],
 }
+
+# Use company names rather than ambiguous short tickers in general-news searches.
+_ADDITIONAL_NEWS_METADATA = {
+    "ADBE": ("Adobe", "adobe.com"),
+    "ADSK": ("Autodesk", "autodesk.com"),
+    "INTU": ("Intuit", "intuit.com"),
+    "IBM": ("IBM", "ibm.com"),
+    "ACN": ("Accenture", "accenture.com"),
+    "CRWD": ("CrowdStrike", "crowdstrike.com"),
+    "FTNT": ("Fortinet", "fortinet.com"),
+    "ZS": ("Zscaler", "zscaler.com"),
+    "NET": ("Cloudflare", "cloudflare.com"),
+    "DDOG": ("Datadog", "datadoghq.com"),
+    "SNOW": ("Snowflake", "snowflake.com"),
+    "MDB": ("MongoDB", "mongodb.com"),
+    "TEAM": ("Atlassian", "atlassian.com"),
+    "SHOP": ("Shopify", "shopify.com"),
+    "UBER": ("Uber", "uber.com"),
+    "ABNB": ("Airbnb", "airbnb.com"),
+    "BKNG": ("Booking Holdings", "bookingholdings.com"),
+    "NFLX": ("Netflix", "netflix.com"),
+    "SPOT": ("Spotify", "spotify.com"),
+    "PYPL": ("PayPal", "paypal.com"),
+    "STM": ("STMicroelectronics", "st.com"),
+    "MPWR": ("Monolithic Power Systems", "monolithicpower.com"),
+    "SWKS": ("Skyworks", "skyworksinc.com"),
+    "STX": ("Seagate", "seagate.com"),
+    "ALGM": ("Allegro MicroSystems", "allegromicro.com"),
+    "LSCC": ("Lattice Semiconductor", "latticesemi.com"),
+    "RMBS": ("Rambus", "rambus.com"),
+    "MTSI": ("MACOM", "macom.com"),
+    "CRUS": ("Cirrus Logic", "cirrus.com"),
+    "FN": ("Fabrinet", "fabrinet.com"),
+    "JNJ": ("Johnson & Johnson", "jnj.com"),
+    "MRK": ("Merck", "merck.com"),
+    "ABBV": ("AbbVie", "abbvie.com"),
+    "PFE": ("Pfizer", "pfizer.com"),
+    "AMGN": ("Amgen", "amgen.com"),
+    "GILD": ("Gilead", "gilead.com"),
+    "REGN": ("Regeneron", "regeneron.com"),
+    "VRTX": ("Vertex Pharmaceuticals", "vrtx.com"),
+    "NVO": ("Novo Nordisk", "novonordisk.com"),
+    "AZN": ("AstraZeneca", "astrazeneca.com"),
+    "TMO": ("Thermo Fisher", "thermofisher.com"),
+    "DHR": ("Danaher", "danaher.com"),
+    "ABT": ("Abbott", "abbott.com"),
+    "MDT": ("Medtronic", "medtronic.com"),
+    "ISRG": ("Intuitive Surgical", "intuitive.com"),
+    "BSX": ("Boston Scientific", "bostonscientific.com"),
+    "GE": ("GE Aerospace", "geaerospace.com"),
+    "RTX": ("RTX", "rtx.com"),
+    "LMT": ("Lockheed Martin", "lockheedmartin.com"),
+    "NOC": ("Northrop Grumman", "northropgrumman.com"),
+    "GD": ("General Dynamics", "gd.com"),
+    "HON": ("Honeywell", "honeywell.com"),
+    "ETN": ("Eaton", "eaton.com"),
+    "PH": ("Parker Hannifin", "parker.com"),
+    "ROK": ("Rockwell Automation", "rockwellautomation.com"),
+    "EMR": ("Emerson Electric", "emerson.com"),
+    "DE": ("Deere", "deere.com"),
+    "CMI": ("Cummins", "cummins.com"),
+    "COST": ("Costco", "costco.com"),
+    "TGT": ("Target", "target.com"),
+    "HD": ("Home Depot", "homedepot.com"),
+    "LOW": ("Lowe's", "lowes.com"),
+    "MCD": ("McDonald's", "mcdonalds.com"),
+    "SBUX": ("Starbucks", "starbucks.com"),
+    "KO": ("Coca-Cola", "coca-colacompany.com"),
+    "PEP": ("PepsiCo", "pepsico.com"),
+    "PG": ("Procter & Gamble", "pg.com"),
+    "CL": ("Colgate-Palmolive", "colgatepalmolive.com"),
+    "NKE": ("Nike", "nike.com"),
+    "DIS": ("Disney", "thewaltdisneycompany.com"),
+    "XOM": ("Exxon", "exxonmobil.com"),
+    "CVX": ("Chevron", "chevron.com"),
+    "COP": ("ConocoPhillips", "conocophillips.com"),
+    "SLB": ("SLB", "slb.com"),
+    "EOG": ("EOG Resources", "eogresources.com"),
+    "NEE": ("NextEra Energy", "nexteraenergy.com"),
+    "DUK": ("Duke Energy", "duke-energy.com"),
+    "SO": ("Southern Company", "southerncompany.com"),
+}
+for _ticker, (_name, _official_domain) in _ADDITIONAL_NEWS_METADATA.items():
+    SEARCH_ALIASES[_ticker] = [_name]
+    OFFICIAL_DOMAINS_BY_TICKER[_ticker] = {_official_domain: _name}
+SEARCH_ALIASES["JNJ"].extend(["Johnson and Johnson", "J&J"])
+SEARCH_ALIASES["PG"].append("Procter and Gamble")
+SEARCH_ALIASES["XOM"].append("ExxonMobil")
+SEARCH_ALIASES["RTX"].append("Raytheon")
+SEARCH_ALIASES["SLB"].append("Schlumberger")
+SEARCH_ALIASES["BKNG"].append("Booking.com")
+SEARCH_ALIASES["PH"].append("Parker-Hannifin")
+SEARCH_ALIASES["EMR"].append("Emerson")
+SEARCH_ALIASES["CL"].append("Colgate")
+OFFICIAL_DOMAINS_BY_TICKER["BKNG"]["booking.com"] = "Booking.com"
+OFFICIAL_DOMAINS_BY_TICKER["NFLX"]["about.netflix.com"] = "Netflix"
+MATERIAL_TITLE_TERMS.update({
+    "drug", "drugs", "trial", "trials", "fda", "treatment", "treatments", "patent", "patents",
+    "production", "pipeline", "backlog", "deliveries", "orders", "oil", "gas", "power", "energy",
+    "dividend", "dividends", "buyback", "buybacks", "divestiture", "divestitures", "spinoff",
+    "accelerate", "accelerates", "expand", "expands", "expansion", "unveils", "introduces",
+    "cyberattack", "cyberattacks", "tokenized", "patent", "patents",
+})
+COMPANY_TITLE_EXCLUSIONS = {
+    # Merck & Co. (NYSE: MRK) and Germany's Merck KGaA are unrelated issuers.
+    "MRK": ("merck kgaa", "germany's merck", "germany’s merck", "german merck"),
+}
+
+
+def _excluded_company_title(ticker: str, title: str) -> bool:
+    return any(term in title.casefold() for term in COMPANY_TITLE_EXCLUSIONS.get(ticker, ()))
+
+
 MEDIA_CONTENT = "{http://search.yahoo.com/mrss/}content"
 MEDIA_THUMBNAIL = "{http://search.yahoo.com/mrss/}thumbnail"
 NEWS_SNAPSHOT_PATH = Path(__file__).resolve().parent / "data" / "recent_news.json"
@@ -202,6 +316,12 @@ def _usable_article_url(value: str) -> bool:
     hostname = (parsed.hostname or "").lower()
     normalized_host = hostname.removeprefix("www.")
     if parsed.scheme != "https" or not hostname:
+        return False
+    if any(part in parsed.path.lower() for part in ("/authors/", "/categories/", "/quote/")):
+        return False
+    if re.search(r"/(?:blog|blogs|news|newsroom|press-releases)/?$", parsed.path.lower()):
+        return False
+    if normalized_host == "reuters.com" and parsed.path.startswith("/company/"):
         return False
     if hostname == "markets.ft.com" and parsed.path.startswith("/data/announce"):
         return False
@@ -362,15 +482,13 @@ def _complete_story(row: tuple[int, datetime, dict[str, str], str]) -> tuple[int
     article_url, image = _article_metadata(decoded_url, domain)
     image = image or _valid_cover_url(story.get("image", ""), base_url=article_url)
     image = image or _bing_cover_for_title(story["title"])
-    if not image:
-        return None
     article_time = _dated_article_time(article_url, published_at)
     completed = {
         **story,
         "url": article_url,
         "date": article_time.date().isoformat(),
         "image": image,
-        "image_kind": "article",
+        "image_kind": "article" if image else "",
     }
     return score, article_time, completed
 
@@ -460,27 +578,8 @@ def _bing_cover_for_title(title: str) -> str:
             image = _valid_cover_url(_bing_thumbnail(_local_child_text(item, "Image")))
             if image:
                 return image
-    html_params = urllib.parse.urlencode({"q": broad_terms, "setlang": "en-us", "cc": "us"})
-    html_request = urllib.request.Request(
-        "https://www.bing.com/news/search?" + html_params,
-        headers={"User-Agent": "Mozilla/5.0 TheCompanyResearch/2.2"},
-    )
-    try:
-        with urllib.request.urlopen(html_request, timeout=10) as response:
-            page = response.read(1_500_000).decode("utf-8", errors="ignore")
-    except (
-        urllib.error.URLError,
-        TimeoutError,
-        OSError,
-        ValueError,
-        UnicodeError,
-        http.client.HTTPException,
-    ):
-        return ""
-    match = re.search(r'(?:data-src-hq|src)="([^\"]*/th\?id=ONUT\.[^\"]+)"', page)
-    if match:
-        cached = urllib.parse.urljoin("https://www.bing.com", match.group(1).replace("&amp;", "&"))
-        return _valid_cover_url(_bing_thumbnail(cached))
+    # A search page's first image is not evidence that it belongs to this story.
+    # Keep only a publisher image or a cached image matched to the article title.
     return ""
 
 
@@ -492,7 +591,8 @@ def _load_bing_company_news(
     window_days: int,
     current_time: datetime,
 ) -> list[dict[str, str]]:
-    query = f'"{aliases[0]}" ({BUSINESS_TERMS})'
+    site_filter = " OR ".join(f"site:{domain}" for domain in publishers)
+    query = f'"{aliases[0]}" ({site_filter})'
     params = urllib.parse.urlencode(
         {"q": query, "format": "rss", "setlang": "en-us", "cc": "us"}
     )
@@ -507,7 +607,7 @@ def _load_bing_company_news(
         return []
 
     cutoff = current_time - timedelta(days=window_days)
-    latest_allowed = current_time + timedelta(days=1)
+    latest_allowed = current_time
     ranked: list[tuple[int, datetime, dict[str, str]]] = []
     seen: set[str] = set()
     for item in root.findall("./channel/item"):
@@ -531,14 +631,12 @@ def _load_bing_company_news(
         if not is_official and not _title_matches_alias(title, aliases):
             continue
         materiality_count = _materiality_count(title)
-        if not is_official and not materiality_count:
+        if not materiality_count:
             continue
         raw_image = _bing_thumbnail(_local_child_text(item, "Image"))
         image = _valid_cover_url(raw_image)
         if not image or "th?id=" not in image:
             original_url, image = _article_metadata(original_url, domain)
-            if not image:
-                continue
         key = "".join(character.lower() for character in title if character.isalnum())[:100]
         if not key or key in seen:
             continue
@@ -555,7 +653,7 @@ def _load_bing_company_news(
                     "publisher": publishers[domain],
                     "date": published_at.date().isoformat(),
                     "image": image,
-                    "image_kind": "article",
+                    "image_kind": "article" if image else "",
                 },
             )
         )
@@ -579,7 +677,7 @@ def load_company_news(
         current_time = current_time.replace(tzinfo=timezone.utc)
     current_time = current_time.astimezone(timezone.utc)
     cutoff = current_time - timedelta(days=window_days)
-    latest_allowed = current_time + timedelta(days=1)
+    latest_allowed = current_time
 
     indexed_results = _load_bing_company_news(
         aliases,
@@ -588,6 +686,7 @@ def load_company_news(
         window_days=window_days,
         current_time=current_time,
     )
+    indexed_results = [story for story in indexed_results if not _excluded_company_title(ticker, story["title"])]
     if len(indexed_results) >= limit:
         return indexed_results[:limit]
 
@@ -616,6 +715,8 @@ def load_company_news(
         if not domain:
             continue
         title = " ".join((item.findtext("title") or "").split())
+        if _excluded_company_title(ticker, title):
+            continue
         publisher = publishers[domain]
         for suffix in [f" - {publisher}", " - WSJ", " - Bloomberg.com", " - Reuters", " - CNBC", " - AP News"]:
             if title.endswith(suffix):
@@ -627,7 +728,7 @@ def load_company_news(
         if any(pattern in lowered_title for pattern in LOW_VALUE_TITLE_PATTERNS):
             continue
         materiality_count = _materiality_count(title)
-        if not is_official and not materiality_count:
+        if not materiality_count:
             continue
         published_at = _published_at(item.findtext("pubDate") or "")
         if published_at is None or published_at < cutoff or published_at > latest_allowed:
@@ -659,7 +760,9 @@ def load_company_news(
     candidates = ranked_results[: max(limit * 5, 20)]
     with ThreadPoolExecutor(max_workers=min(4, max(1, len(candidates)))) as executor:
         completed = list(executor.map(_complete_story, candidates))
-    available = [row for row in completed if row is not None]
+    # Canonical publisher dates can disagree with feed dates, so validate again
+    # after resolving the article instead of accepting a newly indexed old page.
+    available = [row for row in completed if row is not None and cutoff <= row[1] <= latest_allowed]
     available.sort(key=lambda row: (row[0], row[1]), reverse=True)
     combined = [*indexed_results, *(row[2] for row in available)]
 
@@ -712,7 +815,7 @@ def load_company_news_snapshot(
         current_time = current_time.replace(tzinfo=timezone.utc)
     current_date = current_time.astimezone(timezone.utc).date()
     cutoff = current_date - timedelta(days=window_days)
-    latest_allowed = current_date + timedelta(days=1)
+    latest_allowed = current_date
     aliases = SEARCH_ALIASES.get(ticker, [ticker])
     publishers = {**TRUSTED_DOMAINS, **OFFICIAL_DOMAINS_BY_TICKER.get(ticker, {})}
     verified: list[dict[str, str]] = []
@@ -728,15 +831,21 @@ def load_company_news_snapshot(
         article_url = str(story.get("url", ""))
         image_url = str(story.get("image", ""))
         title = str(story.get("title", ""))
+        if _excluded_company_title(ticker, title):
+            continue
         lowered_title = title.lower()
-        if story.get("image_kind") != "article" or not _usable_article_url(article_url):
+        if not _usable_article_url(article_url):
             continue
         domain = _domain(article_url, publishers)
         if not domain or any(pattern in lowered_title for pattern in LOW_VALUE_TITLE_PATTERNS):
             continue
-        if domain in TRUSTED_DOMAINS and (not _title_matches_alias(title, aliases) or not _materiality_count(title)):
+        if not _materiality_count(title):
             continue
-        if image_url == article_url or not _valid_cover_url(image_url):
+        if domain in TRUSTED_DOMAINS and not _title_matches_alias(title, aliases):
+            continue
+        if image_url and (story.get("image_kind") != "article" or image_url == article_url or not _valid_cover_url(image_url)):
+            continue
+        if not image_url and story.get("image_kind") not in {"", None}:
             continue
         verified.append({key: str(story.get(key, "")) for key in ("title", "url", "publisher", "date", "image", "image_kind")})
     verified.sort(key=lambda story: story["date"], reverse=True)

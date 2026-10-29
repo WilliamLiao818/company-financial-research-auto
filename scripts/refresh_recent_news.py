@@ -19,13 +19,14 @@ from research_catalog import COMPANY_NAMES  # noqa: E402
 def _refresh_company(item: tuple[str, str], *, limit: int, window_days: int) -> tuple[str, list[dict[str, str]]]:
     ticker, company = item
     stories = load_company_news(company, ticker, limit=limit, window_days=window_days)
-    cutoff = date.today() - timedelta(days=window_days)
+    today = datetime.now(timezone.utc).date()
+    cutoff = today - timedelta(days=window_days)
     for story in stories:
         published = date.fromisoformat(story["date"])
-        if published < cutoff:
-            raise RuntimeError(f"Outdated article for {ticker}: {story['date']} · {story['title']}")
-        if story.get("image_kind") != "article" or not story.get("image", "").startswith("https://"):
-            raise RuntimeError(f"Missing article cover for {ticker}: {story['title']}")
+        if published < cutoff or published > today:
+            raise RuntimeError(f"Article outside the current window for {ticker}: {story['date']} · {story['title']}")
+        if story.get("image") and (story.get("image_kind") != "article" or not story["image"].startswith("https://")):
+            raise RuntimeError(f"Invalid article cover for {ticker}: {story['title']}")
         if story["image"] == story["url"]:
             raise RuntimeError(f"Article page was mistaken for its cover for {ticker}: {story['title']}")
         if (urlparse(story["url"]).hostname or "").lower() == "news.google.com":

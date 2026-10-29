@@ -13,8 +13,10 @@ from news_connector import (
     SEARCH_ALIASES,
     _decode_google_news_url,
     _dated_article_time,
+    _excluded_company_title,
     _materiality_count,
     _valid_cover_url,
+    _usable_article_url,
     load_company_news,
     load_company_news_snapshot,
 )
@@ -133,6 +135,38 @@ class CompanyNewsTests(unittest.TestCase):
             {"Microsoft reports quarterly earnings", "Microsoft launches a new cloud product"},
         )
 
+    def test_resolved_publisher_date_is_checked_after_google_feed_date(self):
+        rss = b"""<rss><channel><item>
+          <title>Microsoft launches a new cloud product - Reuters</title>
+          <link>https://news.google.com/articles/reindexed-old-story</link>
+          <pubDate>Thu, 27 Aug 2026 12:00:00 GMT</pubDate>
+          <source url="https://www.reuters.com">Reuters</source>
+        </item></channel></rss>"""
+        with (
+            patch("urllib.request.urlopen", return_value=_Response(rss)),
+            patch("news_connector._load_bing_company_news", return_value=[]),
+            patch("news_connector._decode_google_news_url", return_value="https://www.reuters.com/business/microsoft-product-2019-12-18/"),
+            patch("news_connector._article_metadata", return_value=(
+                "https://www.reuters.com/business/microsoft-product-2019-12-18/",
+                "https://cdn.reuters.com/product.jpg",
+            )),
+        ):
+            results = load_company_news(
+                "Microsoft Corporation", "MSFT", now=datetime(2026, 8, 28, tzinfo=timezone.utc)
+            )
+        self.assertEqual(results, [])
+
+    def test_new_sectors_and_ambiguous_tickers_have_company_specific_searches(self):
+        for ticker in ("NET", "TEAM", "FN", "GE", "PH", "DE", "CL", "SO"):
+            self.assertNotIn(ticker.casefold(), {name.casefold() for name in SEARCH_ALIASES[ticker]})
+        self.assertGreater(_materiality_count("Novo Nordisk receives FDA drug approval"), 0)
+        self.assertGreater(_materiality_count("Southern Company expands power production"), 0)
+        self.assertTrue(_excluded_company_title("MRK", "Germany's Merck buys Silence Therapeutics"))
+        self.assertTrue(_excluded_company_title("MRK", "Germany’s Merck announces acquisition"))
+        self.assertFalse(_excluded_company_title("MRK", "Merck drug extends survival in cancer trial"))
+        self.assertFalse(_usable_article_url("https://www.snowflake.com/en/blog/"))
+        self.assertFalse(_usable_article_url("https://www.reuters.com/company/intuit-inc/"))
+
     def test_bing_index_keeps_original_article_and_specific_thumbnail(self):
         rss = b"""<?xml version='1.0' encoding='UTF-8'?>
         <rss xmlns:News="https://www.bing.com/news"><channel>
@@ -170,6 +204,14 @@ class CompanyNewsTests(unittest.TestCase):
                         "publisher": "Reuters",
                         "date": "2025-08-27",
                         "image": "https://cdn.reuters.com/marvell-old.jpg",
+                        "image_kind": "article",
+                    },
+                    {
+                        "title": "Marvell reports quarterly earnings",
+                        "url": "https://www.reuters.com/business/marvell-future",
+                        "publisher": "Reuters",
+                        "date": "2026-08-29",
+                        "image": "https://cdn.reuters.com/marvell-future.jpg",
                         "image_kind": "article",
                     },
                     {
@@ -227,6 +269,20 @@ class CompanyNewsTests(unittest.TestCase):
             )
 
         self.assertEqual([story["date"] for story in results], ["2026-08-27", "2026-08-20"])
+
+    def test_credible_article_can_render_without_an_unverified_cover(self):
+        story = {
+            "title": "Danaher reports third quarter results",
+            "url": "https://investors.danaher.com/2026-10-21-Danaher-Reports-Third-Quarter-2026-Results",
+            "publisher": "Danaher", "date": "2026-10-21", "image": "", "image_kind": "",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "recent_news.json"
+            path.write_text(json.dumps({"companies": {"DHR": [story]}}), encoding="utf-8")
+            results = load_company_news_snapshot(
+                "DHR", now=datetime(2026, 10, 29, tzinfo=timezone.utc), path=path,
+            )
+        self.assertEqual(results, [story])
 
 
 if __name__ == "__main__":
