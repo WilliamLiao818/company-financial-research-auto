@@ -12,6 +12,7 @@ import streamlit as st
 from company_profiles import accounting_quality_signals, fcf_bridge, profile_for
 from fmp_connector import FmpConnectionError, FmpInputError, load_financial_statements
 from input_pipeline import online_company_facts, parse_identifiers
+from industry_context import context_for as industry_context_for
 from news_connector import load_company_news, load_company_news_snapshot
 from pdf_export import build_company_pdf
 from research import (
@@ -123,6 +124,15 @@ st.markdown(
     .section-deck { max-width:790px; color:var(--muted); font-size:15px; line-height:1.7; margin-bottom:1rem; }
     .research-strip { padding:16px 19px; border:1px solid var(--line); border-radius:14px; background:white; color:var(--deep); font-size:14px; line-height:1.7; }
     .research-strip b { color:var(--green); }
+    .industry-context { padding:20px; margin:12px 0 22px; border:1px solid var(--line); border-radius:16px; background:var(--soft); }
+    .industry-context .context-heading { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .industry-context h3 { margin:0; font-size:1.08rem!important; }
+    .industry-context p { margin:8px 0; font-size:14px; line-height:1.6; }
+    .industry-context a { color:var(--green)!important; font-weight:700; text-decoration:none; }
+    .industry-context a:hover { text-decoration:underline; }
+    .industry-context .context-related { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0; }
+    .industry-context .context-related a { padding:8px 11px; border:1px solid var(--line); border-radius:9px; background:white; font-size:12px; }
+    .industry-context .context-note { color:var(--muted)!important; font-size:12px; margin-bottom:0; }
     .source-note { padding:12px 15px; background:#f5f9f7; border-radius:12px; color:var(--muted); font-size:13px; line-height:1.6; }
     .selection-pill { display:inline-flex; align-items:center; gap:8px; margin:.25rem 0 .75rem; padding:8px 12px; border-radius:999px; background:var(--soft); color:var(--green); font-weight:700; font-size:13px; }
     .news-card { height:100%; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:white; box-shadow:0 10px 32px rgba(11,42,32,.035); }
@@ -450,6 +460,24 @@ target_tab = valuation_tab
 scenario_tab = valuation_tab
 
 with executive_tab:
+    industry_context = industry_context_for(ticker)
+    if industry_context:
+        roles = " · ".join(escape(role) for role in industry_context["roles"])
+        related_links = "".join(
+            f"<a href='{escape(item['url'], quote=True)}' target='_blank' rel='noopener' "
+            f"title='{escape(item['name'], quote=True)}'>{escape(item['ticker'])} · {escape(item['role'])} ↗</a>"
+            for item in industry_context["related"]
+        )
+        st.markdown(
+            "<section class='industry-context' aria-label='Industry context'>"
+            "<div class='context-heading'><h3>Industry context · AI infrastructure</h3>"
+            f"<a href='{escape(str(industry_context['map_url']), quote=True)}' target='_blank' rel='noopener'>Open industry map ↗</a></div>"
+            f"<p><b>{roles}</b></p>"
+            "<p>Follow the value chain to investigate how demand, capacity and bottlenecks connect this company to other businesses.</p>"
+            f"<div class='context-related'>{related_links}</div>"
+            "<p class='context-note'>Related companies are grouped by industry role; these links do not establish a supplier or customer contract.</p></section>",
+            unsafe_allow_html=True,
+        )
     st.subheader("Answer first")
     st.markdown("<div class='section-deck'>The opening view states what must be true, what could invalidate it and which questions should drive the next update.</div>", unsafe_allow_html=True)
     columns = st.columns(2)
