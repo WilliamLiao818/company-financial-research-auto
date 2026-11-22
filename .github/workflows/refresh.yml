@@ -10,6 +10,8 @@ on:
         options: [all, filings, market, news]
   schedule:
     - cron: "37 3 * * *"
+    - cron: "13 13-23/2 * * 1-5"
+    - cron: "43 13-23/2 * * 1-5"
 
 concurrency:
   group: publish-public-company-data
@@ -25,6 +27,8 @@ jobs:
     timeout-minutes: 80
     permissions:
       contents: write
+    env:
+      FEED: ${{ inputs.feed || (github.event.schedule == '13 13-23/2 * * 1-5' && 'filings') || (github.event.schedule == '43 13-23/2 * * 1-5' && 'news') || 'all' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,7 +41,6 @@ jobs:
       - name: Check source feeds and retain last verified data on failure
         env:
           SEC_CONTACT_EMAIL: ${{ vars.SEC_CONTACT_EMAIL }}
-          FEED: ${{ inputs.feed || 'all' }}
         run: python scripts/refresh_public_data.py --feeds "$FEED"
       - name: Export lightweight company briefs for the public homepage
         run: python scripts/export_lite.py
@@ -55,8 +58,6 @@ jobs:
           git commit -m "Refresh public company research data"
           git push origin "HEAD:$DEFAULT_BRANCH"
       - name: Flag any retained company data
-        env:
-          FEED: ${{ inputs.feed || 'all' }}
         run: |
           python - <<'PY'
           import json, os

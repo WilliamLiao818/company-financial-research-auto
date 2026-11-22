@@ -57,6 +57,20 @@ class StressModelTests(unittest.TestCase):
 
 
 class CompanyModeTests(unittest.TestCase):
+    def test_direct_pro_link_carries_native_preset_and_allows_changes(self):
+        for linked_preset, expected in (("Multiple compresses", "Multiple compresses"), ("Unknown", PRESETS[0])):
+            with self.subTest(linked_preset=linked_preset):
+                app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / "app.py"), default_timeout=30)
+                app.query_params.update({"ticker": "ORCL", "mode": "pro", "preset": linked_preset})
+                app.run()
+                self.assertFalse(app.exception)
+                self.assertEqual(app.radio[0].value, "Pro")
+                self.assertEqual(app.selectbox(key="preset:ORCL").value, expected)
+                app.selectbox(key="preset:ORCL").select("Margins compress").run()
+                self.assertEqual(app.selectbox(key="preset:ORCL").value, "Margins compress")
+                self.assertEqual(app.query_params["preset"], ["Margins compress"])
+
+
     def test_lite_pro_round_trip_and_reset(self):
         app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / "app.py"), default_timeout=30)
         app.query_params["ticker"] = "ORCL"

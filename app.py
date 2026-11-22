@@ -203,7 +203,11 @@ def render_stress_test(summary: dict, profile: dict, pro: bool) -> None:
         return
     ticker, currency = summary["ticker"], str(summary["currency"])
     st.caption("See how a change in demand, profitability or valuation affects the business at the end of the same period.")
-    preset = st.selectbox("Stress to apply", PRESETS, key=f"preset:{ticker}")
+    linked_preset = st.query_params.get("preset")
+    initial_index = PRESETS.index(linked_preset) if linked_preset in PRESETS else 0
+    preset = st.selectbox("Stress to apply", PRESETS, index=initial_index, key=f"preset:{ticker}")
+    if preset != (linked_preset or PRESETS[0]):
+        st.query_params["preset"] = preset
     defaults = profile["scenario_defaults"]
     base, stress = preset_cases(defaults, preset)
     years = int(defaults["years"])
