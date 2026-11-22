@@ -121,6 +121,8 @@ st.markdown(
         background:linear-gradient(115deg,#0a2720,#164337); border:1px solid #214b3f;
     }
     .st-key-pro_masthead h1 { color:var(--deep); margin:0; }
+    .st-key-lite_masthead [data-testid="stCaptionContainer"] a { color:var(--green); }
+    .st-key-pro_masthead [data-testid="stCaptionContainer"] a,
     .st-key-pro_masthead [data-testid="stMarkdownContainer"] a { color:#d4eddb; }
     .st-key-pro_masthead [data-testid="stDownloadButton"] button {
         background:#e4f1e8!important; color:#10382b!important;
@@ -408,7 +410,11 @@ header = st.container(key="pro_masthead" if mode == "Pro" else "lite_masthead")
 headline, download = header.columns([4.5, 1.5], vertical_alignment="center")
 with headline:
     st.title(summary["company"])
-    st.caption(f"{ticker} · {COMPANY_ROLES[ticker]} · FY{summary['fiscal_year']} ended {summary['fiscal_year_end']}")
+    quote_url = f"https://www.nasdaq.com/market-activity/stocks/{ticker.lower()}"
+    st.caption(
+        f"{ticker} · [View share price on Nasdaq]({quote_url}) · {COMPANY_ROLES[ticker]} · "
+        f"FY{summary['fiscal_year']} ended {summary['fiscal_year_end']}"
+    )
     filing = latest_filing(ticker)
     if filing:
         st.markdown(f"[Latest filing on file · {filing['form']} · {filing['filed']}]({filing['url']})")

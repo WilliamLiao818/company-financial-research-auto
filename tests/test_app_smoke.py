@@ -49,6 +49,7 @@ class AppSmokeTests(unittest.TestCase):
         app.run()
         self.assertEqual(len(app.exception), 0)
         self.assertEqual([title.value for title in app.title], ["Microsoft Corporation"])
+        self.assertIn("[View share price on Nasdaq](https://www.nasdaq.com/market-activity/stocks/msft)", app.caption[0].value)
         self.assertEqual(
             [tab.label for tab in app.tabs],
             ["Overview", "Business & moat", "Financials & quality", "Competition", "Market performance", "Valuation & scenarios", "Catalysts & risks"],
@@ -63,6 +64,7 @@ class AppSmokeTests(unittest.TestCase):
                 app.run()
                 self.assertEqual(len(app.exception), 0)
                 self.assertEqual([title.value for title in app.title], [company_name])
+                self.assertIn(f"[View share price on Nasdaq](https://www.nasdaq.com/market-activity/stocks/{ticker.lower()})", app.caption[0].value)
 
 
 if __name__ == "__main__":
