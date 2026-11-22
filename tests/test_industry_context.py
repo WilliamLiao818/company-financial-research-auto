@@ -1,6 +1,5 @@
 import unittest
 from pathlib import Path
-from unittest.mock import patch
 from urllib.parse import parse_qs, urlparse
 
 from streamlit.testing.v1 import AppTest
@@ -50,7 +49,7 @@ class IndustryContextTests(unittest.TestCase):
         self.assertIsNone(context_for("JNJ"))
         self.assertIsNone(map_url("JNJ"))
         self.assertIsNone(map_url("TSM", "power-cooling"))
-        self.assertIsNotNone(company_url("JNJ"))
+        self.assertIsNone(company_url("JNJ"))
 
     def test_link_generation_rejects_untrusted_query_fragments(self) -> None:
         for value in ("NVDA&theme=other", "NVDA#", "NVDA\" onclick=alert(1)", "https://example.com", "UNKNOWN", ""):
@@ -61,22 +60,27 @@ class IndustryContextTests(unittest.TestCase):
         self.assertIsNone(map_url("NVDA", "ai-compute&company=MSFT"))
         self.assertEqual(company_url(" nvda "), company_url("NVDA"))
 
-    def test_company_pages_render_only_applicable_industry_context(self) -> None:
+    def test_public_company_page_links_to_companies_and_home(self) -> None:
         app_path = Path(__file__).resolve().parents[1] / "app.py"
-        with patch("news_connector.load_company_news", return_value=[]):
-            for ticker, theme in (("TSM", "ai-compute"), ("VRT", "power-cooling"), ("LITE", "networking"), ("JNJ", None)):
-                with self.subTest(ticker=ticker):
-                    app = AppTest.from_file(str(app_path), default_timeout=30)
-                    app.query_params["ticker"] = ticker
-                    app.run()
-                    self.assertEqual(len(app.exception), 0)
-                    context_cards = [block.value for block in app.markdown if "aria-label='Industry context'" in block.value]
-                    if theme is None:
-                        self.assertFalse(context_cards)
-                    else:
-                        self.assertEqual(len(context_cards), 1)
-                        self.assertIn(f"company={ticker}&amp;theme={theme}", context_cards[0])
-                        self.assertIn("Open industry map", context_cards[0])
+        for mode in ("lite", "pro"):
+            app = AppTest.from_file(str(app_path), default_timeout=30)
+            app.query_params.update({"ticker": "TSM", "mode": mode})
+            app.run()
+            self.assertFalse(app.exception)
+            content = "\n".join(block.value for block in app.markdown)
+            self.assertNotIn("/industry", content)
+            self.assertNotIn("Open industry map", content)
+            self.assertIn("**Compare with**", content)
+            self.assertIn("https://liaoresearch.com/", [button.url for button in app.get("link_button")])
+
+    def test_out_of_coverage_link_opens_focused_library(self) -> None:
+        app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / "app.py"))
+        app.query_params.update({"ticker": "JNJ", "mode": "pro"})
+        app.run(timeout=30)
+        self.assertFalse(app.exception)
+        self.assertEqual(app.title[0].value, "Start with a company.")
+        self.assertTrue(any("outside current coverage" in info.value for info in app.info))
+        self.assertFalse(app.get("download_button"))
 
 
 if __name__ == "__main__":

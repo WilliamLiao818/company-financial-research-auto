@@ -2,7 +2,8 @@ import unittest
 
 from company_profiles import PROFILES, accounting_quality_signals, fcf_bridge
 from research import load_financials
-from research_catalog import COMPANY_NAMES, COMPANY_SECTORS, CIKS, EXPANDED_PEERS
+from focus_coverage import COVERAGE_GROUPS
+from research_catalog import COMPANY_NAMES, COMPANY_ROLES, COMPANY_SECTORS, CIKS, EXPANDED_PEERS
 
 
 class CompanyProfileTests(unittest.TestCase):
@@ -10,7 +11,12 @@ class CompanyProfileTests(unittest.TestCase):
         self.frame = load_financials()
 
     def test_prebuilt_snapshot_contains_the_full_company_catalog(self) -> None:
-        self.assertEqual(len(COMPANY_NAMES), 128)
+        self.assertEqual(len(COMPANY_NAMES), 48)
+        self.assertEqual(sum(len(group) for group in COVERAGE_GROUPS.values()), len(COMPANY_NAMES))
+        self.assertEqual(set(COMPANY_NAMES), set(COMPANY_ROLES))
+        self.assertTrue(all(COMPANY_ROLES.values()))
+        self.assertEqual(COMPANY_SECTORS["GOOG"], COMPANY_SECTORS["ORCL"])
+        self.assertTrue({"WMT", "JNJ", "KO", "V"}.isdisjoint(COMPANY_NAMES))
         self.assertEqual(set(self.frame["ticker"]), set(COMPANY_NAMES))
         self.assertEqual(set(PROFILES), set(COMPANY_NAMES))
 
@@ -22,9 +28,11 @@ class CompanyProfileTests(unittest.TestCase):
     def test_catalog_entries_have_consistent_identity_sector_and_peers(self) -> None:
         self.assertEqual(set(COMPANY_SECTORS), set(COMPANY_NAMES))
         self.assertEqual(set(CIKS), set(COMPANY_NAMES))
+        self.assertEqual(set(EXPANDED_PEERS), set(COMPANY_NAMES))
         for ticker, peers in EXPANDED_PEERS.items():
             with self.subTest(ticker=ticker):
                 self.assertNotIn(ticker, peers)
+                self.assertTrue(peers)
                 self.assertTrue(set(peers).issubset(COMPANY_NAMES))
                 self.assertRegex(CIKS[ticker], r"^\d{10}$")
 

@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from datetime import date
 
+from focus_coverage import COMPANY_ROLES, COMPANY_SECTORS
 from coverage128 import (
     ADDITIONAL_COMPANIES, ADDITIONAL_FOREIGN_PRIVATE_ISSUERS,
     ADDITIONAL_RESEARCH_CONTEXT, additional_profile,
 )
 
 
-COMPANY_NAMES = {
+_PACK_NAMES = {
     "MSFT": "Microsoft Corporation",
     "ORCL": "Oracle Corporation",
     "GOOG": "Alphabet Inc.",
@@ -62,35 +63,10 @@ COMPANY_NAMES = {
 }
 
 
-COMPANY_SECTORS = {
-    "MSFT": "Cloud & software", "ORCL": "Cloud & software", "GOOG": "Cloud & software",
-    "AMZN": "Cloud & software", "META": "Cloud & software", "CRM": "Cloud & software",
-    "NOW": "Cloud & software", "PANW": "Cloud & software", "PLTR": "Cloud & software",
-    "AVGO": "Semiconductors", "SNDK": "Semiconductors", "NVDA": "Semiconductors",
-    "MRVL": "Semiconductors", "LITE": "Semiconductors", "TSM": "Semiconductors",
-    "AMD": "Semiconductors", "INTC": "Semiconductors", "QCOM": "Semiconductors",
-    "MU": "Semiconductors", "TXN": "Semiconductors", "ADI": "Semiconductors",
-    "NXPI": "Semiconductors", "ARM": "Semiconductors", "MCHP": "Semiconductors",
-    "ON": "Semiconductors", "GFS": "Semiconductors", "WDC": "Semiconductors",
-    "AMAT": "Chip equipment & design", "ASML": "Chip equipment & design",
-    "KLAC": "Chip equipment & design", "LRCX": "Chip equipment & design",
-    "TER": "Chip equipment & design", "CDNS": "Chip equipment & design",
-    "SNPS": "Chip equipment & design", "AMKR": "Chip equipment & design",
-    "ENTG": "Chip equipment & design", "COHR": "Chip equipment & design",
-    "AAPL": "Systems & infrastructure", "ANET": "Systems & infrastructure",
-    "CSCO": "Systems & infrastructure", "DELL": "Systems & infrastructure",
-    "HPE": "Systems & infrastructure", "VRT": "Systems & infrastructure",
-    "SMCI": "Systems & infrastructure",
-    "TSLA": "Cross-sector complements", "V": "Cross-sector complements",
-    "LLY": "Cross-sector complements", "WMT": "Cross-sector complements",
-    "GEV": "Cross-sector complements", "CAT": "Cross-sector complements",
-}
-
-
 FOREIGN_PRIVATE_ISSUERS = {"TSM", "ASML", "ARM", "GFS"}
 
 
-CIKS = {
+_PACK_CIKS = {
     "MSFT": "0000789019",
     "ORCL": "0001341439",
     "GOOG": "0001652044",
@@ -144,16 +120,11 @@ CIKS = {
 }
 
 
-COMPANY_NAMES.update({ticker: row[0] for ticker, row in ADDITIONAL_COMPANIES.items()})
-CIKS.update({ticker: row[1] for ticker, row in ADDITIONAL_COMPANIES.items()})
-COMPANY_SECTORS.update({ticker: row[2] for ticker, row in ADDITIONAL_COMPANIES.items()})
-COMPANY_SECTORS.update({
-    "TSLA": "Industrials & aerospace", "V": "Digital platforms & payments",
-    "LLY": "Healthcare & life sciences", "WMT": "Consumer & retail",
-    "GEV": "Industrials & aerospace", "CAT": "Industrials & aerospace",
-    "WDC": "Systems & infrastructure",
-})
-FOREIGN_PRIVATE_ISSUERS.update(ADDITIONAL_FOREIGN_PRIVATE_ISSUERS)
+_PACK_NAMES.update({ticker: row[0] for ticker, row in ADDITIONAL_COMPANIES.items()})
+_PACK_CIKS.update({ticker: row[1] for ticker, row in ADDITIONAL_COMPANIES.items()})
+COMPANY_NAMES = {ticker: _PACK_NAMES[ticker] for ticker in COMPANY_ROLES}
+CIKS = {ticker: _PACK_CIKS[ticker] for ticker in COMPANY_ROLES}
+FOREIGN_PRIVATE_ISSUERS = (FOREIGN_PRIVATE_ISSUERS | ADDITIONAL_FOREIGN_PRIVATE_ISSUERS) & COMPANY_ROLES.keys()
 
 
 def sec_filings_url(ticker: str, form: str) -> str:
@@ -259,13 +230,14 @@ LATEST_RESULTS_SNAPSHOTS = {
 
 
 def latest_results_snapshot(ticker: str) -> dict[str, object]:
-    return LATEST_RESULTS_SNAPSHOTS.get(
+    from data_health import reported_quarter
+    return reported_quarter(ticker, LATEST_RESULTS_SNAPSHOTS.get(
         ticker,
         {
             "label": "", "period_start": "", "period_end": "", "form": "", "filed": "", "accession": "",
             "currency": "", "unit": "", "revenue": None, "operating_income": None, "net_income": None, "url": "",
         },
-    )
+    ))
 
 
 TARGET_PRICE_SNAPSHOTS = {
@@ -786,11 +758,6 @@ def _expanded_profile(ticker: str) -> dict[str, object]:
     blueprint_name, business_model, focus = EXPANDED_COMPANY_CONTEXT[ticker]
     blueprint = PROFILE_BLUEPRINTS[blueprint_name]
     company = COMPANY_NAMES[ticker]
-    peer_tickers = EXPANDED_PEERS[ticker]
-    score_patterns = ([4, 4, 4, 4, 4], [4, 4, 3, 4, 4], [3, 4, 4, 4, 4])
-    scores = {company: [4, 4, 4, 4, 4]}
-    for peer, pattern in zip(peer_tickers, score_patterns):
-        scores[COMPANY_NAMES.get(peer, peer)] = list(pattern)
     return _focused_profile(
         business_model=business_model,
         thesis=f"{company} can compound value through {focus}, if reported growth converts into durable margins and free cash flow.",
@@ -804,7 +771,7 @@ def _expanded_profile(ticker: str) -> dict[str, object]:
         monitoring=list(blueprint["monitoring"]),
         scenario=blueprint["scenario"],
         dimensions=list(blueprint["dimensions"]),
-        scores=scores,
+        scores={},
         diligence=[
             f"Separate {focus} from temporary pricing, inventory or timing effects.",
             "Reconcile management's operating narrative with reported margin, working-capital and capital-spending trends.",
@@ -814,17 +781,43 @@ def _expanded_profile(ticker: str) -> dict[str, object]:
     )
 
 
-EXTENDED_PROFILES.update({ticker: _expanded_profile(ticker) for ticker in EXPANDED_COMPANY_CONTEXT})
-EXTENDED_PROFILES.update({ticker: additional_profile(ticker) for ticker in ADDITIONAL_COMPANIES})
 EXPANDED_PEERS.update({ticker: list(context["peers"]) for ticker, context in ADDITIONAL_RESEARCH_CONTEXT.items()})
+# These focused comparison sets replace broad-market peers in the archived packs.
 EXPANDED_PEERS.update({
-    "TSLA": ["ON", "NXPI", "STM"],
-    "V": ["PYPL", "SHOP", "AAPL"],
-    "LLY": ["NVO", "ABBV", "MRK"],
-    "WMT": ["COST", "TGT", "AMZN"],
-    "GEV": ["ETN", "VRT", "CMI"],
-    "CAT": ["DE", "CMI", "PH"],
+    "AAPL": ["QCOM", "ARM", "AMD"],
+    "ADI": ["TXN", "MPWR"],
+    "AMAT": ["LRCX", "KLAC", "ASML"],
+    "AMD": ["NVDA", "INTC", "ARM"],
+    "AMZN": ["MSFT", "GOOG", "ORCL"],
+    "ASML": ["AMAT", "LRCX", "KLAC"],
+    "AVGO": ["MRVL", "NVDA", "AMD"],
+    "ETN": ["VRT", "MPWR"],
+    "GOOG": ["MSFT", "AMZN", "META"],
+    "IBM": ["ORCL", "MSFT", "PLTR"],
+    "LITE": ["COHR", "MTSI", "FN"],
+    "META": ["GOOG", "MSFT", "AMZN"],
+    "MRVL": ["AVGO", "AMD", "NVDA"],
+    "MSFT": ["AMZN", "GOOG", "ORCL"],
+    "NET": ["MSFT", "GOOG", "AMZN"],
+    "NVDA": ["AMD", "AVGO", "INTC"],
+    "ORCL": ["MSFT", "AMZN", "GOOG"],
+    "PLTR": ["SNOW", "IBM", "MSFT"],
+    "SNDK": ["MU", "WDC", "STX"],
+    "SNOW": ["ORCL", "PLTR", "MSFT"],
+    "TSM": ["GFS", "INTC", "AMKR"],
+    "TXN": ["ADI", "MPWR"],
+    "VRT": ["ETN", "MPWR", "SMCI"],
 })
+EXPANDED_PEERS = {
+    ticker: [peer for peer in peers if peer in COMPANY_NAMES]
+    for ticker, peers in EXPANDED_PEERS.items() if ticker in COMPANY_NAMES
+}
+EXTENDED_PROFILES.update({
+    ticker: _expanded_profile(ticker)
+    for ticker in EXPANDED_COMPANY_CONTEXT if ticker in COMPANY_NAMES
+})
+for ticker in ADDITIONAL_COMPANIES.keys() & COMPANY_NAMES.keys():
+    EXTENDED_PROFILES[ticker] = {**additional_profile(ticker), "peer_tickers": EXPANDED_PEERS[ticker]}
 
 
 def target_price_snapshot(

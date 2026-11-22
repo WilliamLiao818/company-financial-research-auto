@@ -9,19 +9,20 @@ The Company is a public-source research system for U.S.-listed companies. It sep
 
 ## Prebuilt research packs
 
-128 companies are bundled as ready-to-use snapshots and require no API key. The universe preserves the original 50 and adds 78 companies across nine research sectors. It follows the cloud, AI-compute and semiconductor value chain while adding healthcare, industrial, consumer and energy businesses:
+The public company workspace covers 48 U.S.-listed companies across six roles:
 
-- **Cloud and software (22):** ACN, ADBE, ADSK, AMZN, CRM, CRWD, DDOG, FTNT, GOOG, IBM, INTU, MDB, META, MSFT, NET, NOW, ORCL, PANW, PLTR, SNOW, TEAM, ZS.
-- **Semiconductors (25):** ADI, ALGM, AMD, ARM, AVGO, CRUS, GFS, INTC, LITE, LSCC, MCHP, MPWR, MRVL, MTSI, MU, NVDA, NXPI, ON, QCOM, RMBS, SNDK, STM, SWKS, TSM, TXN.
-- **Chip equipment, design and manufacturing support (10):** AMAT, AMKR, ASML, CDNS, COHR, ENTG, KLAC, LRCX, SNPS, TER.
-- **Systems and infrastructure (10):** AAPL, ANET, CSCO, DELL, FN, HPE, SMCI, STX, VRT, WDC.
-- **Digital platforms and payments (8):** ABNB, BKNG, NFLX, PYPL, SHOP, SPOT, UBER, V.
-- **Healthcare and life sciences (17):** ABBV, ABT, AMGN, AZN, BSX, DHR, GILD, ISRG, JNJ, LLY, MDT, MRK, NVO, PFE, REGN, TMO, VRTX.
-- **Industrials and aerospace (15):** CAT, CMI, DE, EMR, ETN, GD, GE, GEV, HON, LMT, NOC, PH, ROK, RTX, TSLA.
-- **Consumer and retail (13):** CL, COST, DIS, HD, KO, LOW, MCD, NKE, PEP, PG, SBUX, TGT, WMT.
-- **Energy and utilities (8):** COP, CVX, DUK, EOG, NEE, SLB, SO, XOM.
+| Research role | Companies |
+| --- | --- |
+| Compute & chip design | AAPL, AMD, ARM, AVGO, INTC, LSCC, MRVL, NVDA, QCOM |
+| Foundry, equipment & EDA | AMAT, AMKR, ASML, CDNS, ENTG, GFS, KLAC, LRCX, SNPS, TER, TSM |
+| Memory & storage | MU, RMBS, SNDK, STX, WDC |
+| Networking & optics | ANET, COHR, CSCO, FN, LITE, MTSI |
+| Servers, power & cooling | ADI, DELL, ETN, HPE, MPWR, SMCI, TXN, VRT |
+| Cloud & AI platforms | AMZN, GOOG, IBM, META, MSFT, NET, ORCL, PLTR, SNOW |
 
-Each added company has its own business description, operating drivers, KPI checklist, risk and selected peer context. A selected peer can be a customer, supplier or adjacent business rather than a strict valuation comparable. Banks and insurers are excluded because their balance sheets and cash-flow economics require a different analytical model. No competitive scores, quarterly figures, institutional targets or market shares are synthesized to fill missing coverage. Scenario starting points are editable sector stress-test assumptions, not company forecasts.
+Each pack names the specific product or activity that qualifies the company for coverage. Apple designs silicon for on-device inference, while Alphabet, Amazon and Oracle build and operate cloud infrastructure. Financial statements cover the entire issuer. The research role does not measure the share of its revenue attributable to AI.
+
+The active list and role descriptions live in `focus_coverage.py`. The application, peer tables, PDF exports and scheduled refreshes use this coverage list. Historical public statements for companies outside the current focus remain available in the repository's data history.
 
 Each pack includes:
 
@@ -42,10 +43,6 @@ Each pack includes:
 - a chart-led PDF with a table of contents, available after opening the company view.
 
 The bundled annual series and the latest official quarter are intentionally separated. Annual charts remain comparable across fiscal years; the latest-quarter cards use explicit three-month statement columns and link directly to the verified 10-Q, 6-K or SEC-filed earnings exhibit. They are never annualized or substituted into annual history.
-
-## Analyze another U.S. public company
-
-The first page uses one ticker/company search. Prebuilt packs open immediately. For another U.S.-listed company, users may choose either a user-supplied Financial Modeling Prep key for normalized annual statements or the SEC Company Facts path for core annual facts. Provider keys are password-masked, used only for the current request and never written to the repository.
 
 ## Public-data boundary
 

@@ -25,7 +25,7 @@ from reportlab.platypus import (
 from reportlab.platypus.tableofcontents import TableOfContents
 
 from market_data import load_market_performance, performance_context_note, performance_summary
-from research_catalog import COMPANY_NAMES, EXPANDED_PEERS, market_share_snapshot, target_price_snapshot
+from research_catalog import EXPANDED_PEERS, market_share_snapshot, target_price_snapshot
 
 
 GREEN = colors.HexColor("#087F5B")
@@ -678,14 +678,9 @@ def build_company_pdf(company, summary: dict[str, object], profile: dict[str, ob
     # 8 | Competition and market share
     story.extend([CondPageBreak(280), Paragraph("Competitive position and market share", styles["page"]), Paragraph("Market share and the competitive rubric answer different questions. Share is a dated category snapshot; scores are explicit judgments about the durability of the company's position.", styles["deck"])])
     if peers is not None and hasattr(peers, "empty") and not peers.empty:
-        score_names = " ".join(str(name).lower() for name in profile["competitive_scores"])
-        peer_view = peers.loc[
-            peers.apply(
-                lambda row: str(row.get("ticker", "")) in {ticker, *EXPANDED_PEERS.get(ticker, [])}
-                or any(part.lower() in score_names for part in str(COMPANY_NAMES.get(str(row.get("ticker", "")), "")).replace(",", "").split() if len(part) >= 5),
-                axis=1,
-            )
-        ].head(4)
+        comparison_tickers = [ticker, *EXPANDED_PEERS.get(ticker, [])]
+        peer_view = peers.set_index("ticker", drop=False)
+        peer_view = peer_view.loc[[code for code in comparison_tickers if code in peer_view.index]].head(4)
         if len(peer_view) > 1:
             story.extend([
                 Paragraph("Latest operating comparison", styles["h2"]),

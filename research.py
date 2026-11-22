@@ -9,6 +9,7 @@ from typing import Iterable
 
 import pandas as pd
 
+from focus_coverage import COMPANY_ROLES
 
 DATA_PATH = Path(__file__).parent / "data" / "financials.csv"
 
@@ -221,8 +222,11 @@ def prepare_financials(frame: pd.DataFrame, *, input_source: str = "uploaded_csv
 
 
 def load_financials(path: Path | str = DATA_PATH) -> pd.DataFrame:
-    """Load the frozen SEC snapshot and calculate transparent research metrics."""
-    return prepare_financials(pd.read_csv(path), input_source="frozen_demo")
+    """Limit the packaged snapshot to current coverage; explicit inputs keep their scope."""
+    rows = pd.read_csv(path)
+    if Path(path).resolve() == DATA_PATH.resolve():
+        rows = rows.loc[rows["ticker"].isin(COMPANY_ROLES)]
+    return prepare_financials(rows, input_source="frozen_demo")
 
 
 def filter_year_range(frame: pd.DataFrame, start_year: int, end_year: int) -> pd.DataFrame:

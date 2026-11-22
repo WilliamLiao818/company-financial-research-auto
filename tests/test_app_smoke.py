@@ -24,7 +24,7 @@ class AppSmokeTests(unittest.TestCase):
         self.assertEqual(app.selectbox[0].label, "Search ticker or company")
         self.assertNotIn("Page", [selectbox.label for selectbox in app.selectbox])
         button_labels = [button.label for button in app.button]
-        self.assertEqual(len(COMPANY_NAMES), 128)
+        self.assertEqual(len(COMPANY_NAMES), 48)
         self.assertEqual(button_labels.count("Open"), len(COMPANY_NAMES))
         self.assertIn("Open company", button_labels)
 
@@ -45,6 +45,7 @@ class AppSmokeTests(unittest.TestCase):
         app_path = Path(__file__).resolve().parents[1] / "app.py"
         app = AppTest.from_file(str(app_path), default_timeout=30)
         app.query_params["ticker"] = "MSFT"
+        app.query_params["mode"] = "pro"
         app.run()
         self.assertEqual(len(app.exception), 0)
         self.assertEqual([title.value for title in app.title], ["Microsoft Corporation"])

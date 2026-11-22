@@ -34,7 +34,9 @@ class DataFreshnessTests(unittest.TestCase):
 
     def test_market_snapshot_reaches_september_2026_for_every_series(self) -> None:
         frame = pd.read_csv(SNAPSHOT_PATH, parse_dates=["date"])
-        self.assertEqual(frame["series"].nunique(), len(COMPANY_NAMES) + 2)
+        active_series = set(COMPANY_NAMES) | {"SPY", "QQQ"}
+        frame = frame.loc[frame["series"].isin(active_series)]
+        self.assertEqual(set(frame["series"]), active_series)
         latest_dates = frame.groupby("series")["date"].max()
         self.assertTrue((latest_dates >= pd.Timestamp("2026-09-01")).all())
         sandisk_start = frame.loc[frame["series"] == "SNDK", "date"].min()
