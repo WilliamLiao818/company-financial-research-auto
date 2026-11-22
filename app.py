@@ -36,7 +36,7 @@ from research_catalog import (
     sec_filings_url,
     target_price_snapshot,
 )
-from data_health import freshness_lines, latest_filing
+from data_health import latest_filing
 
 
 # Streamlit Cloud can retain imported helpers during a hot deployment. Reloading
@@ -115,6 +115,23 @@ st.markdown(
     .news-card h4 { margin:8px 0 0; color:var(--deep); font-size:16px; line-height:1.35; }
     .news-card a { text-decoration:none; }
     [data-testid="stAppViewContainer"], [data-testid="stMain"], .stApp { background:#fbfdfc!important; }
+    .st-key-pro_masthead {
+        --deep:#f2f7ef; --muted:#c1d5ca;
+        padding:clamp(1.3rem,4vw,3.2rem); border-radius:18px;
+        background:linear-gradient(115deg,#0a2720,#164337); border:1px solid #214b3f;
+    }
+    .st-key-pro_masthead h1 { color:var(--deep); margin:0; }
+    .st-key-pro_masthead [data-testid="stMarkdownContainer"] a { color:#d4eddb; }
+    .st-key-pro_masthead [data-testid="stDownloadButton"] button {
+        background:#e4f1e8!important; color:#10382b!important;
+    }
+    .st-key-pro_masthead [data-testid="stDownloadButton"] button:hover { background:#fff!important; }
+    .st-key-pro_masthead [data-testid="stDownloadButton"] button p { color:#10382b!important; }
+    .st-key-pro_results div[data-testid="stMetric"] {
+        --muted:#c1d5ca; --green:#f0f8ef;
+        border-color:#284c40; background:#12392e; box-shadow:none;
+    }
+    .st-key-pro_results [data-testid="stMetricValue"] * { color:var(--green); }
     @keyframes rise { from { transform:translateY(10px); opacity:0; } to { transform:none; opacity:1; } }
     @keyframes barGrow { from { transform:scaleY(.02); opacity:.25; } to { transform:scaleY(1); opacity:1; } }
     @keyframes lineDraw {
@@ -234,7 +251,7 @@ def render_stress_test(summary: dict, profile: dict, pro: bool) -> None:
         )
     record = case_record(summary, years, base, stress, preset)
     outputs = record["outputs"]
-    cards = st.columns(3)
+    cards = st.container(key="pro_results" if pro else "lite_results").columns(3)
     for card, label in zip(cards[:2], ("Base", "Stress")):
         value = outputs[label.lower()]["enterprise_value"]
         card.metric(f"{label} terminal EV", money_billions(value, currency) if value is not None else "N/M")
@@ -311,9 +328,10 @@ def company_report_data(frame: pd.DataFrame, ticker: str) -> bytes:
     )
 
 
-def render_landing(prebuilt: pd.DataFrame) -> None:
-    st.markdown("[Research Desk](https://liaoresearch.com/)")
-    st.title("Start with a company.")
+def render_landing(prebuilt: pd.DataFrame, pro: bool) -> None:
+    with st.container(key="pro_masthead" if pro else "lite_masthead"):
+        st.markdown("[Research Desk](https://liaoresearch.com/)")
+        st.title("Start with a company.")
     query = st.selectbox(
         "Search ticker or company",
         options=list(COMPANY_TICKERS_AZ),
@@ -362,12 +380,12 @@ ticker = str(st.query_params.get("ticker", "")).strip().upper()
 if ticker not in SHOWCASES:
     if ticker:
         st.info("This company is outside current coverage. Choose a covered company below.")
-    render_landing(prebuilt)
+    render_landing(prebuilt, str(st.query_params.get("mode", "")).lower() == "pro")
     st.stop()
 
 navigation = st.columns([1.2, 3.7, 1.6])
 if navigation[0].button("Company search", width="stretch"):
-    st.query_params.clear()
+    st.query_params.from_dict({"mode": "pro"} if st.query_params.get("mode") == "pro" else {})
     st.rerun()
 selected = navigation[1].selectbox("Company", COMPANY_TICKERS_AZ, index=COMPANY_TICKERS_AZ.index(ticker),
                                    format_func=lambda item: f"{item} · {SHOWCASES[item]}")
@@ -386,16 +404,14 @@ summary = latest_company_summary(scope, ticker)
 profile = profile_for(ticker)
 currency = str(summary["currency"])
 
-headline, download = st.columns([4.5, 1.5])
+header = st.container(key="pro_masthead" if mode == "Pro" else "lite_masthead")
+headline, download = header.columns([4.5, 1.5], vertical_alignment="center")
 with headline:
     st.title(summary["company"])
     st.caption(f"{ticker} · {COMPANY_ROLES[ticker]} · FY{summary['fiscal_year']} ended {summary['fiscal_year_end']}")
-    with st.expander("Data updates"):
-        filing = latest_filing(ticker)
-        if filing:
-            st.markdown(f"[Most recent filing · {filing['form']} · {filing['filed']}]({filing['url']})")
-        for line in freshness_lines(ticker):
-            st.write(line)
+    filing = latest_filing(ticker)
+    if filing:
+        st.markdown(f"[Latest filing on file · {filing['form']} · {filing['filed']}]({filing['url']})")
 
 with download:
     st.download_button("Download full PDF", partial(company_report_data, scope, ticker),
