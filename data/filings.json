@@ -15,10 +15,10 @@
       "net_income": 30711
     },
     "filing": {
-      "filed": "2026-11-03",
-      "form": "10-K",
-      "accession": "0000320193-26-000026",
-      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
+      "filed": "2026-11-09",
+      "form": "8-K",
+      "accession": "0001140361-26-042798",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126042798/0001140361-26-042798-index.htm"
     }
   },
   "ADI": {
@@ -38,6 +38,12 @@
       "operating_income": 1588.753,
       "net_income": 1340.09,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-09-17",
+      "form": "8-K",
+      "accession": "0001193125-26-394361",
+      "url": "https://www.sec.gov/Archives/edgar/data/6281/000119312526394361/0001193125-26-394361-index.htm"
     }
   },
   "AMAT": {
@@ -101,6 +107,12 @@
       "operating_income": 224.711,
       "net_income": 190.613,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-10-27",
+      "form": "10-Q",
+      "accession": "0001047127-26-000052",
+      "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000052/0001047127-26-000052-index.htm"
     }
   },
   "AMZN": {
@@ -142,6 +154,12 @@
       "operating_income": 1642.4,
       "net_income": 1560.4,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-04",
+      "form": "10-Q",
+      "accession": "0001596532-26-000254",
+      "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/0001596532-26-000254-index.htm"
     }
   },
   "ARM": {
@@ -161,6 +179,12 @@
       "operating_income": 201.0,
       "net_income": 130.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-04",
+      "form": "6-K",
+      "accession": "0001973239-26-000142",
+      "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000142/0001973239-26-000142-index.htm"
     }
   },
   "ASML": {
@@ -201,10 +225,10 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
     },
     "filing": {
-      "filed": "2026-09-10",
-      "form": "10-Q",
-      "accession": "0001730168-26-000080",
-      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
+      "filed": "2026-10-27",
+      "form": "8-K",
+      "accession": "0001193125-26-434271",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526434271/0001193125-26-434271-index.htm"
     }
   },
   "CDNS": {
@@ -224,6 +248,12 @@
       "operating_income": 470.842,
       "net_income": 289.747,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-10-28",
+      "form": "10-Q",
+      "accession": "0000813672-26-000121",
+      "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000121/0000813672-26-000121-index.htm"
     }
   },
   "COHR": {
@@ -243,6 +273,12 @@
       "operating_income": 386.446,
       "net_income": 384.673,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-04",
+      "form": "10-Q",
+      "accession": "0000820318-26-000023",
+      "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000023/0000820318-26-000023-index.htm"
     }
   },
   "CSCO": {
@@ -262,6 +298,12 @@
       "operating_income": 5626.0,
       "net_income": 4552.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-12",
+      "form": "8-K",
+      "accession": "0000858877-26-000170",
+      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000170/0000858877-26-000170-index.htm"
     }
   },
   "DELL": {
@@ -281,6 +323,12 @@
       "operating_income": 5472.0,
       "net_income": 4133.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-10-21",
+      "form": "8-K",
+      "accession": "0001193125-26-427920",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312526427920/0001193125-26-427920-index.htm"
     }
   },
   "ENTG": {
@@ -300,6 +348,12 @@
       "operating_income": 230.6,
       "net_income": 157.8,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-10",
+      "form": "8-K",
+      "accession": "0001140361-26-042892",
+      "url": "https://www.sec.gov/Archives/edgar/data/1101302/000114036126042892/0001140361-26-042892-index.htm"
     }
   },
   "ETN": {
@@ -375,10 +429,10 @@
       "net_income": 26468
     },
     "filing": {
-      "filed": "2026-10-29",
-      "form": "10-Q",
-      "accession": "0001652044-26-000084",
-      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm"
+      "filed": "2026-11-05",
+      "form": "8-K",
+      "accession": "0001193125-26-449835",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526449835/0001193125-26-449835-index.htm"
     }
   },
   "HPE": {
@@ -398,6 +452,12 @@
       "operating_income": 1464.0,
       "net_income": 1540.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-04",
+      "form": "8-K",
+      "accession": "0001645590-26-000087",
+      "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559026000087/0001645590-26-000087-index.htm"
     }
   },
   "IBM": {
@@ -436,6 +496,12 @@
       "operating_income": 2576.0,
       "net_income": 3320.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-10-30",
+      "form": "10-Q",
+      "accession": "0000050863-26-000191",
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/0000050863-26-000191-index.htm"
     }
   },
   "KLAC": {
@@ -455,6 +521,12 @@
       "operating_income": 1861.67,
       "net_income": 1548.588,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-06",
+      "form": "8-K",
+      "accession": "0001193125-26-451824",
+      "url": "https://www.sec.gov/Archives/edgar/data/319201/000119312526451824/0001193125-26-451824-index.htm"
     }
   },
   "LITE": {
@@ -496,6 +568,12 @@
       "operating_income": 3283.727,
       "net_income": 2753.138,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-05",
+      "form": "8-K",
+      "accession": "0000707549-26-000057",
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000057/0000707549-26-000057-index.htm"
     }
   },
   "LSCC": {
@@ -515,6 +593,12 @@
       "operating_income": 49.903,
       "net_income": 11.206,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-03",
+      "form": "10-Q",
+      "accession": "0001193125-26-445613",
+      "url": "https://www.sec.gov/Archives/edgar/data/855658/000119312526445613/0001193125-26-445613-index.htm"
     }
   },
   "META": {
@@ -533,10 +617,10 @@
       "net_income": 9860
     },
     "filing": {
-      "filed": "2026-10-22",
-      "form": "10-Q",
-      "accession": "0001628280-26-066773",
-      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066773/meta-20260930.htm"
+      "filed": "2026-11-12",
+      "form": "8-K",
+      "accession": "0001193125-26-458525",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312526458525/0001193125-26-458525-index.htm"
     }
   },
   "MPWR": {
@@ -556,6 +640,12 @@
       "operating_income": 357.687,
       "net_income": 271.067,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-03",
+      "form": "10-Q",
+      "accession": "0001628280-26-069440",
+      "url": "https://www.sec.gov/Archives/edgar/data/1280452/000162828026069440/0001628280-26-069440-index.htm"
     }
   },
   "MRVL": {
@@ -574,10 +664,10 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm"
     },
     "filing": {
-      "filed": "2026-08-28",
-      "form": "10-Q",
-      "accession": "0001835632-26-000025",
-      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm"
+      "filed": "2026-11-12",
+      "form": "8-K",
+      "accession": "0001835632-26-000026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000026/0001835632-26-000026-index.htm"
     }
   },
   "MSFT": {
@@ -629,10 +719,10 @@
   },
   "MU": {
     "filing": {
-      "filed": "2026-10-09",
-      "form": "10-K",
-      "accession": "0000723125-26-000023",
-      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+      "filed": "2026-11-05",
+      "form": "8-K",
+      "accession": "0001104659-26-123389",
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000110465926123389/0001104659-26-123389-index.htm"
     },
     "quarter": {
       "source_kind": "provider",
@@ -669,6 +759,12 @@
       "operating_income": -56.908,
       "net_income": -34.065,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-05",
+      "form": "10-Q",
+      "accession": "0001477333-26-000061",
+      "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000061/0001477333-26-000061-index.htm"
     }
   },
   "NVDA": {
@@ -732,14 +828,20 @@
       "operating_income": 1084.845,
       "net_income": 1128.012,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-03",
+      "form": "10-Q",
+      "accession": "0001321655-26-000048",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.htm"
     }
   },
   "QCOM": {
     "filing": {
-      "filed": "2026-11-04",
-      "form": "10-K",
-      "accession": "0000804328-26-000128",
-      "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000128/qcom-20260927.htm"
+      "filed": "2026-11-13",
+      "form": "8-K",
+      "accession": "0001104659-26-127163",
+      "url": "https://www.sec.gov/Archives/edgar/data/804328/000110465926127163/0001104659-26-127163-index.htm"
     },
     "quarter": {
       "source_kind": "provider",
@@ -776,6 +878,12 @@
       "operating_income": 83.859,
       "net_income": 74.565,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-10-26",
+      "form": "10-Q",
+      "accession": "0001193125-26-431941",
+      "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526431941/0001193125-26-431941-index.htm"
     }
   },
   "SMCI": {
@@ -795,6 +903,12 @@
       "operating_income": 2064.493,
       "net_income": 1594.205,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-06",
+      "form": "10-Q",
+      "accession": "0001375365-26-000027",
+      "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000027/0001375365-26-000027-index.htm"
     }
   },
   "SNDK": {
@@ -874,6 +988,12 @@
       "operating_income": 2068.0,
       "net_income": 1761.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-10-29",
+      "form": "10-Q",
+      "accession": "0001137789-26-000309",
+      "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000309/0001137789-26-000309-index.htm"
     }
   },
   "TER": {
@@ -916,10 +1036,10 @@
       "note": "Net income is attributable to shareholders of the parent."
     },
     "filing": {
-      "filed": "2026-10-15",
-      "form": "6-K Exhibit 99.1",
-      "accession": "0001046179-26-000726",
-      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm"
+      "filed": "2026-11-13",
+      "form": "6-K",
+      "accession": "0001046179-26-000801",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000801/0001046179-26-000801-index.htm"
     }
   },
   "TXN": {
@@ -939,6 +1059,12 @@
       "operating_income": 2881.0,
       "net_income": 2425.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-09",
+      "form": "8-K",
+      "accession": "0001193125-26-453606",
+      "url": "https://www.sec.gov/Archives/edgar/data/97476/000119312526453606/0001193125-26-453606-index.htm"
     }
   },
   "VRT": {
@@ -958,6 +1084,12 @@
       "operating_income": 991.1,
       "net_income": 764.5,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-11-13",
+      "form": "8-K",
+      "accession": "0001628280-26-073564",
+      "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026073564/0001628280-26-073564-index.htm"
     }
   },
   "WDC": {
@@ -977,6 +1109,12 @@
       "operating_income": 2089.0,
       "net_income": 1779.0,
       "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    },
+    "filing": {
+      "filed": "2026-10-23",
+      "form": "10-Q",
+      "accession": "0001628280-26-066933",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026066933/0001628280-26-066933-index.htm"
     }
   }
 }
