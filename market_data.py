@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import math
+from datetime import datetime, timedelta, timezone
 import time
 import urllib.error
 import urllib.parse
@@ -41,7 +43,8 @@ def performance_context_note(ticker: str) -> str:
 
 
 def fetch_adjusted_monthly(symbol: str, *, years: int = 10, attempts: int = 5) -> pd.DataFrame:
-    end = int(time.time())
+    cutoff = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    end = int(cutoff.timestamp())
     start = end - int(years * 365.25 * 24 * 60 * 60)
     encoded = urllib.parse.quote(symbol, safe="")
     last_error: Exception | None = None
@@ -50,7 +53,7 @@ def fetch_adjusted_monthly(symbol: str, *, years: int = 10, attempts: int = 5) -
         host = "query1.finance.yahoo.com" if attempt % 2 == 0 else "query2.finance.yahoo.com"
         url = (
             f"https://{host}/v8/finance/chart/{encoded}"
-            f"?period1={start}&period2={end}&interval=1mo&events=div%2Csplits&includeAdjustedClose=true"
+            f"?period1={start}&period2={end}&interval=1d&events=div%2Csplits&includeAdjustedClose=true"
         )
         request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         try:
@@ -67,14 +70,28 @@ def fetch_adjusted_monthly(symbol: str, *, years: int = 10, attempts: int = 5) -
     if not result:
         raise MarketDataError(f"No historical prices were returned for {symbol}.")
     block = result[0]
-    timestamps = block.get("timestamp", [])
-    adjusted = block.get("indicators", {}).get("adjclose", [{}])[0].get("adjclose", [])
-    if not timestamps or not adjusted:
-        adjusted = block.get("indicators", {}).get("quote", [{}])[0].get("close", [])
-    frame = pd.DataFrame({"date": pd.to_datetime(timestamps, unit="s", utc=True).tz_convert(None), "adjusted_close": adjusted})
-    frame = frame.dropna().sort_values("date")
-    frame["date"] = frame["date"].dt.to_period("M").dt.to_timestamp()
-    return frame.drop_duplicates("date", keep="last")
+    return completed_monthly_closes(block, symbol, cutoff)
+
+
+def completed_monthly_closes(block: dict, symbol: str, cutoff: datetime) -> pd.DataFrame:
+    if str(block.get("meta", {}).get("symbol", "")).upper() != symbol:
+        raise MarketDataError(f"Unexpected series returned for {symbol}.")
+    adjusted = (block.get("indicators", {}).get("adjclose") or [{}])[0].get("adjclose") or []
+    timestamps = block.get("timestamp") or []
+    if len(adjusted) != len(timestamps) or not adjusted:
+        raise MarketDataError(f"No adjusted close series for {symbol}.")
+    frame = pd.DataFrame({"observation_date": pd.to_datetime(timestamps, unit="s", utc=True),
+                          "adjusted_close": pd.to_numeric(adjusted, errors="coerce")}).dropna()
+    frame = frame.loc[(frame.observation_date < cutoff) & (frame.adjusted_close > 0)
+                      & frame.adjusted_close.map(math.isfinite)].sort_values("observation_date")
+    if frame.empty or frame.observation_date.iloc[-1].date() < cutoff.date() - timedelta(days=6):
+        raise MarketDataError(f"No recent completed trading session for {symbol}.")
+    frame["date"] = frame.observation_date.dt.tz_localize(None).dt.to_period("M").dt.to_timestamp()
+    frame["observation_date"] = frame.observation_date.dt.strftime("%Y-%m-%d")
+    result = frame.drop_duplicates("date", keep="last")
+    if len(result) < 2:
+        raise MarketDataError(f"Insufficient market history for {symbol}.")
+    return result
 
 
 def load_market_performance(ticker: str, path: Path = SNAPSHOT_PATH) -> pd.DataFrame:
@@ -85,6 +102,11 @@ def load_market_performance(ticker: str, path: Path = SNAPSHOT_PATH) -> pd.DataF
     selected = frame.loc[frame["series"].isin(requested)].copy()
     if selected.empty or ticker not in set(selected["series"]):
         return pd.DataFrame(columns=["date", "series", "adjusted_close"])
+    if "observation_date" in selected:
+        # A partially refreshed month must not compare Friday's stock close against Monday's ETF close.
+        by_month = selected.groupby("date").observation_date
+        valid_months = by_month.apply(lambda days: days.isna().all() or (days.notna().all() and days.nunique() == 1))
+        selected = selected.loc[selected.date.isin(valid_months[valid_months].index)]
     pivot = selected.pivot_table(index="date", columns="series", values="adjusted_close", aggfunc="last").dropna()
     if pivot.empty:
         return pd.DataFrame(columns=["date", "series", "adjusted_close"])
@@ -94,6 +116,10 @@ def load_market_performance(ticker: str, path: Path = SNAPSHOT_PATH) -> pd.DataF
     result = rebased.reset_index().melt(id_vars="date", var_name="series", value_name="growth_of_100")
     prices = pivot.reset_index().melt(id_vars="date", var_name="series", value_name="adjusted_close")
     result = result.merge(prices, on=["date", "series"], how="left", validate="one_to_one")
+    if "observation_date" in selected:
+        actual = selected.drop_duplicates("date").set_index("date").observation_date
+        dates = pd.to_datetime(result.date.map(actual), errors="coerce")
+        result["date"] = dates.fillna(result.date)
     result["series"] = result["series"].map(labels).fillna(result["series"])
     return result
 

@@ -15,7 +15,7 @@ class DataFreshnessTests(unittest.TestCase):
             with self.subTest(ticker=ticker):
                 result = latest_results_snapshot(ticker)
                 self.assertTrue(result["label"])
-                self.assertRegex(result["period_end"], r"^2026-\d{2}-\d{2}$")
+                self.assertRegex(result["period_end"], r"^\d{4}-\d{2}-\d{2}$")
                 self.assertTrue(result["url"].startswith("https://www.sec.gov/Archives/edgar/data/"))
                 duration_days = (pd.Timestamp(result["period_end"]) - pd.Timestamp(result["period_start"])).days
                 self.assertGreaterEqual(duration_days, 70)
@@ -25,7 +25,7 @@ class DataFreshnessTests(unittest.TestCase):
 
     def test_tsm_fy2025_uses_the_official_20f_convenience_translation(self) -> None:
         frame = load_financials()
-        tsm = frame.loc[frame["ticker"] == "TSM"].sort_values("fiscal_year")
+        tsm = frame.loc[(frame["ticker"] == "TSM") & (frame["fiscal_year"] == 2025)]
         latest = tsm.iloc[-1]
         self.assertEqual(int(latest["fiscal_year"]), 2025)
         self.assertEqual(str(latest["fiscal_year_end"]), "2025-12-31")

@@ -18,7 +18,7 @@ from research_catalog import COMPANY_NAMES  # noqa: E402
 
 def _refresh_company(item: tuple[str, str], *, limit: int, window_days: int) -> tuple[str, list[dict[str, str]]]:
     ticker, company = item
-    stories = load_company_news(company, ticker, limit=limit, window_days=window_days)
+    stories = load_company_news(company, ticker, limit=limit, window_days=window_days, strict=True)
     today = datetime.now(timezone.utc).date()
     cutoff = today - timedelta(days=window_days)
     for story in stories:

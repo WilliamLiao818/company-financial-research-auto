@@ -57,8 +57,9 @@ class CompanyNewsTests(unittest.TestCase):
         self.assertEqual(corrected.date().isoformat(), "2026-09-08")
 
     def test_every_prebuilt_company_has_specific_news_search_metadata(self):
-        self.assertEqual(set(SEARCH_ALIASES), set(COMPANY_NAMES))
-        self.assertEqual(set(OFFICIAL_DOMAINS_BY_TICKER), set(COMPANY_NAMES))
+        # The parser also understands historical article snapshots for archived companies.
+        self.assertTrue(set(COMPANY_NAMES).issubset(SEARCH_ALIASES))
+        self.assertTrue(set(COMPANY_NAMES).issubset(OFFICIAL_DOMAINS_BY_TICKER))
         for ticker in ("V", "ON", "NOW", "ARM", "GFS", "VRT", "GEV"):
             with self.subTest(ticker=ticker):
                 self.assertNotIn(ticker.lower(), {alias.lower() for alias in SEARCH_ALIASES[ticker]})

@@ -15,6 +15,7 @@ from pathlib import Path
 import sys
 import tempfile
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -74,14 +75,17 @@ def read_json(url: str, cache: Path) -> dict:
     for attempt in range(4):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (LiaoResearch; https://liaoresearch.com)", "Accept": "application/json"})
-            with urllib.request.urlopen(request, timeout=35) as response:
+            with urllib.request.urlopen(request, timeout=18) as response:
                 payload = json.load(response)
             cache.write_text(json.dumps(payload))
             return payload
         except Exception as error:
             last_error = error
-            time.sleep(2 ** attempt)
-    raise RuntimeError(f"Public source unavailable: {url}: {last_error}")
+            if isinstance(error, urllib.error.HTTPError) and error.code in {401, 403, 404, 429}:
+                break
+            if attempt < 3:
+                time.sleep(2 ** attempt)
+    raise RuntimeError(f"Public source unavailable: {url}: {last_error}") from last_error
 
 
 def atomic_csv(frame: pd.DataFrame, output: Path) -> None:

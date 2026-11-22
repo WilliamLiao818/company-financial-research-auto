@@ -33,6 +33,8 @@ def freshness_lines(ticker: str) -> list[str]:
             detail.append(f"data {observed}")
         if status == "retained":
             detail.append("last attempt unavailable · saved data retained")
+        elif status == "lagging":
+            detail.append("latest quote trails the benchmark session")
         elif status == "fallback":
             detail.append("financial-provider check · SEC figures on file retained when available")
         if checked:

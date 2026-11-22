@@ -1,31 +1,78 @@
-name: Validate and optionally refresh SEC snapshot
+name: Refresh public company data
 
 on:
   workflow_dispatch:
+    inputs:
+      feed:
+        description: Public dataset to refresh
+        type: choice
+        default: all
+        options: [all, filings, market, news]
   schedule:
-    - cron: "17 3 * * 1"
+    - cron: "37 3 * * *"
+
+concurrency:
+  group: publish-public-company-data
+  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  refresh-and-test:
+  refresh:
+    if: github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
+    timeout-minutes: 80
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python -m unittest discover -s tests -v
-      - name: Refresh all prebuilt SEC snapshots when contact is configured
-        if: ${{ vars.SEC_CONTACT_EMAIL != '' }}
+      - name: Check source feeds and retain last verified data on failure
         env:
-          SEC_USER_AGENT: "${{ github.repository }} ${{ vars.SEC_CONTACT_EMAIL }}"
-        run: python scripts/build_snapshot.py --all-prebuilt --output refreshed/financials.csv
-      - uses: actions/upload-artifact@v4
-        if: ${{ vars.SEC_CONTACT_EMAIL != '' }}
-        with:
-          name: refreshed-financial-snapshot
-          path: refreshed/financials.csv
+          SEC_CONTACT_EMAIL: ${{ vars.SEC_CONTACT_EMAIL }}
+          FEED: ${{ inputs.feed || 'all' }}
+        run: python scripts/refresh_public_data.py --feeds "$FEED"
+      - name: Export lightweight company briefs for the public homepage
+        run: python scripts/export_lite.py
+      - name: Validate the updated public data and application
+        run: python -m unittest discover -s tests -v
+      - name: Publish data and status in one revision
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/financials.csv data/market_performance.csv data/recent_news.json data/refresh_status.json data/lite_briefs.json
+          if test -f data/filings.json; then git add -- data/filings.json; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refresh public company research data"
+          git push origin "HEAD:$DEFAULT_BRANCH"
+      - name: Flag any retained company data
+        env:
+          FEED: ${{ inputs.feed || 'all' }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from research_catalog import COMPANY_NAMES
+          ledger = json.load(open("data/refresh_status.json"))["companies"]
+          requested = os.environ["FEED"]
+          fields = {"filings": ["filings", "financials"], "news": ["news"], "market": ["market"]}
+          failures = {}
+          for group, names in fields.items():
+              if requested not in (group, "all"):
+                  continue
+              for name in names:
+                  tickers = list(COMPANY_NAMES) + (["SPY", "QQQ"] if name == "market" else [])
+                  retained = [ticker for ticker in tickers if ledger[ticker][name]["status"] in {"retained", "lagging"}]
+                  if retained:
+                      failures[name] = retained
+          if failures:
+              raise SystemExit(f"Validated partial update published. Some checks need attention: {failures}")
+          PY

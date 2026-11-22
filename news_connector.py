@@ -590,6 +590,7 @@ def _load_bing_company_news(
     limit: int,
     window_days: int,
     current_time: datetime,
+    strict: bool = False,
 ) -> list[dict[str, str]]:
     site_filter = " OR ".join(f"site:{domain}" for domain in publishers)
     query = f'"{aliases[0]}" ({site_filter})'
@@ -604,6 +605,8 @@ def _load_bing_company_news(
         with urllib.request.urlopen(request, timeout=12) as response:
             root = ET.fromstring(response.read())
     except (urllib.error.URLError, TimeoutError, ET.ParseError, OSError, http.client.HTTPException):
+        if strict:
+            raise
         return []
 
     cutoff = current_time - timedelta(days=window_days)
@@ -668,6 +671,7 @@ def load_company_news(
     limit: int = 4,
     window_days: int = 90,
     now: datetime | None = None,
+    strict: bool = False,
 ) -> list[dict[str, str]]:
     short_name = company_name.replace(" Corporation", "").replace(" Inc.", "").replace(" plc", "")
     aliases = SEARCH_ALIASES.get(ticker, [short_name, ticker])
@@ -679,13 +683,15 @@ def load_company_news(
     cutoff = current_time - timedelta(days=window_days)
     latest_allowed = current_time
 
-    indexed_results = _load_bing_company_news(
-        aliases,
-        publishers,
-        limit=limit,
-        window_days=window_days,
-        current_time=current_time,
-    )
+    bing_available = True
+    try:
+        indexed_results = _load_bing_company_news(
+            aliases, publishers, limit=limit, window_days=window_days,
+            current_time=current_time, strict=strict,
+        )
+    except (urllib.error.URLError, TimeoutError, ET.ParseError, OSError, http.client.HTTPException):
+        bing_available = False
+        indexed_results = []
     indexed_results = [story for story in indexed_results if not _excluded_company_title(ticker, story["title"])]
     if len(indexed_results) >= limit:
         return indexed_results[:limit]
@@ -702,6 +708,8 @@ def load_company_news(
         with urllib.request.urlopen(request, timeout=15) as response:
             root = ET.fromstring(response.read())
     except (urllib.error.URLError, TimeoutError, ET.ParseError, OSError, http.client.HTTPException):
+        if strict and not bing_available:
+            raise RuntimeError("Neither monitored news index could be checked.")
         return indexed_results
 
     ranked_results: list[tuple[int, datetime, dict[str, str], str]] = []

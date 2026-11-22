@@ -1,0 +1,387 @@
+{
+  "AAPL": {
+    "quarter": {
+      "label": "Q4 FY2026",
+      "period_start": "2026-06-28",
+      "period_end": "2026-09-26",
+      "filed": "2026-11-02",
+      "form": "8-K Exhibit 99.1",
+      "accession": "0000320193-26-000024",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/a8-kex991q4202609262026.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 114477,
+      "operating_income": 35631,
+      "net_income": 30711
+    },
+    "filing": {
+      "filed": "2026-11-03",
+      "form": "10-K",
+      "accession": "0000320193-26-000026",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
+    }
+  },
+  "ADI": {},
+  "AMAT": {
+    "quarter": {
+      "label": "Q4 FY2026",
+      "period_start": "2026-07-27",
+      "period_end": "2026-10-25",
+      "filed": "2026-11-12",
+      "form": "8-K Exhibit 99.1",
+      "accession": "0001628280-26-073360",
+      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/exhibit991q42026earningsre.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 10409,
+      "operating_income": 3658,
+      "net_income": 2718
+    },
+    "filing": {
+      "filed": "2026-11-12",
+      "form": "8-K Exhibit 99.1",
+      "accession": "0001628280-26-073360",
+      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/exhibit991q42026earningsre.htm"
+    }
+  },
+  "AMD": {
+    "quarter": {
+      "label": "Q3 2026",
+      "period_start": "2026-06-28",
+      "period_end": "2026-09-26",
+      "filed": "2026-11-04",
+      "form": "10-Q",
+      "accession": "0000002488-26-000191",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 13377,
+      "operating_income": 2832,
+      "net_income": 2428
+    },
+    "filing": {
+      "filed": "2026-11-04",
+      "form": "10-Q",
+      "accession": "0000002488-26-000191",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm"
+    }
+  },
+  "AMKR": {},
+  "AMZN": {
+    "quarter": {
+      "label": "Q3 2026",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "filed": "2026-10-30",
+      "form": "10-Q",
+      "accession": "0001018724-26-000040",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 201944,
+      "operating_income": 28076,
+      "net_income": 20685
+    },
+    "filing": {
+      "filed": "2026-10-30",
+      "form": "10-Q",
+      "accession": "0001018724-26-000040",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
+    }
+  },
+  "ANET": {},
+  "ARM": {},
+  "ASML": {
+    "quarter": {
+      "label": "Q3 2026",
+      "period_start": "2026-06-29",
+      "period_end": "2026-09-27",
+      "filed": "2026-10-14",
+      "form": "6-K Exhibit",
+      "accession": "0001628280-26-065813",
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm",
+      "currency": "EUR",
+      "unit": "millions",
+      "revenue": 11662.0,
+      "operating_income": 5172.8,
+      "net_income": 4960.4
+    },
+    "filing": {
+      "filed": "2026-10-14",
+      "form": "6-K Exhibit",
+      "accession": "0001628280-26-065813",
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm"
+    }
+  },
+  "AVGO": {
+    "quarter": {
+      "label": "Q3 FY2026",
+      "period_start": "2026-05-04",
+      "period_end": "2026-08-02",
+      "form": "10-Q",
+      "filed": "2026-09-10",
+      "accession": "0001730168-26-000080",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 29591.0,
+      "operating_income": 15955.0,
+      "net_income": 13088.0,
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
+    },
+    "filing": {
+      "filed": "2026-09-10",
+      "form": "10-Q",
+      "accession": "0001730168-26-000080",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
+    }
+  },
+  "CDNS": {},
+  "COHR": {},
+  "CSCO": {},
+  "DELL": {},
+  "ENTG": {},
+  "ETN": {},
+  "FN": {},
+  "GFS": {},
+  "GOOG": {
+    "quarter": {
+      "label": "Q3 2026",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "filed": "2026-10-29",
+      "form": "10-Q",
+      "accession": "0001652044-26-000084",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 127577,
+      "operating_income": 40576,
+      "net_income": 26468
+    },
+    "filing": {
+      "filed": "2026-10-29",
+      "form": "10-Q",
+      "accession": "0001652044-26-000084",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm"
+    }
+  },
+  "HPE": {},
+  "IBM": {},
+  "INTC": {},
+  "KLAC": {},
+  "LITE": {
+    "quarter": {
+      "label": "Q1 FY2027",
+      "period_start": "2026-06-28",
+      "period_end": "2026-09-26",
+      "filed": "2026-11-03",
+      "form": "10-Q",
+      "accession": "0001628280-26-069615",
+      "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026069615/lite-20260926.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1262.6,
+      "operating_income": 359.8,
+      "net_income": 360.3
+    },
+    "filing": {
+      "filed": "2026-11-03",
+      "form": "10-Q",
+      "accession": "0001628280-26-069615",
+      "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026069615/lite-20260926.htm"
+    }
+  },
+  "LRCX": {},
+  "LSCC": {},
+  "META": {
+    "quarter": {
+      "label": "Q3 2026",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "filed": "2026-10-22",
+      "form": "10-Q",
+      "accession": "0001628280-26-066773",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066773/meta-20260930.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 64601,
+      "operating_income": 12988,
+      "net_income": 9860
+    },
+    "filing": {
+      "filed": "2026-10-22",
+      "form": "10-Q",
+      "accession": "0001628280-26-066773",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066773/meta-20260930.htm"
+    }
+  },
+  "MPWR": {},
+  "MRVL": {
+    "quarter": {
+      "label": "Q2 FY2027",
+      "period_start": "2026-05-03",
+      "period_end": "2026-08-01",
+      "form": "10-Q",
+      "filed": "2026-08-28",
+      "accession": "0001835632-26-000025",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 2739.3,
+      "operating_income": 459.7,
+      "net_income": 308.0,
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm"
+    },
+    "filing": {
+      "filed": "2026-08-28",
+      "form": "10-Q",
+      "accession": "0001835632-26-000025",
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm"
+    }
+  },
+  "MSFT": {
+    "quarter": {
+      "label": "Q1 FY2027",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "filed": "2026-10-28",
+      "form": "10-Q",
+      "accession": "0001193125-26-436133",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 92279,
+      "operating_income": 45915,
+      "net_income": 36629
+    },
+    "filing": {
+      "filed": "2026-10-28",
+      "form": "10-Q",
+      "accession": "0001193125-26-436133",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm"
+    }
+  },
+  "MTSI": {
+    "filing": {
+      "filed": "2026-11-12",
+      "form": "10-K",
+      "accession": "0001493594-26-000044",
+      "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359426000044/mtsi-20261002.htm"
+    }
+  },
+  "MU": {
+    "filing": {
+      "filed": "2026-10-09",
+      "form": "10-K",
+      "accession": "0000723125-26-000023",
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+    }
+  },
+  "NET": {},
+  "NVDA": {
+    "quarter": {
+      "label": "Q3 FY2027",
+      "period_start": "2026-07-27",
+      "period_end": "2026-10-25",
+      "filed": "2026-11-17",
+      "form": "8-K Exhibit 99.3",
+      "accession": "0001045810-26-000088",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/supplementalfinancialinfor.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 115844,
+      "operating_income": 77520,
+      "net_income": 65287
+    },
+    "filing": {
+      "filed": "2026-11-17",
+      "form": "8-K Exhibit 99.3",
+      "accession": "0001045810-26-000088",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/supplementalfinancialinfor.htm"
+    }
+  },
+  "ORCL": {
+    "quarter": {
+      "label": "Q1 FY2027",
+      "period_start": "2026-06-01",
+      "period_end": "2026-08-31",
+      "form": "10-Q",
+      "filed": "2026-09-11",
+      "accession": "0001193125-26-389274",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 19345.0,
+      "operating_income": 6728.0,
+      "net_income": 4760.0,
+      "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm"
+    },
+    "filing": {
+      "filed": "2026-09-11",
+      "form": "10-Q",
+      "accession": "0001193125-26-389274",
+      "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm"
+    }
+  },
+  "PLTR": {},
+  "QCOM": {
+    "filing": {
+      "filed": "2026-11-04",
+      "form": "10-K",
+      "accession": "0000804328-26-000128",
+      "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000128/qcom-20260927.htm"
+    }
+  },
+  "RMBS": {},
+  "SMCI": {},
+  "SNDK": {
+    "quarter": {
+      "label": "Q1 FY2027",
+      "period_start": "2026-07-04",
+      "period_end": "2026-10-02",
+      "filed": "2026-10-30",
+      "form": "10-Q",
+      "accession": "0001628280-26-068601",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 11031,
+      "operating_income": 8780,
+      "net_income": 8101
+    },
+    "filing": {
+      "filed": "2026-10-30",
+      "form": "10-Q",
+      "accession": "0001628280-26-068601",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm"
+    }
+  },
+  "SNOW": {},
+  "SNPS": {},
+  "STX": {},
+  "TER": {},
+  "TSM": {
+    "quarter": {
+      "label": "Q3 2026",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "filed": "2026-10-15",
+      "form": "6-K Exhibit 99.1",
+      "accession": "0001046179-26-000726",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm",
+      "currency": "TWD",
+      "unit": "millions",
+      "revenue": 1494243,
+      "operating_income": 876445,
+      "net_income": 763064,
+      "note": "Net income is attributable to shareholders of the parent."
+    },
+    "filing": {
+      "filed": "2026-10-15",
+      "form": "6-K Exhibit 99.1",
+      "accession": "0001046179-26-000726",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm"
+    }
+  },
+  "TXN": {},
+  "VRT": {},
+  "WDC": {}
+}
