@@ -338,7 +338,7 @@ def render_landing(prebuilt: pd.DataFrame) -> None:
             summary = latest_company_summary(prebuilt, ticker)
             latest_result = latest_results_snapshot(ticker)
             latest_line = (
-                f"<br/>Quarter on file {latest_result['label']} · {latest_result['period_end']}"
+                f"<br/>Quarter on file {latest_result['label']}"
                 if latest_result["label"] else ""
             )
             with column:
@@ -421,21 +421,21 @@ render_stress_test(summary, profile, pro=True)
 
 filing_links = st.columns([1, 1, 1.25, 2.75])
 latest_result = latest_results_snapshot(ticker)
+provider_quarter = latest_result.get("source_kind") == "provider"
 if ticker in CIKS:
     annual_form, interim_form = (("20-F", "6-K") if ticker in FOREIGN_PRIVATE_ISSUERS else ("10-K", "10-Q"))
     filing_links[0].link_button(f"Recent {annual_form} filings", sec_filings_url(ticker, annual_form), width="stretch")
     filing_links[1].link_button(f"Recent {interim_form} filings", sec_filings_url(ticker, interim_form), width="stretch")
     if latest_result["url"]:
-        filing_links[2].link_button(f"Filed results · {latest_result['label']}", latest_result["url"], width="stretch")
+        filing_links[2].link_button(f"{'Provider results' if provider_quarter else 'Filed results'} · {latest_result['label']}", latest_result["url"], width="stretch")
 else:
     filing_links[0].link_button("SEC filing search", f"https://www.sec.gov/edgar/search/#/q={ticker}", width="stretch")
 if latest_result["url"]:
-    st.caption(
-        f"Quarter on file: {latest_result['label']} ({latest_result['form']}), "
-        f"period ended {latest_result['period_end']}, filed {latest_result['filed']}. "
-        f"The financial history and headline metrics below remain annual to preserve comparability."
-    )
-
+    if provider_quarter:
+        st.caption(f"Yahoo Finance quarterly statement · reporting month {latest_result['period_end'][:7]}.")
+    else:
+        st.caption(f"Quarter on file · {latest_result['label']} ({latest_result['form']}) · "
+                   f"period ended {latest_result['period_end']} · filed {latest_result['filed']}.")
 if latest_result.get("revenue") is not None:
     st.markdown(f"### Quarter on file · {latest_result['label']}")
     latest_currency = str(latest_result["currency"])
@@ -443,10 +443,11 @@ if latest_result.get("revenue") is not None:
     for column, key in zip(latest_metrics, ("revenue", "operating_income", "net_income")):
         value = latest_result.get(key)
         column.metric(f"Reported {humanize(key)}", money_billions(float(value) * 1e6 if value is not None else None, latest_currency))
-    st.caption(
-        f"Native currency ({latest_currency}); explicit three-month period {latest_result['period_start']} to "
-        f"{latest_result['period_end']}. Reported GAAP/TIFRS figures; not annualized."
-    )
+    if not provider_quarter:
+        st.caption(
+            f"Reported currency ({latest_currency}) · three-month period {latest_result['period_start']} to "
+            f"{latest_result['period_end']}."
+        )
     if latest_result.get("note"):
         st.markdown(f"<div class='source-note'>{latest_result['note']}</div>", unsafe_allow_html=True)
 

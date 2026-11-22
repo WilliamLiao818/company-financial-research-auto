@@ -20,7 +20,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from data_health import read_json
+from provider_quarter import choose_quarter, fetch_provider_quarter, provider_check_status
 from market_data import BENCHMARKS, fetch_adjusted_monthly
+from filing_index import ListedIndex
 from news_connector import load_company_news_snapshot
 from research import REPORTED_FACT_FIELDS, validate_financials
 from research_catalog import COMPANY_NAMES, CIKS
@@ -41,7 +43,7 @@ def write_json(path: Path, payload: dict) -> None:
 
 
 def check_result(previous: dict, now: str, outcome: str, observed: str = "") -> dict:
-    checked = previous.get("verified_at", "") if outcome == "retained" else now
+    checked = previous.get("verified_at", "") if outcome in {"retained", "delayed"} else now
     return {"attempted_at": now, "verified_at": checked, "status": outcome,
             "as_of": observed or (previous.get("as_of", "") if outcome == "retained" else "")}
 
@@ -150,7 +152,11 @@ def merge_annual(saved: pd.DataFrame, fresh: pd.DataFrame, *, primary: bool, tod
             curated = ("/Archives/edgar/" in str(saved.at[i, "source_url"]) and pd.isna(saved.at[i, "accession"])) or (
                 bool(pd.notna(saved.at[i, "capex_accession"])) and "Primary filing table" in str(saved.at[i, "capex_xbrl_tag"]))
             old_date = saved.at[i, "filed"]
-            can_replace = primary and not curated and complete and (pd.isna(old_date) or str(row.get("filed", "")) >= str(old_date))
+            new_filed = str(row.get("filed", ""))
+            ppe_tag = str(row.get("capex_xbrl_tag", "")) in {
+                "PaymentsToAcquirePropertyPlantAndEquipment", "PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"}
+            later_primary = pd.notna(old_date) and new_filed > str(old_date) and ppe_tag
+            can_replace = primary and complete and (not curated or later_primary) and (pd.isna(old_date) or new_filed >= str(old_date))
             if can_replace:
                 replacement = row.reindex(saved.columns).copy()
                 replacement["fiscal_year"] = saved.at[i, "fiscal_year"]
@@ -206,6 +212,8 @@ def apply_filing_evidence(ticker, frame):
             continue
         matches = frame.index[(frame.fiscal_year == year) & (frame.currency == record["currency"])]
         for i in matches:
+            if abs((date.fromisoformat(frame.at[i, "fiscal_year_end"]) - date.fromisoformat(record["fiscal_year_end"])).days) > 7:
+                continue
             if not math.isclose(float(frame.at[i, "revenue"]), record["revenue"], rel_tol=0.00001):
                 continue
             # Preserve later restatements.
@@ -215,6 +223,11 @@ def apply_filing_evidence(ticker, frame):
             for field in ("fiscal_year_end", "filed", "form", "accession", "revenue", "capex", "capex_xbrl_tag", "capex_accession"):
                 frame.at[i, field] = record[field]
             frame.at[i, "revenue_accession"] = record["accession"]
+            other_fields = record.get("statement_values", {})
+            if (set(other_fields) == set(REPORTED_FACT_FIELDS) - {"revenue", "capex"}
+                    and all(pd.notna(frame.at[i, key]) and math.isclose(float(frame.at[i, key]), amount, rel_tol=1e-9, abs_tol=1)
+                            for key, amount in other_fields.items())):
+                frame.at[i, "source_url"] = record["url"]
     return frame
 
 
@@ -223,14 +236,31 @@ def add_known_disclosures(ticker, packed):
     records = [d for d in (LATEST_RESULTS_SNAPSHOTS.get(ticker), VERIFIED_QUARTERS.get(ticker)) if d and d.get("filed")]
     if records:
         newest = max(records, key=lambda entry: (entry["period_end"], entry["filed"]))
-        if (newest["period_end"], newest["filed"]) > (packed.get("quarter", {}).get("period_end", ""), packed.get("quarter", {}).get("filed", "")):
-            packed["quarter"] = newest
+        packed["quarter"] = choose_quarter(packed.get("quarter", {}), newest)
     records += [record for (symbol, year), record in VERIFIED_ANNUALS.items() if symbol == ticker]
     records += [{**record, "url": record["source_url"]} for (symbol, year), record in VERIFIED_ANNUAL_RELEASES.items() if symbol == ticker]
     if records:
         recent = max(records, key=lambda row: row["filed"])
         if recent["filed"] > packed.get("filing", {}).get("filed", ""):
             packed["filing"] = {key: recent[key] for key in ("filed", "form", "accession", "url")}
+
+
+def merge_distributed_filing(packed: dict, previous: dict, result: dict, now: str) -> dict:
+    observed = result["filing"]
+    known = packed.get("filing", {})
+    watermark = date.fromisoformat(result["indexed_at"][:10])
+    today = date.fromisoformat(now[:10])
+    if watermark > today:
+        raise ValueError("Filing index watermark in the future")
+    later_known = observed["filed"] < known.get("filed", "")
+    if observed["filed"] > known.get("filed", "") or not known:
+        packed["filing"] = observed
+    # Distinguish a successful lookup from a timely independent source.
+    weekdays_since_update = max(0, len(pd.bdate_range(watermark + timedelta(days=1), today)))
+    late = weekdays_since_update > 2 or later_known or watermark.isoformat() < previous.get("indexed_through", "")
+    status = "delayed" if late else "distribution"
+    return {**check_result(previous, now, status, packed["filing"]["filed"]),
+            "indexed_through": watermark.isoformat(), "distribution_source": result["source"]}
 
 
 def refresh_filings(symbols, ledger, now, data):
@@ -240,6 +270,7 @@ def refresh_filings(symbols, ledger, now, data):
             statements[col] = pd.Series(dtype="object")
     old_filings = read_json(data / "filings.json")
     edgar = Edgar()
+    listed = ListedIndex()
     secondary_available = True
     replacements = {}
     today = date.fromisoformat(now[:10])
@@ -251,18 +282,25 @@ def refresh_filings(symbols, ledger, now, data):
             packed = old_filings.setdefault(ticker, {})
             add_known_disclosures(ticker, packed)
             submissions = {}
+            previous_filing_check = company_status.get("filings", {})
             try:
                 submissions = edgar.get(f"https://data.sec.gov/submissions/CIK{cik}.json")
                 filing = filing_summary(submissions, cik, today)
                 if filing["filed"] < packed.get("filing", {}).get("filed", ""):
                     raise ValueError("SEC submissions older than previous check")
                 packed["filing"] = filing
-                status = "ok"
+                filing_check = check_result(previous_filing_check, now, "ok", filing["filed"])
             except Exception as exc:
                 print(f"{ticker} filings: {type(exc).__name__}", flush=True)
-                status = "retained"
-            company_status["filings"] = check_result(company_status.get("filings", {}), now, status, packed.get("filing", {}).get("filed", ""))
+                try:
+                    distributed = listed.fetch(ticker, cik, today)
+                    filing_check = merge_distributed_filing(packed, previous_filing_check, distributed, now)
+                except Exception as index_error:
+                    print(f"{ticker} independent filing index: {type(index_error).__name__}", flush=True)
+                    filing_check = {**previous_filing_check, **check_result(previous_filing_check, now, "retained", packed.get("filing", {}).get("filed", ""))}
+            company_status["filings"] = filing_check
             annual_status = "ok"
+            quarter_status = "retained"
             try:
                 raw = edgar.get(SEC_COMPANY_FACTS_URL.format(cik=cik))
                 if int(raw["cik"]) != int(cik):
@@ -270,8 +308,11 @@ def refresh_filings(symbols, ledger, now, data):
                 native = {"TSM": "TWD", "ASML": "EUR"}.get(ticker, str(saved.currency.iloc[-1]))
                 quarter = quarter_summary(raw, today, preferred_currency=native)
                 previous = packed.get("quarter", {})
-                if quarter and (quarter["period_end"], quarter["filed"]) >= (previous.get("period_end", ""), previous.get("filed", "")):
-                    packed["quarter"] = quarter
+                chosen = choose_quarter(previous, quarter)
+                if chosen:
+                    packed["quarter"] = chosen
+                if quarter and chosen is quarter:
+                    quarter_status = "ok"
                 fresh = supplement_capex(company_facts_to_frame(raw, ticker=ticker))
                 fresh["company"] = COMPANY_NAMES[ticker]
                 # Preserve exact annual report evidence even when facts were later restated.
@@ -296,6 +337,26 @@ def refresh_filings(symbols, ledger, now, data):
                         secondary_available = False
                     print(f"{ticker} annual fallback: {type(fallback_error).__name__}", flush=True)
                     annual_status, updated = "retained", saved
+            quarter_end = packed.get("quarter", {}).get("period_end")
+            next_due = quarter_end and (today - date.fromisoformat(quarter_end)).days >= 70
+            if secondary_available and (quarter_status != "ok" or next_due):
+                try:
+                    provider = fetch_provider_quarter(ticker, today, Path(temporary))
+                    current = packed.get("quarter", {})
+                    chosen = choose_quarter(current, provider)
+                    if chosen:
+                        packed["quarter"] = chosen
+                    if quarter_status != "ok" or chosen is provider:
+                        quarter_status = provider_check_status(chosen, provider)
+                except Exception as error:
+                    if isinstance(error.__cause__, HTTPError) and error.__cause__.code in {401, 403, 429}:
+                        secondary_available = False
+                    print(f"{ticker} quarterly fallback: {type(error).__name__}", flush=True)
+            current_quarter = packed.get("quarter", {})
+            quarter_date = current_quarter.get("period_end", "")
+            if current_quarter.get("period_precision") == "month":
+                quarter_date = quarter_date[:7]
+            company_status["quarterly"] = check_result(company_status.get("quarterly", {}), now, quarter_status, quarter_date)
             updated = apply_filing_evidence(ticker, updated)
             replacements[ticker] = updated
             company_status["financials"] = check_result(company_status.get("financials", {}), now, annual_status, updated.fiscal_year_end.max())
@@ -387,11 +448,11 @@ def main():
         if args.feeds in (name, "all"):
             refresh(symbols, ledger, now, args.data_dir)
     write_json(path, {"generated_at": now, "companies": ledger})
-    fields = ["filings", "financials", "market", "news"] if args.feeds == "all" else (
-        ["filings", "financials"] if args.feeds == "filings" else [args.feeds])
+    fields = ["filings", "financials", "quarterly", "market", "news"] if args.feeds == "all" else (
+        ["filings", "financials", "quarterly"] if args.feeds == "filings" else [args.feeds])
     for field in fields:
         following = [*symbols, *BENCHMARKS] if field == "market" else symbols
-        kept = [s for s in following if ledger[s][field]["status"] in {"retained", "lagging"}]
+        kept = [s for s in following if ledger[s][field]["status"] in {"retained", "lagging", "delayed"}]
         message = f"{field}: {len(following)-len(kept)}/{len(following)} checked"
         if kept:
             message += " · checks require attention for " + ", ".join(kept)

@@ -63,14 +63,14 @@ jobs:
           from research_catalog import COMPANY_NAMES
           ledger = json.load(open("data/refresh_status.json"))["companies"]
           requested = os.environ["FEED"]
-          fields = {"filings": ["filings", "financials"], "news": ["news"], "market": ["market"]}
+          fields = {"filings": ["filings", "financials", "quarterly"], "news": ["news"], "market": ["market"]}
           failures = {}
           for group, names in fields.items():
               if requested not in (group, "all"):
                   continue
               for name in names:
                   tickers = list(COMPANY_NAMES) + (["SPY", "QQQ"] if name == "market" else [])
-                  retained = [ticker for ticker in tickers if ledger[ticker][name]["status"] in {"retained", "lagging"}]
+                  retained = [ticker for ticker in tickers if ledger[ticker][name]["status"] in {"retained", "lagging", "delayed"}]
                   if retained:
                       failures[name] = retained
           if failures:

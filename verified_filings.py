@@ -2,6 +2,7 @@
 
 These dated observations can fill gaps when automated feeds are incomplete.
 The 10-K checks cover revenue, cash purchases of PP&E and reporting dates.
+Four 2026 10-Ks also have consolidated statement values for a full-row comparison.
 Annual earnings releases are identified separately until an annual report supersedes them.
 """
 
@@ -21,6 +22,13 @@ def _quarter(label, start, end, filed, form, cik, accession, document, currency,
 
 
 VERIFIED_QUARTERS = {
+    "TER": {
+        **_quarter(
+            "Q3 FY2026", "2026-06-29", "2026-09-27", "2026-10-30", "10-Q",
+            97210, "0001193125-26-441091", "ter-20260927.htm", "USD", 1305.950, 401.968, 347.739,
+        ),
+        "note": "Net income uses consolidated net income before allocating noncontrolling interests.",
+    },
     "AAPL": _quarter(
         "Q4 FY2026", "2026-06-28", "2026-09-26", "2026-11-02", "8-K Exhibit 99.1",
         320193, "0000320193-26-000024", "a8-kex991q4202609262026.htm",
@@ -115,7 +123,33 @@ VERIFIED_ANNUALS = {
 }
 
 
-# Issuer's unaudited consolidated statements, pages 7–9 of the SEC-furnished
+def _statement(scale, gross_profit, cost_of_revenue, operating_income, net_income,
+               operating_cash_flow, assets, liabilities, equity):
+    return {field: amount * scale for field, amount in {
+        "gross_profit": gross_profit, "cost_of_revenue": cost_of_revenue,
+        "operating_income": operating_income, "net_income": net_income,
+        "operating_cash_flow": operating_cash_flow, "assets": assets,
+        "liabilities": liabilities, "equity": equity,
+    }.items()}
+
+
+# The amounts below follow the units printed on the financial statements.
+# QCOM gross profit equals total revenues less cost of revenues.
+VERIFIED_ANNUALS[("AAPL", 2026)]["statement_values"] = _statement(
+    1_000_000, 233602, 245232, 158063, 132175, 145097, 404548, 292455, 112093,
+)
+VERIFIED_ANNUALS[("MTSI", 2026)]["statement_values"] = _statement(
+    1_000, 770396, 557227, 305467, 335251, 357086, 2322851, 626184, 1696667,
+)
+VERIFIED_ANNUALS[("MU", 2026)]["statement_values"] = _statement(
+    1_000_000, 107504, 25684, 99340, 84969, 89675, 195888, 57510, 138378,
+)
+VERIFIED_ANNUALS[("QCOM", 2026)]["statement_values"] = _statement(
+    1_000_000, 22898, 20222, 8658, 13628, 11145, 60829, 30428, 30401,
+)
+
+
+# Issuer's unaudited consolidated statements in the SEC-furnished
 # earnings release. All flow metrics use the twelve-month column, in whole USD.
 _amat_release = VERIFIED_QUARTERS["AMAT"]
 VERIFIED_ANNUAL_RELEASES = {

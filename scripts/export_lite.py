@@ -64,6 +64,8 @@ def build_lite_feed() -> dict:
             quarterly_data = {key: quarter.get(key) for key in (
                 "label", "period_start", "period_end", "form", "filed", "currency", "unit", "url", "note",
             )}
+            quarterly_data["source_kind"] = quarter.get("source_kind", "filing")
+            quarterly_data["period_precision"] = quarter.get("period_precision", "day")
             quarterly_data.update({key: finite_number(quarter.get(key)) for key in ("revenue", "operating_income", "net_income")})
         filing = latest_filing(ticker)
         annual = {
@@ -78,7 +80,11 @@ def build_lite_feed() -> dict:
         stories = load_company_news_snapshot(ticker, limit=3, now=generated_at)
         status = ledger.get("companies", {}).get(ticker, {})
         refresh = {feed: {key: status[feed].get(key) or None for key in ("status", "attempted_at", "verified_at", "as_of")}
-                   for feed in ("filings", "financials", "market", "news") if feed in status}
+                   for feed in ("filings", "financials", "quarterly", "market", "news") if feed in status}
+        if "filings" in refresh:
+            for key in ("indexed_through", "distribution_source"):
+                if isinstance(value := status["filings"].get(key), str) and value:
+                    refresh["filings"][key] = value[:120]
         companies[ticker] = {
             "ticker": ticker, "name": COMPANY_NAMES[ticker], "sector": COMPANY_SECTORS[ticker], "role": COMPANY_ROLES[ticker],
             "annual": annual, "question": profile["key_questions"][0], "thesis": profile["research_thesis"],

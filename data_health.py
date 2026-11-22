@@ -5,6 +5,8 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from provider_quarter import choose_quarter
+
 DATA = Path(__file__).resolve().parent / "data"
 
 
@@ -20,7 +22,7 @@ def freshness_lines(ticker: str) -> list[str]:
         return ["Scheduled source checks are awaiting their first published result."]
     lines = []
     for key, label in [("filings", "SEC filings"), ("financials", "Annual statements"),
-                       ("market", "Adjusted close"), ("news", "90-day news")]:
+                       ("quarterly", "Quarterly statements"), ("market", "Adjusted close"), ("news", "90-day news")]:
         item = ledger.get(key, {})
         if not item:
             lines.append(f"{label} · awaiting first check")
@@ -33,6 +35,12 @@ def freshness_lines(ticker: str) -> list[str]:
             detail.append(f"data {observed}")
         if status == "retained":
             detail.append("last attempt unavailable · saved data retained")
+        elif key == "filings" and status in {"distribution", "delayed"}:
+            detail.append(f"SEC EDGAR via Listed · index through {item.get('indexed_through', 'unknown')}")
+            if status == "delayed":
+                detail.append("filing index delayed")
+        elif key == "quarterly" and status == "delayed":
+            detail.append("provider trails the quarterly statement on file")
         elif status == "lagging":
             detail.append("latest quote trails the benchmark session")
         elif status == "fallback":
@@ -53,6 +61,4 @@ def latest_filing(ticker: str) -> dict:
 
 def reported_quarter(ticker: str, saved: dict) -> dict:
     candidate = read_json(DATA / "filings.json").get(ticker, {}).get("quarter", {})
-    if candidate and (candidate["period_end"], candidate["filed"]) > (saved.get("period_end", ""), saved.get("filed", "")):
-        return candidate
-    return saved
+    return choose_quarter(saved, candidate)

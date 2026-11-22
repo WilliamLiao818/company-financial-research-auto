@@ -30,7 +30,7 @@ Each pack includes:
 - pivotal questions and explicit decision rules;
 - business-model-specific indicators and diligence questions;
 - multi-year earnings, margin, cash-flow and balance-sheet diagnostics;
-- a separate native-currency quarterly snapshot where an explicitly verified update is available;
+- a separate quarterly snapshot with source, period precision and reporting currency;
 - deterministic accounting-quality signals;
 - reported-to-analytical cash-flow normalization where sourced;
 - selected peer context, with dated market share and a revisable competitive-position rubric only where separately available;
@@ -42,7 +42,7 @@ Each pack includes:
 - direct links to recent 10-K/10-Q or 20-F/6-K filings;
 - a chart-led PDF with a table of contents, available after opening the company view.
 
-The bundled annual series and the latest official quarter are intentionally separated. Annual charts remain comparable across fiscal years; the latest-quarter cards use explicit three-month statement columns and link directly to the verified 10-Q, 6-K or SEC-filed earnings exhibit. They are never annualized or substituted into annual history.
+Quarterly observations have independent dates, units and sources. Filed three-month figures take priority for the same quarter. A newer Yahoo Finance quarterly statement can fill an issuer coverage gap. Provider figures carry a reporting month and omit unverified filing and period-start dates. Annual charts and the valuation anchor continue to use fiscal-year results.
 
 ## Public-data boundary
 
@@ -92,7 +92,7 @@ This system supports research and review. It does not provide transaction instru
 
 The default branch's **Refresh public company data** workflow checks the 48 active issuers every day at 03:37 UTC. GitHub may start scheduled runs later. A manual dispatch can refresh filings, prices, news or all three. Validated changes and per-company check dates publish together to the branch read by Streamlit and the public company briefs.
 
-- **Reports.** The SEC submissions feed covers periodic and current U.S. and foreign issuer filings, including 10-Q, 10-K, 8-K, 6-K and 20-F. Company Facts supplies comparable annual statements and explicitly tagged three-month figures. Custom tags and exhibit-only earnings can require an individual filing review. Annual statements can fall back to Yahoo Finance's dated normalized statements. Each row retains its provider and reporting currency.
+- **Reports.** The SEC submissions feed covers periodic and current U.S. and foreign issuer filings, including 10-Q, 10-K, 8-K, 6-K and 20-F. If direct access fails, the Listed public index can supply original EDGAR links after issuer and accession checks. Its published reconciliation date is shown separately. An index more than two weekdays behind, or behind a newer filing already on file, is marked delayed. Company Facts supplies comparable annual statements and explicitly tagged three-month figures. Custom tags and exhibit-only earnings can require an individual filing review. Annual statements can fall back to Yahoo Finance's dated normalized statements. Each row retains its provider and reporting currency.
 - **Market.** The refresh reads daily adjusted closing observations, including SPY and QQQ, then samples the final available completed session each month. The current month is partial. Common observation dates determine returns. These are end-of-day observations.
 - **News.** The refresh checks monitored indexes and original publisher links and keeps qualifying articles within the rolling 90-day window.
 - **Failures.** The ledger in `data/refresh_status.json` records observation dates, attempts, last successful checks and retained data separately. An unreachable source retains the last verified observation. The workflow summary names affected tickers and flags partial releases after publication. A competing push fails safely and the next dispatch reads the updated branch.

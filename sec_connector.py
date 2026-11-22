@@ -128,7 +128,7 @@ def select_annual_facts(
                 or (pd.notna(start) and pd.notna(end) and 300 <= int((end - start).days) <= 400)
             )
             if (
-                item.get("form") not in {"10-K", "20-F", "40-F"}
+                str(item.get("form", "")).removesuffix("/A") not in {"10-K", "20-F", "40-F"}
                 or item.get("fp") != "FY"
                 or not item.get("end")
                 or not valid_annual_duration

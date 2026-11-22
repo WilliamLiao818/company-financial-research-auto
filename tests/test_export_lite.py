@@ -41,9 +41,12 @@ class PublicLiteFeedTests(unittest.TestCase):
         on_date = datetime.fromisoformat(self.feed["generated_at"]).date()
         for ticker, brief in self.feed["companies"].items():
             with self.subTest(ticker=ticker):
-                self.assertLessEqual(set(brief["refresh"]), {"filings", "financials", "market", "news"})
-                for feed in brief["refresh"].values():
-                    self.assertEqual(set(feed), {"status", "attempted_at", "verified_at", "as_of"})
+                self.assertLessEqual(set(brief["refresh"]), {"filings", "financials", "quarterly", "market", "news"})
+                for feed_name, feed in brief["refresh"].items():
+                    required = {"status", "attempted_at", "verified_at", "as_of"}
+                    self.assertLessEqual(required, set(feed))
+                    extra = {"indexed_through", "distribution_source"} if feed_name == "filings" else set()
+                    self.assertLessEqual(set(feed), required | extra)
                 if quarter := brief["latest_quarter"]:
                     self.assertEqual(quarter["unit"], "millions")
                     self.assertEqual(quarter["revenue"], latest_results_snapshot(ticker)["revenue"])

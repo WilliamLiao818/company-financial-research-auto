@@ -6,7 +6,7 @@ import unittest
 import pandas as pd
 
 from market_data import completed_monthly_closes, load_market_performance
-from scripts.refresh_public_data import check_result, filing_summary, merge_annual, quarter_summary
+from scripts.refresh_public_data import check_result, filing_summary, merge_annual, merge_distributed_filing, quarter_summary
 from research import REPORTED_FACT_FIELDS
 
 
@@ -17,6 +17,20 @@ class RefreshTests(unittest.TestCase):
         self.assertEqual(failed["verified_at"], first["verified_at"])
         self.assertEqual(failed["as_of"], first["as_of"])
         self.assertNotEqual(failed["attempted_at"], failed["verified_at"])
+
+    def test_independent_index_uses_own_watermark_and_preserves_newer_known_filing(self):
+        existing = {"filing": {"filed": "2026-11-17", "url": "original filing"}}
+        observed = {"source": "SEC EDGAR via Listed", "indexed_at": "2026-11-13T16:00:00+00:00",
+                    "filing": {"filed": "2026-11-10", "url": "older filing"}}
+        now = "2026-11-22T03:00:00+00:00"
+        delayed = merge_distributed_filing(existing, {}, observed, now)
+        self.assertEqual((delayed["status"], delayed["as_of"], delayed["indexed_through"]),
+                         ("delayed", "2026-11-17", "2026-11-13"))
+        self.assertFalse(delayed["verified_at"])
+        self.assertEqual(existing["filing"]["url"], "original filing")
+        observed.update(indexed_at="2026-11-20T12:00:00+00:00", filing={"filed":"2026-11-19", "url":"new filing"})
+        current = merge_distributed_filing(existing, delayed, observed, now)
+        self.assertEqual((current["status"], existing["filing"]["url"]), ("distribution", "new filing"))
 
     def test_latest_disclosure_includes_foreign_current_reports(self):
         raw = {"cik": 123, "filings": {"recent": {"form": ["6-K", "20-F", "4"],

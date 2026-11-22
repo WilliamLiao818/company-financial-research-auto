@@ -21,7 +21,25 @@
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
     }
   },
-  "ADI": {},
+  "ADI": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-07-31",
+      "label": "Quarter · 2026-07",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/ADI/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 4021.899,
+      "operating_income": 1588.753,
+      "net_income": 1340.09,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "AMAT": {
     "quarter": {
       "label": "Q4 FY2026",
@@ -66,7 +84,25 @@
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm"
     }
   },
-  "AMKR": {},
+  "AMKR": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/AMKR/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1990.557,
+      "operating_income": 224.711,
+      "net_income": 190.613,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "AMZN": {
     "quarter": {
       "label": "Q3 2026",
@@ -89,15 +125,51 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
     }
   },
-  "ANET": {},
-  "ARM": {},
+  "ANET": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/ANET/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 3657.6,
+      "operating_income": 1642.4,
+      "net_income": 1560.4,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "ARM": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/ARM/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1443.0,
+      "operating_income": 201.0,
+      "net_income": 130.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "ASML": {
     "quarter": {
       "label": "Q3 2026",
       "period_start": "2026-06-29",
       "period_end": "2026-09-27",
       "filed": "2026-10-14",
-      "form": "6-K Exhibit",
+      "form": "6-K Exhibit 99.3",
       "accession": "0001628280-26-065813",
       "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm",
       "currency": "EUR",
@@ -135,14 +207,158 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
     }
   },
-  "CDNS": {},
-  "COHR": {},
-  "CSCO": {},
-  "DELL": {},
-  "ENTG": {},
-  "ETN": {},
-  "FN": {},
-  "GFS": {},
+  "CDNS": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/CDNS/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1633.311,
+      "operating_income": 470.842,
+      "net_income": 289.747,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "COHR": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/COHR/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 2370.324,
+      "operating_income": 386.446,
+      "net_income": 384.673,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "CSCO": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-10-31",
+      "label": "Quarter · 2026-10",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/CSCO/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 18517.0,
+      "operating_income": 5626.0,
+      "net_income": 4552.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "DELL": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-07-31",
+      "label": "Quarter · 2026-07",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/DELL/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 46971.0,
+      "operating_income": 5472.0,
+      "net_income": 4133.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "ENTG": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/ENTG/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1005.7,
+      "operating_income": 230.6,
+      "net_income": 157.8,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "ETN": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/ETN/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 8947.0,
+      "operating_income": 1589.0,
+      "net_income": 1078.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "FN": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/FN/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1474.459,
+      "operating_income": 147.054,
+      "net_income": 103.497,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "GFS": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/GFS/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1899.0,
+      "operating_income": 230.0,
+      "net_income": -271.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "GOOG": {
     "quarter": {
       "label": "Q3 2026",
@@ -165,10 +381,82 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm"
     }
   },
-  "HPE": {},
-  "IBM": {},
-  "INTC": {},
-  "KLAC": {},
+  "HPE": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-07-31",
+      "label": "Quarter · 2026-07",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/HPE/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 12213.0,
+      "operating_income": 1464.0,
+      "net_income": 1540.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "IBM": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/IBM/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 17104.0,
+      "operating_income": 2895.0,
+      "net_income": 2189.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "INTC": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/INTC/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 16513.0,
+      "operating_income": 2576.0,
+      "net_income": 3320.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "KLAC": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/KLAC/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 4136.015,
+      "operating_income": 1861.67,
+      "net_income": 1548.588,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "LITE": {
     "quarter": {
       "label": "Q1 FY2027",
@@ -191,8 +479,44 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026069615/lite-20260926.htm"
     }
   },
-  "LRCX": {},
-  "LSCC": {},
+  "LRCX": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/LRCX/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 8219.418,
+      "operating_income": 3283.727,
+      "net_income": 2753.138,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "LSCC": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/LSCC/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 291.035,
+      "operating_income": 49.903,
+      "net_income": 11.206,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "META": {
     "quarter": {
       "label": "Q3 2026",
@@ -215,7 +539,25 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066773/meta-20260930.htm"
     }
   },
-  "MPWR": {},
+  "MPWR": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/MPWR/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1202.409,
+      "operating_income": 357.687,
+      "net_income": 271.067,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "MRVL": {
     "quarter": {
       "label": "Q2 FY2027",
@@ -266,6 +608,23 @@
       "form": "10-K",
       "accession": "0001493594-26-000044",
       "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359426000044/mtsi-20261002.htm"
+    },
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/MTSI/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 424.819,
+      "operating_income": 134.224,
+      "net_income": 139.445,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
     }
   },
   "MU": {
@@ -274,9 +633,44 @@
       "form": "10-K",
       "accession": "0000723125-26-000023",
       "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+    },
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-08-31",
+      "label": "Quarter · 2026-08",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/MU/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 54229.0,
+      "operating_income": 43751.0,
+      "net_income": 37701.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
     }
   },
-  "NET": {},
+  "NET": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/NET/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 782.513,
+      "operating_income": -56.908,
+      "net_income": -34.065,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "NVDA": {
     "quarter": {
       "label": "Q3 FY2027",
@@ -321,17 +715,88 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm"
     }
   },
-  "PLTR": {},
+  "PLTR": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/PLTR/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 2313.411,
+      "operating_income": 1084.845,
+      "net_income": 1128.012,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "QCOM": {
     "filing": {
       "filed": "2026-11-04",
       "form": "10-K",
       "accession": "0000804328-26-000128",
       "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000128/qcom-20260927.htm"
+    },
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/QCOM/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 10322.0,
+      "operating_income": 1356.0,
+      "net_income": 1251.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
     }
   },
-  "RMBS": {},
-  "SMCI": {},
+  "RMBS": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/RMBS/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 218.289,
+      "operating_income": 83.859,
+      "net_income": 74.565,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "SMCI": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/SMCI/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 19945.832,
+      "operating_income": 2064.493,
+      "net_income": 1594.205,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
   "SNDK": {
     "quarter": {
       "label": "Q1 FY2027",
@@ -354,10 +819,86 @@
       "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm"
     }
   },
-  "SNOW": {},
-  "SNPS": {},
-  "STX": {},
-  "TER": {},
+  "SNOW": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-07-31",
+      "label": "Quarter · 2026-07",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/SNOW/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1546.793,
+      "operating_income": -262.967,
+      "net_income": -191.72,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "SNPS": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-07-31",
+      "label": "Quarter · 2026-07",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/SNPS/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 2476.822,
+      "operating_income": 359.655,
+      "net_income": 545.8,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "STX": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/STX/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 4233.0,
+      "operating_income": 2068.0,
+      "net_income": 1761.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "TER": {
+    "quarter": {
+      "label": "Q3 FY2026",
+      "period_start": "2026-06-29",
+      "period_end": "2026-09-27",
+      "filed": "2026-10-30",
+      "form": "10-Q",
+      "accession": "0001193125-26-441091",
+      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526441091/ter-20260927.htm",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 1305.95,
+      "operating_income": 401.968,
+      "net_income": 347.739,
+      "note": "Net income uses consolidated net income before allocating noncontrolling interests."
+    },
+    "filing": {
+      "filed": "2026-10-30",
+      "form": "10-Q",
+      "accession": "0001193125-26-441091",
+      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526441091/ter-20260927.htm"
+    }
+  },
   "TSM": {
     "quarter": {
       "label": "Q3 2026",
@@ -381,7 +922,61 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm"
     }
   },
-  "TXN": {},
-  "VRT": {},
-  "WDC": {}
+  "TXN": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/TXN/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 6055.0,
+      "operating_income": 2881.0,
+      "net_income": 2425.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "VRT": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/VRT/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 4312.8,
+      "operating_income": 991.1,
+      "net_income": 764.5,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  },
+  "WDC": {
+    "quarter": {
+      "source_kind": "provider",
+      "period_precision": "month",
+      "period_start": null,
+      "period_end": "2026-09-30",
+      "label": "Quarter · 2026-09",
+      "filed": null,
+      "accession": null,
+      "form": "Yahoo Finance quarterly financials",
+      "url": "https://finance.yahoo.com/quote/WDC/financials/",
+      "currency": "USD",
+      "unit": "millions",
+      "revenue": 4381.0,
+      "operating_income": 2089.0,
+      "net_income": 1779.0,
+      "note": "Quarterly amounts follow Yahoo Finance's normalized financial statements. The provider identifies the reporting month."
+    }
+  }
 }

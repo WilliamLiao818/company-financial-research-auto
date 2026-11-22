@@ -9,11 +9,11 @@ from research_catalog import COMPANY_NAMES, LATEST_RESULTS_SNAPSHOTS, latest_res
 
 
 class DataFreshnessTests(unittest.TestCase):
-    def test_every_explicit_quarterly_snapshot_has_a_current_official_results_link(self) -> None:
+    def test_every_explicit_quarterly_snapshot_has_its_official_results_link(self) -> None:
         self.assertTrue(set(LATEST_RESULTS_SNAPSHOTS).issubset(COMPANY_NAMES))
         for ticker in LATEST_RESULTS_SNAPSHOTS:
             with self.subTest(ticker=ticker):
-                result = latest_results_snapshot(ticker)
+                result = LATEST_RESULTS_SNAPSHOTS[ticker]
                 self.assertTrue(result["label"])
                 self.assertRegex(result["period_end"], r"^\d{4}-\d{2}-\d{2}$")
                 self.assertTrue(result["url"].startswith("https://www.sec.gov/Archives/edgar/data/"))
