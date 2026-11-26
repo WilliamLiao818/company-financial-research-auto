@@ -39,6 +39,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - name: Check source feeds and retain last verified data on failure
+        id: fetch
         env:
           SEC_CONTACT_EMAIL: ${{ vars.SEC_CONTACT_EMAIL }}
         run: python scripts/refresh_public_data.py --feeds "$FEED"
@@ -57,23 +58,10 @@ jobs:
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Refresh public company research data"
           git push origin "HEAD:$DEFAULT_BRANCH"
-      - name: Flag any retained company data
+      - name: Alert on a newly unavailable entire feed
+        if: steps.fetch.outputs.new_outages != ''
+        env:
+          NEW_OUTAGES: ${{ steps.fetch.outputs.new_outages }}
         run: |
-          python - <<'PY'
-          import json, os
-          from research_catalog import COMPANY_NAMES
-          ledger = json.load(open("data/refresh_status.json"))["companies"]
-          requested = os.environ["FEED"]
-          fields = {"filings": ["filings", "financials", "quarterly"], "news": ["news"], "market": ["market"]}
-          failures = {}
-          for group, names in fields.items():
-              if requested not in (group, "all"):
-                  continue
-              for name in names:
-                  tickers = list(COMPANY_NAMES) + (["SPY", "QQQ"] if name == "market" else [])
-                  retained = [ticker for ticker in tickers if ledger[ticker][name]["status"] in {"retained", "lagging", "delayed"}]
-                  if retained:
-                      failures[name] = retained
-          if failures:
-              raise SystemExit(f"Validated partial update published. Some checks need attention: {failures}")
-          PY
+          echo "::error::Published the update status. Every company retained its previous data for: $NEW_OUTAGES"
+          exit 1

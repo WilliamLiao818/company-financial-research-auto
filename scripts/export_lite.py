@@ -1,10 +1,11 @@
 """Build the public, self-contained Lite company feed from the same inputs used by Pro."""
 from __future__ import annotations
 
+import csv
 import json
 import math
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.parse import urlsplit
@@ -16,6 +17,7 @@ sys.path.insert(0, str(ROOT))
 from company_profiles import profile_for
 from data_health import DATA, latest_filing, read_json
 from focus_coverage import COMPANY_ROLES, COMPANY_SECTORS
+from market_data import SNAPSHOT_PATH
 from news_connector import load_company_news_snapshot
 from research import latest_company_summary, load_financials
 from research_catalog import COMPANY_NAMES, EXPANDED_PEERS, latest_results_snapshot
@@ -27,6 +29,31 @@ def finite_number(value) -> float | None:
         return None
     number = float(value)
     return number if math.isfinite(number) else None
+
+
+def latest_adjusted_closes(path: Path, as_of: date) -> dict:
+    """Use the actual session recorded for each US listing, independently of its benchmarks."""
+    closes = {}
+    if not path.exists():
+        return closes
+    with path.open(encoding="utf-8", newline="") as source:
+        for row in csv.DictReader(source):
+            ticker = row.get("series")
+            if ticker not in COMPANY_NAMES:
+                continue
+            try:
+                session = date.fromisoformat(row.get("observation_date") or "")
+                value = float(row.get("adjusted_close") or "")
+            except ValueError:
+                continue
+            if not math.isfinite(value) or value <= 0 or session > as_of:
+                continue
+            if session.replace(day=1).isoformat() != row.get("date"):
+                continue
+            observed = session.isoformat()
+            if ticker not in closes or observed > closes[ticker]["observation_date"]:
+                closes[ticker] = {"value": value, "currency": "USD", "observation_date": observed}
+    return closes
 
 
 def export_story(story: dict) -> dict:
@@ -47,6 +74,7 @@ def build_lite_feed() -> dict:
     ledger = read_json(DATA / "refresh_status.json")
     source_time = ledger.get("generated_at")
     generated_at = datetime.fromisoformat(source_time).astimezone(timezone.utc) if source_time else datetime.now(timezone.utc)
+    closes = latest_adjusted_closes(SNAPSHOT_PATH, generated_at.date())
     companies = {}
     for ticker in sorted(COMPANY_NAMES):
         summary = latest_company_summary(frame, ticker)
@@ -91,6 +119,7 @@ def build_lite_feed() -> dict:
             "counter_thesis": profile["counter_thesis"], "peers": list(EXPANDED_PEERS[ticker]), "cases": cases,
             "latest_filing": {key: filing[key] for key in ("form", "filed", "url")} if filing else None,
             "latest_quarter": quarterly_data,
+            "latest_adjusted_close": closes.get(ticker),
             "news": [export_story(story) for story in stories], "refresh": refresh,
         }
     return {"schema_version": 1, "generated_at": generated_at.isoformat(), "companies": companies}

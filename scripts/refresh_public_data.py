@@ -432,6 +432,12 @@ def refresh_news(symbols, ledger, now, data):
     write_json(path, {"generated_at": now, "window_days": 90, "companies": companies})
 
 
+def unavailable_feeds(ledger: dict, fields: list[str], symbols: list[str]) -> set[str]:
+    """A complete source outage means every requested company had to keep prior data."""
+    return {field for field in fields
+            if all(ledger.get(ticker, {}).get(field, {}).get("status") == "retained" for ticker in symbols)}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--feeds", choices=["filings", "market", "news", "all"], default="all")
@@ -442,24 +448,33 @@ def main():
     now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     path = args.data_dir / "refresh_status.json"
     ledger = read_json(path).get("companies", {})
+    fields = ["filings", "financials", "quarterly", "market", "news"] if args.feeds == "all" else (
+        ["filings", "financials", "quarterly"] if args.feeds == "filings" else [args.feeds])
+    previous_outages = unavailable_feeds(ledger, fields, symbols)
     for symbol in symbols:
         ledger.setdefault(symbol, {})
     for name, refresh in [("filings", refresh_filings), ("market", refresh_market), ("news", refresh_news)]:
         if args.feeds in (name, "all"):
             refresh(symbols, ledger, now, args.data_dir)
     write_json(path, {"generated_at": now, "companies": ledger})
-    fields = ["filings", "financials", "quarterly", "market", "news"] if args.feeds == "all" else (
-        ["filings", "financials", "quarterly"] if args.feeds == "filings" else [args.feeds])
     for field in fields:
         following = [*symbols, *BENCHMARKS] if field == "market" else symbols
+        if any(ledger[s][field]["attempted_at"] != now for s in following):
+            raise RuntimeError(f"Incomplete refresh ledger for {field}")
         kept = [s for s in following if ledger[s][field]["status"] in {"retained", "lagging", "delayed"}]
         message = f"{field}: {len(following)-len(kept)}/{len(following)} checked"
         if kept:
             message += " · checks require attention for " + ", ".join(kept)
+            if os.getenv("GITHUB_ACTIONS") == "true":
+                print("::warning::" + message, flush=True)
         print(message, flush=True)
         if os.getenv("GITHUB_STEP_SUMMARY"):
             with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
                 print("- " + message, file=summary)
+    if os.getenv("GITHUB_OUTPUT"):
+        new_outages = unavailable_feeds(ledger, fields, symbols) - previous_outages
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+            print("new_outages=" + ", ".join(sorted(new_outages)), file=output)
 
 
 if __name__ == "__main__":

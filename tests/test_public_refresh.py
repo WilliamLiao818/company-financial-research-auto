@@ -1,16 +1,47 @@
 from datetime import date, datetime, timezone
+from contextlib import redirect_stdout
+from io import StringIO
+import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import pandas as pd
 
 from market_data import completed_monthly_closes, load_market_performance
-from scripts.refresh_public_data import check_result, filing_summary, merge_annual, merge_distributed_filing, quarter_summary
+from scripts.refresh_public_data import check_result, filing_summary, main, merge_annual, merge_distributed_filing, quarter_summary
 from research import REPORTED_FACT_FIELDS
 
 
 class RefreshTests(unittest.TestCase):
+    def test_alerts_once_per_entire_feed_outage_while_publishing_partial_and_recovered_checks(self):
+        state = {"AAPL": "ok", "MSFT": "retained"}
+
+        def mock_news(symbols, ledger, now, data):
+            for symbol in symbols:
+                previous = ledger[symbol].get("news", {})
+                ledger[symbol]["news"] = check_result(previous, now, state[symbol])
+
+        with tempfile.TemporaryDirectory() as folder:
+            data = Path(folder)
+            (data / "refresh_status.json").write_text('{"companies":{}}')
+            output = data / "output"
+            summary = data / "summary"
+            env = {"GITHUB_OUTPUT": str(output), "GITHUB_STEP_SUMMARY": str(summary), "GITHUB_ACTIONS": "true"}
+            args = ["refresh", "--data-dir", folder, "--feeds", "news", "--ticker", "AAPL", "--ticker", "MSFT"]
+            with patch.dict(os.environ, env), patch("sys.argv", args), redirect_stdout(StringIO()), \
+                    patch("scripts.refresh_public_data.refresh_news", mock_news):
+                for apple_status, expected_alert in [("ok", ""), ("retained", "news"), ("retained", ""),
+                                                     ("ok", ""), ("retained", "news")]:
+                    state["AAPL"] = apple_status
+                    main()
+                    self.assertEqual(output.read_text().splitlines()[-1], f"new_outages={expected_alert}")
+                    ledger = json.loads((data / "refresh_status.json").read_text())["companies"]
+                    self.assertEqual(ledger["AAPL"]["news"]["status"], apple_status)
+            self.assertIn("MSFT", summary.read_text())
+
     def test_news_or_price_failure_keeps_previous_success_time(self):
         first = check_result({}, "2026-11-20T03:00:00+00:00", "ok", "2026-11-19")
         failed = check_result(first, "2026-11-21T03:00:00+00:00", "retained")

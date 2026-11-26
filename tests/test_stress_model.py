@@ -2,6 +2,7 @@ import json
 import unittest
 from dataclasses import asdict
 from pathlib import Path
+from urllib.parse import parse_qs, urlencode
 
 from streamlit.testing.v1 import AppTest
 
@@ -68,7 +69,9 @@ class CompanyModeTests(unittest.TestCase):
                 self.assertEqual(app.selectbox(key="preset:ORCL").value, expected)
                 app.selectbox(key="preset:ORCL").select("Margins compress").run()
                 self.assertEqual(app.selectbox(key="preset:ORCL").value, "Margins compress")
-                self.assertEqual(app.query_params["preset"], ["Margins compress"])
+                # AppTest versions represent a single URL value as either a string or a one-item list.
+                url_values = parse_qs(urlencode(app.query_params, doseq=True))
+                self.assertEqual(url_values["preset"], ["Margins compress"])
 
 
     def test_lite_pro_round_trip_and_reset(self):
