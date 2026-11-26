@@ -1,43 +1,43 @@
 {
-  "generated_at": "2026-11-26T09:15:29+00:00",
+  "generated_at": "2026-11-26T13:05:37+00:00",
   "companies": {
     "AAPL": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "",
-        "status": "retained",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
+        "status": "distribution",
         "as_of": "2026-11-09",
-        "indexed_through": "2026-11-13",
+        "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-26"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-26"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-26"
       }
     },
     "ADI": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-09-17",
@@ -45,33 +45,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-10-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-24"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07"
       }
     },
     "AMAT": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-12",
@@ -79,25 +79,25 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "2026-11-22T14:09:42+00:00",
         "status": "retained",
         "as_of": "2026-10-25"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-23"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-25"
@@ -105,41 +105,41 @@
     },
     "AMD": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-20",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-27"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-20"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-26"
       }
     },
     "AMKR": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-27",
@@ -147,67 +147,67 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "AMZN": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-10-30",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-30"
       }
     },
     "ANET": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-04",
@@ -215,33 +215,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "ARM": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-04",
@@ -249,33 +249,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-03-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-04"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "ASML": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-14",
@@ -283,33 +283,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-26"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-27"
       }
     },
     "AVGO": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-27",
@@ -317,33 +317,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-11-02"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-12"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-08-02"
       }
     },
     "CDNS": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-28",
@@ -351,33 +351,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-26"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "COHR": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-04",
@@ -385,67 +385,67 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-30"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-09-21"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "CSCO": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-17",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-23"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-10"
       }
     },
     "DELL": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-21",
@@ -453,33 +453,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-01-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-24"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07"
       }
     },
     "ENTG": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-10",
@@ -487,101 +487,101 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "ETN": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-03",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-29"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "FN": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-03",
         "indexed_through": "2026-11-24",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-26"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "GFS": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-04",
@@ -589,135 +589,135 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-14"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "GOOG": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-24",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-20"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-30"
       }
     },
     "HPE": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-23",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-10-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-24"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07"
       }
     },
     "IBM": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-19",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-16"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "INTC": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-30",
@@ -725,33 +725,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
-        "as_of": "2026-10-30"
+        "as_of": "2026-11-18"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "KLAC": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-06",
@@ -759,67 +759,67 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-30"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "LITE": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-23",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-27"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-02"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-26"
       }
     },
     "LRCX": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-05",
@@ -827,67 +827,67 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-30"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-19"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "LSCC": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-03",
         "indexed_through": "2026-11-26",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-01-03"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "META": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-12",
@@ -895,169 +895,169 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
-        "as_of": "2026-11-25"
+        "as_of": "2026-11-26"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-30"
       }
     },
     "MPWR": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-03",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-23"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "MRVL": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-12",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-01-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-24"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-08-01"
       }
     },
     "MSFT": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-05",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-30"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-20"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-30"
       }
     },
     "MTSI": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-12",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-10-02"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "MU": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-05",
@@ -1065,93 +1065,93 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-03"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-26"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-08"
       }
     },
     "NET": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-05",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-23"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "NVDA": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-23",
         "indexed_through": "2026-11-24",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-01-25"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-25"
@@ -1159,7 +1159,7 @@
     },
     "ORCL": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-04",
@@ -1167,67 +1167,67 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-05-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-06"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-08-31"
       }
     },
     "PLTR": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-03",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
-        "as_of": "2026-11-03"
+        "as_of": "2026-11-15"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "QCOM": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-13",
@@ -1235,33 +1235,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-27"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-05"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "RMBS": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-26",
@@ -1269,33 +1269,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": ""
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "SMCI": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-06",
@@ -1303,33 +1303,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-30"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-03"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "SNDK": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-30",
@@ -1337,33 +1337,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07-03"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "2026-11-22T14:23:51+00:00",
         "status": "retained",
         "as_of": "2026-11-19"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-29"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-10-02"
       }
     },
     "SNOW": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-02",
@@ -1371,33 +1371,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-01-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-01"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07"
       }
     },
     "SNPS": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-05",
@@ -1405,33 +1405,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-10-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-01"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07"
       }
     },
     "STX": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-10-29",
@@ -1439,33 +1439,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-07-03"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-27"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "TER": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "2026-11-22T14:40:46+00:00",
         "status": "delayed",
         "as_of": "2026-10-30",
@@ -1473,25 +1473,25 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-27"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "2026-11-22T14:34:14+00:00",
         "status": "delayed",
         "as_of": "2026-09-27"
@@ -1499,7 +1499,7 @@
     },
     "TSM": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-13",
@@ -1507,33 +1507,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "retained",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09-30"
       }
     },
     "TXN": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-09",
@@ -1541,33 +1541,33 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-23"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "VRT": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
         "verified_at": "",
         "status": "delayed",
         "as_of": "2026-11-13",
@@ -1575,76 +1575,76 @@
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2025-12-31"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-29"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "WDC": {
       "filings": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "distribution",
         "as_of": "2026-11-20",
         "indexed_through": "2026-11-25",
         "distribution_source": "SEC EDGAR via Listed"
       },
       "financials": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-06-30"
       },
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       },
       "news": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-10-22"
       },
       "quarterly": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "fallback",
         "as_of": "2026-09"
       }
     },
     "SPY": {
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       }
     },
     "QQQ": {
       "market": {
-        "attempted_at": "2026-11-26T09:15:29+00:00",
-        "verified_at": "2026-11-26T09:15:29+00:00",
+        "attempted_at": "2026-11-26T13:05:37+00:00",
+        "verified_at": "2026-11-26T13:05:37+00:00",
         "status": "ok",
         "as_of": "2026-11-25"
       }

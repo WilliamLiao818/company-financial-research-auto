@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T09:15:29+00:00",
+  "generated_at": "2026-11-26T13:05:37+00:00",
   "window_days": 90,
   "companies": {
     "MSFT": [
@@ -8,7 +8,7 @@
         "url": "https://www.reuters.com/world/china/us-house-panel-seeks-microsoft-briefing-reported-ai-deal-talks-with-chinas-2026-11-18/",
         "publisher": "Reuters",
         "date": "2026-11-18",
-        "image": "https://www.bing.com/th?id=ONUT.EzEqITugc99Qgis3m48EQg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.25m4mv-UU7dp2-QnyVrfPQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -16,7 +16,7 @@
         "url": "https://www.reuters.com/legal/litigation/microsoft-unveils-ai-models-coding-cybersecurity-it-takes-anthropic-openai-2026-11-17/",
         "publisher": "Reuters",
         "date": "2026-11-17",
-        "image": "https://www.bing.com/th?id=ONUT.YWYeUYkueZQ3GZToSVT6Uw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.FQpBds9fidGhNxe0m5Gdmg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -106,14 +106,6 @@
     ],
     "AVGO": [
       {
-        "title": "Nvidia, Broadcom shielded as AI power crunch hits chip supply chain, says Morgan Stanley",
-        "url": "https://www.reuters.com/business/nvidia-broadcom-shielded-ai-power-crunch-hits-chip-supply-chain-says-morgan-2026-10-05/",
-        "publisher": "Reuters",
-        "date": "2026-10-05",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "Broadcom Third-Quarter Profit Soars on Growing Custom Chip Demand",
         "url": "https://www.wsj.com/business/earnings/broadcom-third-quarter-profit-soars-on-ai-driven-revenue-growth-c5add826",
         "publisher": "The Wall Street Journal",
@@ -134,6 +126,14 @@
         "url": "https://www.wsj.com/tech/oracle-broadcom-and-spacex-seek-blockbuster-debt-deals-to-pay-for-ai-chips-848e8032",
         "publisher": "The Wall Street Journal",
         "date": "2026-10-07",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "Broadcom raises AI chip forecast as Big Tech keeps writing bigger checks",
+        "url": "https://www.reuters.com/business/broadcom-forecasts-quarterly-revenue-below-estimates-2026-09-02/",
+        "publisher": "Reuters",
+        "date": "2026-09-02",
         "image": "",
         "image_kind": ""
       }
@@ -166,19 +166,19 @@
         "image_kind": "article"
       },
       {
-        "title": "Nvidia’s Role as an Underwriter of the AI Boom",
-        "url": "https://www.wsj.com/finance/investing/nvidias-role-as-an-underwriter-of-the-ai-boom-95375800",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-11-25",
-        "image": "https://www.bing.com/th?id=ONUT.x5u0WmHjzrlfTzUd3lArNA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
         "title": "Nvidia faces questions from top Senate antitrust Democrat",
         "url": "https://www.reuters.com/legal/government/nvidia-faces-questions-top-senate-antitrust-democrat-2026-11-25/",
         "publisher": "Reuters",
         "date": "2026-11-25",
         "image": "https://www.bing.com/th?id=ONUT.xDUVbbY4_qJxG1Sap8VqHw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Nvidia sellers seek new buyers as U.S. curbs China AI chip access, sources tell CNBC",
+        "url": "https://www.cnbc.com/2026/11/25/nvidia-china-ai-chip-remote-access.html",
+        "publisher": "CNBC",
+        "date": "2026-11-25",
+        "image": "https://image.cnbcfm.com/api/v1/image/108558280-1795524153938-gettyimages-2306090565-NVIDIA_HQ.jpeg?v=1795524192&w=1920&h=1080",
         "image_kind": "article"
       }
     ],
@@ -218,6 +218,14 @@
     ],
     "AAPL": [
       {
+        "title": "Every Great Black Friday Apple Deal We’ve Found on iPads, AirPods, and More",
+        "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026/",
+        "publisher": "The New York Times",
+        "date": "2026-11-26",
+        "image": "https://www.bing.com/th?id=ONUT.L2gW0OE64UNou-3LxdNKzA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
         "title": "Apple pulls MiniMax AI chatbot from App Store over child safety concerns",
         "url": "https://www.reuters.com/business/retail-consumer/apple-pulls-minimax-ai-chatbot-app-store-over-child-safety-concerns-2026-11-26/",
         "publisher": "Reuters",
@@ -234,16 +242,8 @@
         "image_kind": "article"
       },
       {
-        "title": "Every Great Black Friday Apple Deal We’ve Found on iPads, AirPods, and More",
-        "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026/",
-        "publisher": "The New York Times",
-        "date": "2026-11-25",
-        "image": "https://www.bing.com/th?id=ONUT.L2gW0OE64UNou-3LxdNKzA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
         "title": "One Potential Factor Weighing on Meta Today: a Job Posting at Apple",
-        "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-11-20-2026/card/one-potential-factor-weighing-on-meta-shares-today-a-job-posting-at-apple-R0uFVdRzJuMw532CGiQe",
+        "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-11-20-2026/card/R0uFVdRzJuMw532CGiQe",
         "publisher": "The Wall Street Journal",
         "date": "2026-11-20",
         "image": "https://www.bing.com/th?id=ONUT.mz7ECXOws0NdK_Okitburw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
@@ -272,19 +272,27 @@
         "url": "https://www.reuters.com/business/autos-transportation/amazon-launch-amazon-autos-uk-early-2027-first-expansion-beyond-us-2026-11-25/",
         "publisher": "Reuters",
         "date": "2026-11-25",
-        "image": "https://www.bing.com/th?id=ONUT.rSKNDeorPPXf04tlklRUvw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.UjwAoV40lq5U0OGk4QKZnA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Exclusive | Amazon in Talks to Buy AI Startup Decart for Around $7 Billion",
-        "url": "https://www.wsj.com/business/deals/amazon-in-talks-to-buy-ai-startup-decart-for-around-7-billion-9433abad",
+        "title": "Amazon Autos Plans to Launch Services in U.K. in Early 2027",
+        "url": "https://www.wsj.com/business/autos/amazon-autos-plans-to-launch-services-in-u-k-in-early-2027-a637c131",
         "publisher": "The Wall Street Journal",
-        "date": "2026-10-11",
-        "image": "",
-        "image_kind": ""
+        "date": "2026-11-25",
+        "image": "https://www.bing.com/th?id=ONUT.hUN9NjICVgkxbmfjp9vuCw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "META": [
+      {
+        "title": "Dutch groups ask court to halt Meta smart glasses sales over privacy concerns",
+        "url": "https://www.reuters.com/legal/government/dutch-groups-ask-court-halt-meta-smart-glasses-sales-over-privacy-concerns-2026-11-26/",
+        "publisher": "Reuters",
+        "date": "2026-11-26",
+        "image": "https://www.bing.com/th?id=ONUT.khmWgWENwdPy9SbkHxl6SQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "Meta’s AI assistant is a fluffy frenemy to UK’s consumer finance brands",
         "url": "https://www.ft.com/content/7f81ffd9-c259-4f36-9e22-77269244de1b?syn-25a6b1a6=1",
@@ -307,14 +315,6 @@
         "publisher": "The Wall Street Journal",
         "date": "2026-11-20",
         "image": "https://www.bing.com/th?id=ONUT.mz7ECXOws0NdK_Okitburw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "How Meta is using Instagram to get an ad boost from its Muse personal AI agent",
-        "url": "https://www.cnbc.com/2026/11/24/meta-instagram-muse-ad-revenue.html",
-        "publisher": "CNBC",
-        "date": "2026-11-24",
-        "image": "https://www.bing.com/th?id=ONUT.ZLySeT8b7U6n-vaU9hO8aA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -344,12 +344,12 @@
         "image_kind": ""
       },
       {
-        "title": "How Marvell and Lumentum stack up in AI's optical race",
-        "url": "https://www.reuters.com/business/how-marvell-lumentum-stack-up-ais-optical-race-2026-11-02/",
+        "title": "Marvell Technology in advanced talks to buy optics maker Lumentum, source says",
+        "url": "https://www.reuters.com/business/marvell-advanced-talks-buy-lumentum-bloomberg-news-reports-2026-10-28/",
         "publisher": "Reuters",
-        "date": "2026-11-02",
-        "image": "",
-        "image_kind": ""
+        "date": "2026-10-28",
+        "image": "https://www.bing.com/th?id=ONUT.Nsxudf-nGp4uqSzNI-dIZA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "AMAT": [
@@ -422,22 +422,6 @@
     ],
     "ASML": [
       {
-        "title": "Chip-Machine Supplier ASML Boosts Guidance for Third Time on Surging AI Demand",
-        "url": "https://www.wsj.com/business/earnings/chip-machine-supplier-asml-boosts-guidance-for-third-time-on-surging-ai-demand-7ea173d9",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-10-14",
-        "image": "",
-        "image_kind": ""
-      },
-      {
-        "title": "AI demand to exceed supply for 2 more years, says ASML",
-        "url": "https://www.ft.com/content/2fc239ae-b0d4-41e8-81d0-cc2c0b3aba01?syn-25a6b1a6=1",
-        "publisher": "Financial Times",
-        "date": "2026-10-14",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "ASML's strong orders ease fears AI spending boom is running out of steam",
         "url": "https://www.reuters.com/business/asml-forecasts-q4-sales-above-expectations-ai-chip-demand-2026-10-14/",
         "publisher": "Reuters",
@@ -446,10 +430,26 @@
         "image_kind": ""
       },
       {
+        "title": "AI demand to exceed supply for 2 more years, says ASML",
+        "url": "https://www.ft.com/content/2fc239ae-b0d4-41e8-81d0-cc2c0b3aba01?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-10-13",
+        "image": "",
+        "image_kind": ""
+      },
+      {
         "title": "EXCLUSIVE: Vietnam's first chip plant unlikely to meet 2027 target, sources say no deal yet with ASML",
         "url": "https://www.reuters.com/world/asia-pacific/vietnams-first-chip-plant-unlikely-meet-2027-target-sources-say-no-deal-yet-with-2026-10-26/",
         "publisher": "Reuters",
         "date": "2026-10-26",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "Chip-Machine Supplier ASML Boosts Guidance for Third Time on Surging AI Demand",
+        "url": "https://www.wsj.com/business/earnings/chip-machine-supplier-asml-boosts-guidance-for-third-time-on-surging-ai-demand-7ea173d9",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-14",
         "image": "",
         "image_kind": ""
       }
@@ -506,20 +506,20 @@
         "image_kind": ""
       },
       {
-        "title": "Amazon burns cash, Intel flags weak PC demand as AI boom's costs ripple across markets",
-        "url": "https://www.reuters.com/business/weak-quarter-intel-sends-shivers-through-cooling-chip-stocks-2026-10-29/",
+        "title": "EXCLUSIVE: SK Hynix in talks with Intel about deal to make memory chips in US for the first time, sources say",
+        "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-talks-with-intel-about-deal-make-memory-chips-us-first-time-sources-say-2026-09-16/",
         "publisher": "Reuters",
-        "date": "2026-10-29",
+        "date": "2026-09-16",
         "image": "",
         "image_kind": ""
       },
       {
-        "title": "Intel shares fall 22% as weak sales outlook dents turnaround",
-        "url": "https://www.ft.com/content/d7540e89-08db-43d3-92e0-3c15dd3a60cb?syn-25a6b1a6=1",
-        "publisher": "Financial Times",
-        "date": "2026-10-29",
-        "image": "",
-        "image_kind": ""
+        "title": "Intel signs first external customer for advanced 18A chips",
+        "url": "https://www.cnbc.com/2026/11/18/intel-first-18a-foundry-customer.html",
+        "publisher": "CNBC",
+        "date": "2026-11-18",
+        "image": "https://image.cnbcfm.com/api/v1/image/108477593-1793228653611-gettyimages-2278669801-AFP_B4P96JJ.jpeg?v=1793228835&w=1920&h=1080",
+        "image_kind": "article"
       }
     ],
     "QCOM": [
@@ -574,23 +574,31 @@
         "image_kind": ""
       },
       {
-        "title": "Micron unveils global profit-linked bonus plan after Taiwan union pressure",
-        "url": "https://www.reuters.com/technology/micron-introduces-quarterly-employee-bonus-tied-profits-2026-10-22/",
-        "publisher": "Reuters",
-        "date": "2026-10-22",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "Micron Profit, Revenue Surge as Memory Crunch Looks to Last Through 2028",
         "url": "https://www.wsj.com/business/earnings/micron-profit-revenue-surge-on-memory-demand-562034e6",
         "publisher": "The Wall Street Journal",
         "date": "2026-09-30",
         "image": "",
         "image_kind": ""
+      },
+      {
+        "title": "Micron faces strike from one Taiwan union after deal with another",
+        "url": "https://www.reuters.com/business/world-at-work/micron-says-it-has-reached-agreement-with-taiwan-union-2026-10-21/",
+        "publisher": "Reuters",
+        "date": "2026-10-21",
+        "image": "",
+        "image_kind": ""
       }
     ],
     "TXN": [
+      {
+        "title": "Texas Instruments Posts Higher Profit, Revenue",
+        "url": "https://www.wsj.com/business/earnings/texas-instruments-posts-higher-profit-revenue-23a867a6",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-21",
+        "image": "",
+        "image_kind": ""
+      },
       {
         "title": "Analog chipmaker Texas Instruments sees quarterly sales above estimates",
         "url": "https://www.reuters.com/business/analog-chipmaker-texas-instruments-sees-quarterly-sales-above-estimates-2026-10-21/",
@@ -614,14 +622,6 @@
         "date": "2026-11-20",
         "image": "https://www.bing.com/th?id=ONUT.3MVVFagDBKLfXL9cnjncTw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
-      },
-      {
-        "title": "Texas Instruments Posts Higher Profit, Revenue",
-        "url": "https://www.wsj.com/business/earnings/texas-instruments-posts-higher-profit-revenue-23a867a6",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-10-21",
-        "image": "",
-        "image_kind": ""
       }
     ],
     "ADI": [
@@ -872,7 +872,7 @@
         "url": "https://www.reuters.com/business/media-telecom/cisco-raises-annual-revenue-forecast-strong-ai-networking-demand-2026-11-12/",
         "publisher": "Reuters",
         "date": "2026-11-12",
-        "image": "https://www.bing.com/th?id=ONUT.wNo1MfycmBbaJ8xNcTXCdA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.3qEl9v6mbUXlDdZ3vijmNA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -910,12 +910,12 @@
         "image_kind": "article"
       },
       {
-        "title": "Dell, HPE results to put AI demand to the test after tech rout",
-        "url": "https://www.reuters.com/business/dell-hpe-results-put-ai-demand-test-after-tech-rout-2026-11-23/",
+        "title": "Dell again lifts annual forecasts as AI demand powers record results",
+        "url": "https://www.reuters.com/business/dell-again-lifts-forecasts-ai-demand-powers-record-results-2026-09-01/",
         "publisher": "Reuters",
-        "date": "2026-11-23",
-        "image": "https://www.bing.com/th?id=ONUT.dKpk71T-gqtYz1-1BqOqHw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "date": "2026-09-01",
+        "image": "",
+        "image_kind": ""
       },
       {
         "title": "Dell Lifts Outlook as Revenue Doubles on Server Demand",
@@ -936,22 +936,6 @@
     ],
     "HPE": [
       {
-        "title": "HPE Lifts Outlook as AI Demand Boosts Revenue, Profit",
-        "url": "https://www.wsj.com/business/earnings/hpe-lifts-outlook-as-ai-demand-boosts-revenue-profit-1ae221df",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-11-23",
-        "image": "https://www.bing.com/th?id=ONUT.7UCom29Jpe_J2opTIKV3Nw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "HPE Boosts Outlook as AI Demand Drives Surge in Third-Quarter Profit",
-        "url": "https://www.wsj.com/business/earnings/hpe-boosts-outlook-as-ai-demand-drives-surge-in-third-quarter-profit-2ba3b90a",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-09-02",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "HPE raises forecasts on AI demand, shares fall on supply concerns",
         "url": "https://www.reuters.com/business/hpe-raises-annual-forecasts-ai-networking-demand-lifts-quarterly-revenue-2026-09-02/",
         "publisher": "Reuters",
@@ -966,6 +950,22 @@
         "date": "2026-11-24",
         "image": "",
         "image_kind": ""
+      },
+      {
+        "title": "HPE Adds Former JPMorgan Exec to Board, Amends Agreement With Elliott Investment",
+        "url": "https://www.wsj.com/business/deals/hpe-adds-former-jpmorgan-exec-to-board-amends-agreement-with-elliott-investment-fb99517b",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-11-18",
+        "image": "https://www.bing.com/th?id=ONUT.7UCom29Jpe_J2opTIKV3Nw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Dell, HPE results to put AI demand to the test after tech rout",
+        "url": "https://www.channelnewsasia.com/business/dell-hpe-results-put-ai-demand-test-after-tech-rout-6575171",
+        "publisher": "Reuters / CNA",
+        "date": "2026-11-23",
+        "image": "https://www.bing.com/th?id=ONUT.4z9kBeAFFhYHpXri1eEBzg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "VRT": [
@@ -1126,20 +1126,20 @@
         "image_kind": "article"
       },
       {
-        "title": "Palantir and London mayor's office settle lawsuit over UK police contract",
-        "url": "https://www.reuters.com/legal/litigation/palantir-london-mayors-office-settle-lawsuit-over-uk-police-contract-2026-10-14/",
-        "publisher": "Reuters",
-        "date": "2026-10-14",
+        "title": "UK companies line up to replace Palantir in NHS contract",
+        "url": "https://www.ft.com/content/f69f1f6b-cdbe-40d6-b76d-fb712ca58b51?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
+        "date": "2026-11-15",
         "image": "",
         "image_kind": ""
       },
       {
-        "title": "Palantir says it cannot shut off NATO AI system as Europeans fear US tech dependence",
-        "url": "https://www.reuters.com/business/media-telecom/palantir-says-it-cannot-shut-off-nato-ai-system-europeans-fear-us-tech-2026-10-22/",
+        "title": "Germany's Helsing to unveil AI-based military software as a rival to Palantir",
+        "url": "https://www.reuters.com/business/media-telecom/germanys-helsing-unveil-ai-based-military-software-rival-palantir-2026-11-10/",
         "publisher": "Reuters",
-        "date": "2026-10-22",
-        "image": "https://www.bing.com/th?id=ONUT.LmCqxobOZxWZ7mwACsD8vg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "date": "2026-11-10",
+        "image": "",
+        "image_kind": ""
       }
     ],
     "TSLA": [
@@ -1358,7 +1358,7 @@
         "url": "https://newsroom.ibm.com/2026-11-17-ibm-study-chief-ai-officers-see-where-ai-creates-value,-but-few-control-investment-decisions",
         "publisher": "IBM",
         "date": "2026-11-16",
-        "image": "https://www.bing.com/th?id=ONUT.uV1WaweoozC40Ab5-Rt1Cg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.kdGw1dcWRJioVEfq3V3WmQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -1494,14 +1494,6 @@
     "DDOG": [],
     "SNOW": [
       {
-        "title": "Snowflake lifts annual revenue forecast on cloud and AI demand, shares soar",
-        "url": "https://www.reuters.com/business/snowflake-lifts-annual-product-revenue-forecast-demand-cloud-data-platform-2026-09-02/",
-        "publisher": "Reuters",
-        "date": "2026-09-02",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "Snowflake's AI-powered results send shares soaring, buoy software stocks",
         "url": "https://www.reuters.com/business/snowflake-shares-surge-ai-demand-powers-growth-lifts-outlook-2026-09-03/",
         "publisher": "Reuters",
@@ -1514,6 +1506,14 @@
         "url": "https://www.snowflake.com/en/news/press-releases/fy27-q3-earnings-date-announcement/",
         "publisher": "Snowflake",
         "date": "2026-11-01",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "Snowflake lifts annual revenue forecast on cloud and AI demand, shares soar",
+        "url": "https://www.reuters.com/business/snowflake-lifts-annual-product-revenue-forecast-demand-cloud-data-platform-2026-09-02/",
+        "publisher": "Reuters",
+        "date": "2026-09-02",
         "image": "",
         "image_kind": ""
       }
@@ -1675,7 +1675,7 @@
     "MPWR": [
       {
         "title": "Monolithic Power Systems Inc",
-        "url": "https://markets.ft.com/data/equities/tearsheet/summary?s=1MPWR:MIL",
+        "url": "https://markets.ft.com/data/equities/tearsheet/forecasts?s=MPWR:NSQ",
         "publisher": "Financial Times",
         "date": "2026-11-23",
         "image": "",
