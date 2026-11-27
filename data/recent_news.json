@@ -1,31 +1,23 @@
 {
-  "generated_at": "2026-11-27T05:20:42+00:00",
+  "generated_at": "2026-11-27T13:02:33+00:00",
   "window_days": 90,
   "companies": {
     "MSFT": [
       {
-        "title": "AI data center firm IREN delays Microsoft AI deliveries, plans $15 billion spending push",
-        "url": "https://www.reuters.com/technology/neocloud-firm-iren-tops-quarterly-revenue-estimates-shares-jump-2026-11-05/",
+        "title": "US lawmakers seek Microsoft briefing on reported AI deal talks with ByteDance",
+        "url": "https://www.reuters.com/world/china/us-house-panel-seeks-microsoft-briefing-reported-ai-deal-talks-with-chinas-2026-11-18/",
         "publisher": "Reuters",
-        "date": "2026-11-05",
-        "image": "",
-        "image_kind": ""
+        "date": "2026-11-18",
+        "image": "https://www.bing.com/th?id=ONUT.25m4mv-UU7dp2-QnyVrfPQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       },
       {
-        "title": "Microsoft Quarterly Profit Soars as Cloud Growth Accelerates",
-        "url": "https://www.wsj.com/tech/microsoft-msft-q1-earnings-report-2027-stock-5809ce40",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-10-28",
-        "image": "",
-        "image_kind": ""
-      },
-      {
-        "title": "Microsoft's cloud growth, cash flow offer respite from AI spending fears",
-        "url": "https://www.reuters.com/business/retail-consumer/microsoft-beats-quarterly-cloud-revenue-estimates-2026-10-28/",
+        "title": "Microsoft unveils AI models for coding, cybersecurity as it takes on Anthropic, OpenAI",
+        "url": "https://www.reuters.com/legal/litigation/microsoft-unveils-ai-models-coding-cybersecurity-it-takes-anthropic-openai-2026-11-17/",
         "publisher": "Reuters",
-        "date": "2026-10-28",
-        "image": "",
-        "image_kind": ""
+        "date": "2026-11-17",
+        "image": "https://www.bing.com/th?id=ONUT.YWYeUYkueZQ3GZToSVT6Uw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       },
       {
         "title": "Microsoft’s Profit Jumps 32% Despite Big Increase in Spending",
@@ -34,6 +26,14 @@
         "date": "2026-10-28",
         "image": "",
         "image_kind": ""
+      },
+      {
+        "title": "Microsoft to Pay Top Cloud Workers More, Crack Down on Others",
+        "url": "https://www.bloomberg.com/news/articles/2026-11-20/microsoft-to-pay-top-cloud-workers-more-crack-down-on-others",
+        "publisher": "Bloomberg",
+        "date": "2026-11-20",
+        "image": "https://www.bing.com/th?id=ONUT.grfhH-Q9nfhGzbnW3Y5R3w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "ORCL": [
@@ -150,35 +150,35 @@
     ],
     "NVDA": [
       {
-        "title": "Trump: 'Market feels very good' about Huang's return as Nvidia CEO",
-        "url": "https://www.reuters.com/video/watch/idRW164127112026RP1/",
+        "title": "How China got access to Nvidia's AI chips despite rules to stop them",
+        "url": "https://www.reuters.com/world/china/how-china-got-access-nvidias-ai-chips-despite-rules-stop-them-2026-11-25/",
         "publisher": "Reuters",
+        "date": "2026-11-25",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "Schumer accuses Nvidia CEO of violating US export control law",
+        "url": "https://www.reuters.com/world/china/schumer-accuses-nvidia-ceo-violating-us-export-control-law-2026-11-24/",
+        "publisher": "Reuters",
+        "date": "2026-11-24",
+        "image": "https://www.bing.com/th?id=ONUT.3YInqUaRNfdpIEnHv9od5A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Nvidia Halts Sales to Southeast Asia as U.S. Tightens China Restrictions",
+        "url": "https://www.nytimes.com/2026/11/26/business/nvidia-southeast-asia-sales.html",
+        "publisher": "The New York Times",
         "date": "2026-11-26",
         "image": "",
         "image_kind": ""
       },
       {
-        "title": "Nvidia CEO’s comeback fuels debate over misogyny and impunity for the rich and powerful",
-        "url": "https://apnews.com/article/jensen-huang-nvidia-sexual-misconduct-1465a5890122b44e63a5d3a95d00bbdc",
-        "publisher": "Associated Press",
-        "date": "2026-11-25",
-        "image": "https://www.bing.com/th?id=ONUT.AlsnMPlju9Gaov35M04RHw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "'Very bullish on ASEAN' despite Nvidia chip export curbs to the region: BNY",
-        "url": "https://www.cnbc.com/video/2026/11/27/bullish-on-asean-despite-nvidia-chip-export-curbs-to-the-region-bny.html",
-        "publisher": "CNBC",
+        "title": "Nvidia halts chip shipments to south-east Asia",
+        "url": "https://www.ft.com/content/7838a715-07d4-4605-aa60-21f5af2b2370?syn-25a6b1a6=1",
+        "publisher": "Financial Times",
         "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.kvElRwIuZlixVsWNjTdT3A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "Nvidia brought Jensen Huang back. But the investigations aren’t over",
-        "url": "https://www.cnbc.com/2026/11/24/nvidia-jensen-huang-ceo-return.html",
-        "publisher": "CNBC",
-        "date": "2026-11-24",
-        "image": "https://www.bing.com/th?id=ONUT.OuYYxZQbMkYXSFoKJo8V5Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.6nm1Dvv66kVw2ka97oKz5Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -218,19 +218,19 @@
     ],
     "AAPL": [
       {
+        "title": "The Best Black Friday Apple Deals on AirPods, iPads, Apple Watches, and More",
+        "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026-1127/",
+        "publisher": "The New York Times",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT._L9YTpcUodXXdSQ4UUFzHg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
         "title": "Every Great Black Friday Apple Deal We’ve Found on iPads, AirPods, and More",
         "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026/",
         "publisher": "The New York Times",
         "date": "2026-11-26",
         "image": "https://www.bing.com/th?id=ONUT.L2gW0OE64UNou-3LxdNKzA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "Apple pulls MiniMax AI chatbot from App Store over child safety concerns",
-        "url": "https://www.reuters.com/business/retail-consumer/apple-pulls-minimax-ai-chatbot-app-store-over-child-safety-concerns-2026-11-26/",
-        "publisher": "Reuters",
-        "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.fEMEj0EadQX6Cz_a6ivgYg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -242,57 +242,49 @@
         "image_kind": "article"
       },
       {
-        "title": "One Potential Factor Weighing on Meta Today: a Job Posting at Apple",
-        "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-11-20-2026/card/one-potential-factor-weighing-on-meta-shares-today-a-job-posting-at-apple-R0uFVdRzJuMw532CGiQe",
-        "publisher": "The Wall Street Journal",
+        "title": "Apple job posting shows plans to reportedly build its own AI agent",
+        "url": "https://www.cnbc.com/video/2026/11/20/apple-job-posting-shows-plans-to-reportedly-build-its-own-ai-agent.html",
+        "publisher": "CNBC",
         "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.mz7ECXOws0NdK_Okitburw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.h1Voc1JSbXLssWgRROUOLg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "AMZN": [
       {
-        "title": "Amazon to buy Decart's AI chip optimization tech in latest AI talent grab",
-        "url": "https://www.reuters.com/business/retail-consumer/amazon-buy-decarts-ai-chip-optimization-tech-latest-ai-talent-grab-2026-11-23/",
-        "publisher": "Reuters",
+        "title": "Out of Thousands of Amazon Black Friday Sales, These Are the 80+ Best Deals We've Found",
+        "url": "https://www.nytimes.com/wirecutter/money/amazon-black-friday-deals-2026-1127/",
+        "publisher": "The New York Times",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.ORe8zXVGSgJ4T8ZbEG4XnQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "The 80+ Best Amazon Black Friday Deals That Are Actually Worth It",
+        "url": "https://www.nytimes.com/wirecutter/money/amazon-black-friday-deals-2026/",
+        "publisher": "The New York Times",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.EXY1jL6NziycoyCfSLSTEg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Amazon Launches Satellites for Network to Rival Starlink",
+        "url": "https://www.bloomberg.com/news/articles/2026-11-24/european-rocket-launches-satellites-for-amazon-s-starlink-rival",
+        "publisher": "Bloomberg",
+        "date": "2026-11-24",
+        "image": "https://www.bing.com/th?id=ONUT.W0Qrmu0yJaSj1hOxHhX6Tg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Amazon to acquire AI startup Decart's chip software, hire founders",
+        "url": "https://www.cnbc.com/2026/11/23/amazon-decarts-ai-acquisition.html",
+        "publisher": "CNBC",
         "date": "2026-11-23",
-        "image": "https://www.bing.com/th?id=ONUT.21xOlWHLeDyletMsaBZFNA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.-k8mdVfAdvyzuF3yXqioVg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
-      },
-      {
-        "title": "Amazon closes in on $7.5bn deal to buy AI start-up Decart",
-        "url": "https://www.ft.com/content/dc7749dc-0f40-44a6-80bc-7f747d383616?syn-25a6b1a6=1",
-        "publisher": "Financial Times",
-        "date": "2026-11-21",
-        "image": "",
-        "image_kind": ""
-      },
-      {
-        "title": "Amazon to launch Amazon Autos in UK in early 2027 in first expansion beyond US",
-        "url": "https://www.reuters.com/business/autos-transportation/amazon-launch-amazon-autos-uk-early-2027-first-expansion-beyond-us-2026-11-25/",
-        "publisher": "Reuters",
-        "date": "2026-11-25",
-        "image": "https://www.bing.com/th?id=ONUT.UjwAoV40lq5U0OGk4QKZnA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "Exclusive | Amazon in Talks to Buy AI Startup Decart for Around $7 Billion",
-        "url": "https://www.wsj.com/business/deals/amazon-in-talks-to-buy-ai-startup-decart-for-around-7-billion-9433abad",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-10-11",
-        "image": "",
-        "image_kind": ""
       }
     ],
     "META": [
-      {
-        "title": "Dutch groups ask court to halt Meta smart glasses sales over privacy concerns",
-        "url": "https://www.reuters.com/legal/government/dutch-groups-ask-court-halt-meta-smart-glasses-sales-over-privacy-concerns-2026-11-26/",
-        "publisher": "Reuters",
-        "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.khmWgWENwdPy9SbkHxl6SQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
       {
         "title": "As Meta bets big on Muse AI agent, early safety mishaps surface",
         "url": "https://www.reuters.com/video/watch/idRW007520112026RP1/",
@@ -302,19 +294,27 @@
         "image_kind": "article"
       },
       {
-        "title": "One Potential Factor Weighing on Meta Today: a Job Posting at Apple",
-        "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-11-20-2026/card/one-potential-factor-weighing-on-meta-shares-today-a-job-posting-at-apple-R0uFVdRzJuMw532CGiQe",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.mz7ECXOws0NdK_Okitburw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
         "title": "How Meta is using Instagram to get an ad boost from its Muse personal AI agent",
         "url": "https://www.cnbc.com/2026/11/24/meta-instagram-muse-ad-revenue.html",
         "publisher": "CNBC",
         "date": "2026-11-24",
         "image": "https://www.bing.com/th?id=ONUT.ZLySeT8b7U6n-vaU9hO8aA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "How Meta is using Instagram to get an ad boost from its Muse AI agent",
+        "url": "https://www.cnbc.com/video/2026/11/24/how-meta-is-using-instagram-to-get-an-ad-boost-from-its-muse-ai-agent.html",
+        "publisher": "CNBC",
+        "date": "2026-11-24",
+        "image": "https://www.bing.com/th?id=ONUT.WJ5UkBsDHxPsa4gvF4I8iw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Who qualifies for Costco’s $30-per-share dividend — plus, Meta puts share plan on hold",
+        "url": "https://www.cnbc.com/investingclub/2026/11/24/who-qualifies-for-costcos-dividend-plus-meta-pauses-share-plan.html",
+        "publisher": "CNBC",
+        "date": "2026-11-24",
+        "image": "https://www.bing.com/th?id=ONUT.e75KetceL5cI93QP_PqKqQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -366,8 +366,8 @@
         "url": "https://www.wsj.com/business/earnings/applied-materials-sales-profit-climb-on-semiconductor-demand-1954e62c",
         "publisher": "The Wall Street Journal",
         "date": "2026-11-12",
-        "image": "https://www.bing.com/th?id=ONUT.Nsxudf-nGp4uqSzNI-dIZA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "image": "",
+        "image_kind": ""
       },
       {
         "title": "Dutch chip tool maker Besi soars after Applied Materials moves to double stake",
@@ -475,16 +475,16 @@
         "title": "AMD to Acquire World Labs for $8.2 Billion",
         "url": "https://www.wsj.com/tech/ai/amd-to-acquire-world-labs-for-8-2-billion-a8d03d11",
         "publisher": "The Wall Street Journal",
-        "date": "2026-09-28",
+        "date": "2026-09-29",
         "image": "",
         "image_kind": ""
       },
       {
-        "title": "Rep. John Moolenaar: Nvidia, AMD chip sales to China need scrutiny",
-        "url": "https://www.cnbc.com/video/2026/11/20/rep-john-moolenaar-nvidia-amd-chip-sales-to-china-need-scrutiny.html",
-        "publisher": "CNBC",
-        "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.Jx_dGs5gvwVzGAsc7hq4rQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "More AI. More Control. AMD Instinct MI350P Comes to Windows Server.",
+        "url": "https://www.amd.com/en/blogs/2026/more-ai-more-control-amd-instinct-mi350p-comes-to-windows.html",
+        "publisher": "AMD",
+        "date": "2026-11-17",
+        "image": "https://www.bing.com/th?id=ONUT.9MiC8KsfNzgUEh25xil7KQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -620,7 +620,7 @@
         "url": "https://www.cnbc.com/video/2026/11/20/trade-tracker-kevin-simpson-buys-texas-instruments.html",
         "publisher": "CNBC",
         "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.3MVVFagDBKLfXL9cnjncTw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.tTs_XtRX_fQIZt-PxtO_Hg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -837,18 +837,18 @@
         "image_kind": ""
       },
       {
-        "title": "Synopsys shares jump on robust growth outlook, OpenAI and AWS deals",
-        "url": "https://www.reuters.com/business/synopsys-shares-jump-robust-growth-outlook-openai-aws-deals-2026-10-01/",
-        "publisher": "Reuters",
-        "date": "2026-10-01",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "Synopsys, Amazon Web Services sign chip design licensing deal worth more than $1 billion",
         "url": "https://www.reuters.com/business/retail-consumer/synopsys-amazon-web-services-sign-chip-design-licensing-deal-worth-more-than-1-2026-09-30/",
         "publisher": "Reuters",
         "date": "2026-09-30",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "Synopsys shares jump on robust growth outlook, OpenAI and AWS deals",
+        "url": "https://www.reuters.com/business/synopsys-shares-jump-robust-growth-outlook-openai-aws-deals-2026-10-01/",
+        "publisher": "Reuters",
+        "date": "2026-10-01",
         "image": "",
         "image_kind": ""
       }
@@ -872,8 +872,8 @@
         "url": "https://www.reuters.com/business/media-telecom/cisco-raises-annual-revenue-forecast-strong-ai-networking-demand-2026-11-12/",
         "publisher": "Reuters",
         "date": "2026-11-12",
-        "image": "",
-        "image_kind": ""
+        "image": "https://www.bing.com/th?id=ONUT.wNo1MfycmBbaJ8xNcTXCdA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       },
       {
         "title": "Cisco, OpenAI Launch Project to Safeguard Agentic AI",
@@ -922,8 +922,8 @@
         "url": "https://www.wsj.com/business/earnings/dell-lifts-outlook-as-revenue-doubles-on-server-demand-40c14b0b",
         "publisher": "The Wall Street Journal",
         "date": "2026-11-24",
-        "image": "",
-        "image_kind": ""
+        "image": "https://www.bing.com/th?id=ONUT.Uphryuy_Tk9exQZpvdiDDw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       },
       {
         "title": "Michael Dell, a Dot-Com Era Survivor, Has Tips to Beat an AI Bust",
@@ -1118,6 +1118,14 @@
         "image_kind": ""
       },
       {
+        "title": "Poland Signs $300 Million Palantir Deal to Use AI for Defense",
+        "url": "https://www.bloomberg.com/news/articles/2026-11-27/poland-signs-300-million-palantir-deal-to-use-ai-for-defense",
+        "publisher": "Bloomberg",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.pHRo3vjkjfoDQLXwsDbmQg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
         "title": "Palantir Profit Soars as U.S. Commercial Revenue Overtakes Government Business",
         "url": "https://www.wsj.com/business/earnings/palantir-lifts-outlook-as-u-s-commercial-business-overtakes-government-business-16eb693f",
         "publisher": "The Wall Street Journal",
@@ -1130,14 +1138,6 @@
         "url": "https://www.reuters.com/legal/litigation/palantir-london-mayors-office-settle-lawsuit-over-uk-police-contract-2026-10-14/",
         "publisher": "Reuters",
         "date": "2026-10-14",
-        "image": "",
-        "image_kind": ""
-      },
-      {
-        "title": "UK companies line up to replace Palantir in NHS contract",
-        "url": "https://www.ft.com/content/f69f1f6b-cdbe-40d6-b76d-fb712ca58b51?syn-25a6b1a6=1",
-        "publisher": "Financial Times",
-        "date": "2026-11-15",
         "image": "",
         "image_kind": ""
       }
