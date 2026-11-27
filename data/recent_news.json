@@ -1,23 +1,31 @@
 {
-  "generated_at": "2026-11-27T13:02:33+00:00",
+  "generated_at": "2026-11-27T22:19:31+00:00",
   "window_days": 90,
   "companies": {
     "MSFT": [
       {
-        "title": "US lawmakers seek Microsoft briefing on reported AI deal talks with ByteDance",
-        "url": "https://www.reuters.com/world/china/us-house-panel-seeks-microsoft-briefing-reported-ai-deal-talks-with-chinas-2026-11-18/",
+        "title": "Microsoft is winding down Oracle deal to rent AI cloud capacity, Bloomberg News reports",
+        "url": "https://www.reuters.com/business/microsoft-is-winding-down-oracle-deal-rent-ai-cloud-capacity-bloomberg-news-2026-11-06/",
         "publisher": "Reuters",
-        "date": "2026-11-18",
-        "image": "https://www.bing.com/th?id=ONUT.25m4mv-UU7dp2-QnyVrfPQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "date": "2026-11-06",
+        "image": "",
+        "image_kind": ""
       },
       {
-        "title": "Microsoft unveils AI models for coding, cybersecurity as it takes on Anthropic, OpenAI",
-        "url": "https://www.reuters.com/legal/litigation/microsoft-unveils-ai-models-coding-cybersecurity-it-takes-anthropic-openai-2026-11-17/",
+        "title": "AI data center firm IREN delays Microsoft AI deliveries, plans $15 billion spending push",
+        "url": "https://www.reuters.com/technology/neocloud-firm-iren-tops-quarterly-revenue-estimates-shares-jump-2026-11-05/",
         "publisher": "Reuters",
-        "date": "2026-11-17",
-        "image": "https://www.bing.com/th?id=ONUT.YWYeUYkueZQ3GZToSVT6Uw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "date": "2026-11-05",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "Microsoft Quarterly Profit Soars as Cloud Growth Accelerates",
+        "url": "https://www.wsj.com/tech/microsoft-msft-q1-earnings-report-2027-stock-5809ce40",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-29",
+        "image": "",
+        "image_kind": ""
       },
       {
         "title": "Microsoft’s Profit Jumps 32% Despite Big Increase in Spending",
@@ -26,14 +34,6 @@
         "date": "2026-10-28",
         "image": "",
         "image_kind": ""
-      },
-      {
-        "title": "Microsoft to Pay Top Cloud Workers More, Crack Down on Others",
-        "url": "https://www.bloomberg.com/news/articles/2026-11-20/microsoft-to-pay-top-cloud-workers-more-crack-down-on-others",
-        "publisher": "Bloomberg",
-        "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.grfhH-Q9nfhGzbnW3Y5R3w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
       }
     ],
     "ORCL": [
@@ -150,35 +150,35 @@
     ],
     "NVDA": [
       {
-        "title": "How China got access to Nvidia's AI chips despite rules to stop them",
-        "url": "https://www.reuters.com/world/china/how-china-got-access-nvidias-ai-chips-despite-rules-stop-them-2026-11-25/",
-        "publisher": "Reuters",
-        "date": "2026-11-25",
-        "image": "",
-        "image_kind": ""
-      },
-      {
-        "title": "Schumer accuses Nvidia CEO of violating US export control law",
-        "url": "https://www.reuters.com/world/china/schumer-accuses-nvidia-ceo-violating-us-export-control-law-2026-11-24/",
-        "publisher": "Reuters",
-        "date": "2026-11-24",
-        "image": "https://www.bing.com/th?id=ONUT.3YInqUaRNfdpIEnHv9od5A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "Votes and Verdicts: Nvidia Risks, Data Centers, Credit Card Caps",
+        "url": "https://www.bloomberg.com/news/audio/2026-11-27/votes-verdicts-nvidia-risks-data-centers-credit-card-caps",
+        "publisher": "Bloomberg",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.RqOsyp4mxX-qrYKo063FzQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
-        "title": "Nvidia Halts Sales to Southeast Asia as U.S. Tightens China Restrictions",
-        "url": "https://www.nytimes.com/2026/11/26/business/nvidia-southeast-asia-sales.html",
-        "publisher": "The New York Times",
+        "title": "'Very bullish on ASEAN' despite Nvidia chip export curbs to the region: BNY",
+        "url": "https://www.cnbc.com/video/2026/11/27/bullish-on-asean-despite-nvidia-chip-export-curbs-to-the-region-bny.html",
+        "publisher": "CNBC",
         "date": "2026-11-26",
-        "image": "",
-        "image_kind": ""
+        "image": "https://www.bing.com/th?id=ONUT.kvElRwIuZlixVsWNjTdT3A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       },
       {
-        "title": "Nvidia halts chip shipments to south-east Asia",
-        "url": "https://www.ft.com/content/7838a715-07d4-4605-aa60-21f5af2b2370?syn-25a6b1a6=1",
-        "publisher": "Financial Times",
-        "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.6nm1Dvv66kVw2ka97oKz5Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "title": "China's Nvidia chip access is closing fast, says Big Technology's Alex Kantrowitz",
+        "url": "https://www.cnbc.com/video/2026/11/27/chinas-nvidia-chip-access-is-closing-fast-says-big-technologys-alex-kantrowitz.html",
+        "publisher": "CNBC",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.d8RPRxgPNe_x3JNnhCWwsg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "D.A. Davidson’s Gil Luria: There’s no doubt that Nvidia’s most advanced chip ended up in China",
+        "url": "https://www.cnbc.com/video/2026/11/27/d-a-davidsonas-gil-luria-thereas-no-doubt-that-nvidiaas-most-advanced-chip-ended-up-in-china.html",
+        "publisher": "CNBC",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT._8Ak_5PZwj-d1PtJxymV_Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -218,14 +218,6 @@
     ],
     "AAPL": [
       {
-        "title": "The Best Black Friday Apple Deals on AirPods, iPads, Apple Watches, and More",
-        "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026-1127/",
-        "publisher": "The New York Times",
-        "date": "2026-11-27",
-        "image": "https://www.bing.com/th?id=ONUT._L9YTpcUodXXdSQ4UUFzHg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
         "title": "Every Great Black Friday Apple Deal We’ve Found on iPads, AirPods, and More",
         "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026/",
         "publisher": "The New York Times",
@@ -234,19 +226,27 @@
         "image_kind": "article"
       },
       {
+        "title": "Apple pulls MiniMax AI chatbot from App Store over child safety concerns",
+        "url": "https://www.reuters.com/business/retail-consumer/apple-pulls-minimax-ai-chatbot-app-store-over-child-safety-concerns-2026-11-26/",
+        "publisher": "Reuters",
+        "date": "2026-11-26",
+        "image": "https://www.bing.com/th?id=ONUT.wOrT23M44i57RzohyvSn4w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "The Best Black Friday Apple Deals on AirPods, iPads, Apple Watches, and More",
+        "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026-1127/",
+        "publisher": "The New York Times",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT._L9YTpcUodXXdSQ4UUFzHg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
         "title": "Apple to Expand India Retail Network With New Store in Hyderabad",
         "url": "https://www.bloomberg.com/news/articles/2026-11-26/apple-to-expand-india-retail-network-with-new-store-in-hyderabad",
         "publisher": "Bloomberg",
         "date": "2026-11-25",
         "image": "https://www.bing.com/th?id=ONUT.DDPfwE1w5nrhvR12pWzH6w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "Apple job posting shows plans to reportedly build its own AI agent",
-        "url": "https://www.cnbc.com/video/2026/11/20/apple-job-posting-shows-plans-to-reportedly-build-its-own-ai-agent.html",
-        "publisher": "CNBC",
-        "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.h1Voc1JSbXLssWgRROUOLg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -286,14 +286,6 @@
     ],
     "META": [
       {
-        "title": "As Meta bets big on Muse AI agent, early safety mishaps surface",
-        "url": "https://www.reuters.com/video/watch/idRW007520112026RP1/",
-        "publisher": "Reuters",
-        "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.rTcp0ln427jDVUKanO2l1g&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
         "title": "How Meta is using Instagram to get an ad boost from its Muse personal AI agent",
         "url": "https://www.cnbc.com/2026/11/24/meta-instagram-muse-ad-revenue.html",
         "publisher": "CNBC",
@@ -316,6 +308,14 @@
         "date": "2026-11-24",
         "image": "https://www.bing.com/th?id=ONUT.e75KetceL5cI93QP_PqKqQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
+      },
+      {
+        "title": "Researchers Are Using Meta’s Open-Weight AI Models to Transform Medicine",
+        "url": "https://about.fb.com/news/2026/11/researchers-using-meta-open-weight-ai-models-medical-breakthroughs/",
+        "publisher": "Meta",
+        "date": "2026-11-23",
+        "image": "https://www.bing.com/th?id=ONUT.cWUcwXKfsxLVSzRkubgWvQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "LITE": [
@@ -336,20 +336,20 @@
         "image_kind": ""
       },
       {
+        "title": "Driven by A.I. Boom, Marvell and Lumentum Announce $115 Billion Merger",
+        "url": "https://www.nytimes.com/2026/11/02/technology/marvell-lumentum-115-billion-merger-ai.html",
+        "publisher": "The New York Times",
+        "date": "2026-11-02",
+        "image": "",
+        "image_kind": ""
+      },
+      {
         "title": "How Marvell and Lumentum stack up in AI's optical race",
         "url": "https://www.reuters.com/business/how-marvell-lumentum-stack-up-ais-optical-race-2026-11-02/",
         "publisher": "Reuters",
         "date": "2026-11-02",
         "image": "",
         "image_kind": ""
-      },
-      {
-        "title": "Lumentum CEO defends Marvell deal after stock plunge: 'We've got work to do' with shareholders",
-        "url": "https://www.cnbc.com/2026/11/19/lumentum-marvell-deal-ceo-shareholders-cramer.html",
-        "publisher": "CNBC",
-        "date": "2026-11-19",
-        "image": "https://www.bing.com/th?id=ONUT.VtNfEqrzZd1vRgGtzugy3A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
       }
     ],
     "AMAT": [
@@ -382,7 +382,7 @@
         "url": "https://www.cnbc.com/2026/11/23/cramers-lightning-round-buy-applied-materials.html",
         "publisher": "CNBC",
         "date": "2026-11-23",
-        "image": "https://www.bing.com/th?id=ONUT.cTpRo0nESCvy2QlVPzMb3Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://image.cnbcfm.com/api/v1/image/102079128-1539342565979105501689.jpg?v=1698448473&w=1920&h=1080",
         "image_kind": "article"
       }
     ],
@@ -475,7 +475,7 @@
         "title": "AMD to Acquire World Labs for $8.2 Billion",
         "url": "https://www.wsj.com/tech/ai/amd-to-acquire-world-labs-for-8-2-billion-a8d03d11",
         "publisher": "The Wall Street Journal",
-        "date": "2026-09-29",
+        "date": "2026-09-28",
         "image": "",
         "image_kind": ""
       },
@@ -620,7 +620,7 @@
         "url": "https://www.cnbc.com/video/2026/11/20/trade-tracker-kevin-simpson-buys-texas-instruments.html",
         "publisher": "CNBC",
         "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.tTs_XtRX_fQIZt-PxtO_Hg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.3MVVFagDBKLfXL9cnjncTw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -896,7 +896,7 @@
         "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m11/cisco-reports-first-quarter-earnings.html",
         "publisher": "Cisco",
         "date": "2026-11-12",
-        "image": "https://www.bing.com/th?id=ONUT.2v_2mAvgT98eyCNAgtF5fg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://newsroom.cisco.com/c/dam/r/newsroom/en/us/assets/earnings/cisco-building-w-sign-800x450.jpg",
         "image_kind": "article"
       }
     ],
@@ -922,8 +922,8 @@
         "url": "https://www.wsj.com/business/earnings/dell-lifts-outlook-as-revenue-doubles-on-server-demand-40c14b0b",
         "publisher": "The Wall Street Journal",
         "date": "2026-11-24",
-        "image": "https://www.bing.com/th?id=ONUT.Uphryuy_Tk9exQZpvdiDDw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "image": "",
+        "image_kind": ""
       },
       {
         "title": "Michael Dell, a Dot-Com Era Survivor, Has Tips to Beat an AI Bust",
@@ -1370,20 +1370,20 @@
         "image_kind": ""
       },
       {
-        "title": "IBM Reports Higher Profit as Some Delayed Deals Come Through",
-        "url": "https://www.wsj.com/business/earnings/ibm-reports-higher-profit-as-some-slipped-deals-come-through-c0bb0640",
-        "publisher": "The Wall Street Journal",
-        "date": "2026-10-21",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "IBM, NASA launch AI model to help map ice, craters on Moon",
         "url": "https://www.reuters.com/science/ibm-nasa-launch-ai-model-help-map-ice-craters-moon-2026-09-10/",
         "publisher": "Reuters",
         "date": "2026-09-10",
         "image": "",
         "image_kind": ""
+      },
+      {
+        "title": "How IBM Uses AI to Turn Six Weeks of Work Into 60 Seconds - Video API",
+        "url": "https://video-api.wsj.com/api-video/player/v3/iframe.html?guid=8AB818D1-A06C-4D7B-A5C6-5BBC88E17B11",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-11-17",
+        "image": "https://www.bing.com/th?id=ONUT.zc3ULzoVNC5LPyocuLiCcw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "ACN": [
@@ -1510,18 +1510,18 @@
         "image_kind": ""
       },
       {
-        "title": "Introducing Snowflake Decision in Cortex AI Functions",
-        "url": "https://www.snowflake.com/en/blog/snowflake-decision-cortex-ai-functions/",
-        "publisher": "Snowflake",
-        "date": "2026-10-08",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "Snowflake to Announce Financial Results for the Third Quarter of Fiscal 2027 on December 2, 2026",
         "url": "https://www.snowflake.com/en/news/press-releases/fy27-q3-earnings-date-announcement/",
         "publisher": "Snowflake",
         "date": "2026-11-01",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "Introducing Snowflake Decision in Cortex AI Functions",
+        "url": "https://www.snowflake.com/en/blog/snowflake-decision-cortex-ai-functions/",
+        "publisher": "Snowflake",
+        "date": "2026-10-08",
         "image": "",
         "image_kind": ""
       }
@@ -1682,10 +1682,10 @@
     "STM": [],
     "MPWR": [
       {
-        "title": "Monolithic Power Systems Inc",
-        "url": "https://markets.ft.com/data/equities/tearsheet/forecasts?s=MPWR:NSQ",
-        "publisher": "Financial Times",
-        "date": "2026-11-23",
+        "title": "Monolithic Power Systems Inc.",
+        "url": "https://www.wsj.com/market-data/quotes/US/XNAS/MPWR/financials",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-11-13",
         "image": "",
         "image_kind": ""
       }
