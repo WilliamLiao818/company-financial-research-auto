@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T22:19:31+00:00",
+  "generated_at": "2026-11-28T04:57:13+00:00",
   "window_days": 90,
   "companies": {
     "MSFT": [
@@ -23,7 +23,7 @@
         "title": "Microsoft Quarterly Profit Soars as Cloud Growth Accelerates",
         "url": "https://www.wsj.com/tech/microsoft-msft-q1-earnings-report-2027-stock-5809ce40",
         "publisher": "The Wall Street Journal",
-        "date": "2026-10-29",
+        "date": "2026-10-28",
         "image": "",
         "image_kind": ""
       },
@@ -150,22 +150,6 @@
     ],
     "NVDA": [
       {
-        "title": "Votes and Verdicts: Nvidia Risks, Data Centers, Credit Card Caps",
-        "url": "https://www.bloomberg.com/news/audio/2026-11-27/votes-verdicts-nvidia-risks-data-centers-credit-card-caps",
-        "publisher": "Bloomberg",
-        "date": "2026-11-27",
-        "image": "https://www.bing.com/th?id=ONUT.RqOsyp4mxX-qrYKo063FzQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "'Very bullish on ASEAN' despite Nvidia chip export curbs to the region: BNY",
-        "url": "https://www.cnbc.com/video/2026/11/27/bullish-on-asean-despite-nvidia-chip-export-curbs-to-the-region-bny.html",
-        "publisher": "CNBC",
-        "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.kvElRwIuZlixVsWNjTdT3A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
         "title": "China's Nvidia chip access is closing fast, says Big Technology's Alex Kantrowitz",
         "url": "https://www.cnbc.com/video/2026/11/27/chinas-nvidia-chip-access-is-closing-fast-says-big-technologys-alex-kantrowitz.html",
         "publisher": "CNBC",
@@ -179,6 +163,22 @@
         "publisher": "CNBC",
         "date": "2026-11-27",
         "image": "https://www.bing.com/th?id=ONUT._8Ak_5PZwj-d1PtJxymV_Q&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Two Chinese firms linked to Alice Huang reportedly installed Nvidia Blackwell chips",
+        "url": "https://www.cnbc.com/video/2026/11/27/two-chinese-firms-linked-to-alice-huang-reportedly-installed-nvidia-blackwell-chips.html",
+        "publisher": "CNBC",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.BiEWOHt6GMO_jSeR8d2GoQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Lead Edge Capital's Mitchell Green on Nvidia and the global AI ecosystem",
+        "url": "https://www.cnbc.com/video/2026/11/27/lead-edge-capitals-mitchell-green-on-nvidia-and-the-global-ai-ecosystem.html",
+        "publisher": "CNBC",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.oaup159nRfXDn1hJbps50w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -218,27 +218,27 @@
     ],
     "AAPL": [
       {
-        "title": "Every Great Black Friday Apple Deal We’ve Found on iPads, AirPods, and More",
-        "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026/",
-        "publisher": "The New York Times",
-        "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.L2gW0OE64UNou-3LxdNKzA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "Apple pulls MiniMax AI chatbot from App Store over child safety concerns",
-        "url": "https://www.reuters.com/business/retail-consumer/apple-pulls-minimax-ai-chatbot-app-store-over-child-safety-concerns-2026-11-26/",
-        "publisher": "Reuters",
-        "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.wOrT23M44i57RzohyvSn4w&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
         "title": "The Best Black Friday Apple Deals on AirPods, iPads, Apple Watches, and More",
         "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026-1127/",
         "publisher": "The New York Times",
         "date": "2026-11-27",
         "image": "https://www.bing.com/th?id=ONUT._L9YTpcUodXXdSQ4UUFzHg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Chile's antitrust authority seeks $80 million Apple fine over iOS",
+        "url": "https://www.reuters.com/legal/litigation/chiles-antitrust-authority-seeks-80-million-apple-fine-over-ios-2026-11-27/",
+        "publisher": "Reuters",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.WdVC69pPLLTBlD5a5RS9yw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
+      {
+        "title": "Every Great Black Friday Apple Deal We’ve Found on iPads, AirPods, and More",
+        "url": "https://www.nytimes.com/wirecutter/money/apple-black-friday-deals-2026/",
+        "publisher": "The New York Times",
+        "date": "2026-11-26",
+        "image": "https://www.bing.com/th?id=ONUT.L2gW0OE64UNou-3LxdNKzA&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       },
       {
@@ -276,15 +276,23 @@
         "image_kind": "article"
       },
       {
-        "title": "Amazon to acquire AI startup Decart's chip software, hire founders",
-        "url": "https://www.cnbc.com/2026/11/23/amazon-decarts-ai-acquisition.html",
+        "title": "AI shopping agents are having a moment, but Amazon and a growing number of sites threaten to stunt their growth",
+        "url": "https://www.cnbc.com/2026/11/27/ai-shopping-agents-retailer-blocks.html",
         "publisher": "CNBC",
-        "date": "2026-11-23",
-        "image": "https://www.bing.com/th?id=ONUT.-k8mdVfAdvyzuF3yXqioVg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "date": "2026-11-27",
+        "image": "https://www.bing.com/th?id=ONUT.JELZLG60ZoLRc_-hkwepoQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
     "META": [
+      {
+        "title": "Dutch groups ask court to halt Meta smart glasses sales over privacy concerns",
+        "url": "https://www.reuters.com/legal/government/dutch-groups-ask-court-halt-meta-smart-glasses-sales-over-privacy-concerns-2026-11-26/",
+        "publisher": "Reuters",
+        "date": "2026-11-26",
+        "image": "https://www.bing.com/th?id=ONUT.khmWgWENwdPy9SbkHxl6SQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
+      },
       {
         "title": "How Meta is using Instagram to get an ad boost from its Muse personal AI agent",
         "url": "https://www.cnbc.com/2026/11/24/meta-instagram-muse-ad-revenue.html",
@@ -308,14 +316,6 @@
         "date": "2026-11-24",
         "image": "https://www.bing.com/th?id=ONUT.e75KetceL5cI93QP_PqKqQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
-      },
-      {
-        "title": "Researchers Are Using Meta’s Open-Weight AI Models to Transform Medicine",
-        "url": "https://about.fb.com/news/2026/11/researchers-using-meta-open-weight-ai-models-medical-breakthroughs/",
-        "publisher": "Meta",
-        "date": "2026-11-23",
-        "image": "https://www.bing.com/th?id=ONUT.cWUcwXKfsxLVSzRkubgWvQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
       }
     ],
     "LITE": [
@@ -336,20 +336,20 @@
         "image_kind": ""
       },
       {
-        "title": "Driven by A.I. Boom, Marvell and Lumentum Announce $115 Billion Merger",
-        "url": "https://www.nytimes.com/2026/11/02/technology/marvell-lumentum-115-billion-merger-ai.html",
-        "publisher": "The New York Times",
-        "date": "2026-11-02",
-        "image": "",
-        "image_kind": ""
-      },
-      {
         "title": "How Marvell and Lumentum stack up in AI's optical race",
         "url": "https://www.reuters.com/business/how-marvell-lumentum-stack-up-ais-optical-race-2026-11-02/",
         "publisher": "Reuters",
         "date": "2026-11-02",
         "image": "",
         "image_kind": ""
+      },
+      {
+        "title": "Lumentum CEO defends Marvell deal after stock plunge: 'We've got work to do' with shareholders",
+        "url": "https://www.cnbc.com/2026/11/19/lumentum-marvell-deal-ceo-shareholders-cramer.html",
+        "publisher": "CNBC",
+        "date": "2026-11-19",
+        "image": "https://www.bing.com/th?id=ONUT.VtNfEqrzZd1vRgGtzugy3A&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "AMAT": [
@@ -357,14 +357,6 @@
         "title": "Applied Materials forecasts quarterly revenue above estimates on strong AI chip demand",
         "url": "https://www.reuters.com/business/applied-materials-forecasts-quarterly-revenue-above-estimates-strong-ai-chip-2026-11-12/",
         "publisher": "Reuters",
-        "date": "2026-11-12",
-        "image": "",
-        "image_kind": ""
-      },
-      {
-        "title": "Applied Materials Sales, Profit Climb on Semiconductor Demand",
-        "url": "https://www.wsj.com/business/earnings/applied-materials-sales-profit-climb-on-semiconductor-demand-1954e62c",
-        "publisher": "The Wall Street Journal",
         "date": "2026-11-12",
         "image": "",
         "image_kind": ""
@@ -384,40 +376,48 @@
         "date": "2026-11-23",
         "image": "https://image.cnbcfm.com/api/v1/image/102079128-1539342565979105501689.jpg?v=1698448473&w=1920&h=1080",
         "image_kind": "article"
+      },
+      {
+        "title": "Applied Materials Sales, Profit Climb on Semiconductor Demand",
+        "url": "https://www.wsj.com/business/earnings/applied-materials-sales-profit-climb-on-semiconductor-demand-1954e62c",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-11-12",
+        "image": "",
+        "image_kind": ""
       }
     ],
     "TSM": [
       {
-        "title": "Trump heads to Arizona next week for a high-stakes expansion of TSMC’s computer chip factories",
-        "url": "https://apnews.com/article/tsmc-computer-chips-arizona-trump-cdc7faa84895ddeb19bd114061e9dd85",
-        "publisher": "Associated Press",
-        "date": "2026-11-25",
-        "image": "https://www.bing.com/th?id=ONUT.bIefXtb04yOfaKUMkVrUbw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
-      },
-      {
-        "title": "TSMC tightens China AI chip curbs as new US rules close manufacturing loophole, sources say",
-        "url": "https://www.reuters.com/world/china/tsmc-tightens-china-ai-chip-curbs-new-us-rules-close-manufacturing-loophole-2026-11-19/",
+        "title": "TSMC expected to report sixth straight quarter of record profit thanks to AI boom",
+        "url": "https://www.reuters.com/world/china/tsmc-expected-report-sixth-straight-quarter-record-profit-thanks-ai-boom-2026-10-12/",
         "publisher": "Reuters",
-        "date": "2026-11-19",
+        "date": "2026-10-12",
         "image": "",
         "image_kind": ""
       },
       {
-        "title": "Trump viajará a Arizona la próxima semana por expansión de fábricas de chips de TSMC",
-        "url": "https://apnews.com/article/trump-tsmc-arizona-fabrica-chips-b942549c0a34395bf2a9d2075ea7951b",
-        "publisher": "Associated Press",
-        "date": "2026-11-26",
-        "image": "https://www.bing.com/th?id=ONUT.X7XdxWF7eOtJwW1Yu5uxKQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "title": "GlobalFoundries to make key AI chip component for TSMC in $2 billion deal",
+        "url": "https://www.reuters.com/world/asia-pacific/globalfoundries-make-key-ai-chip-component-tsmc-2026-10-08/",
+        "publisher": "Reuters",
+        "date": "2026-10-08",
+        "image": "",
+        "image_kind": ""
       },
       {
-        "title": "TSMC unit seeks Texas property tax limit for proposed $22.6 billion chip making facility",
-        "url": "https://www.reuters.com/business/tsmc-unit-seeks-texas-property-tax-limit-proposed-226-billion-chip-making-2026-11-24/",
-        "publisher": "Reuters",
-        "date": "2026-11-24",
-        "image": "https://www.bing.com/th?id=ONUT.LZWFCKNPdhPBdQU77scCfQ&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
-        "image_kind": "article"
+        "title": "TSMC Approves Up to $1 Billion Investment Plan in Anthropic, OpenAI",
+        "url": "https://www.wsj.com/tech/ai/tsmc-approves-up-to-1-billion-investment-plan-in-anthropic-openai-3e4b4997",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-11-11",
+        "image": "",
+        "image_kind": ""
+      },
+      {
+        "title": "TSMC Weighs Texas Expansion, Holds Talks on Musk’s Terafab",
+        "url": "https://www.wsj.com/tech/ai-demand-extends-tsmcs-record-earnings-streak-95bbef62",
+        "publisher": "The Wall Street Journal",
+        "date": "2026-10-16",
+        "image": "",
+        "image_kind": ""
       }
     ],
     "ASML": [
@@ -620,7 +620,7 @@
         "url": "https://www.cnbc.com/video/2026/11/20/trade-tracker-kevin-simpson-buys-texas-instruments.html",
         "publisher": "CNBC",
         "date": "2026-11-20",
-        "image": "https://www.bing.com/th?id=ONUT.3MVVFagDBKLfXL9cnjncTw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image": "https://www.bing.com/th?id=ONUT.tTs_XtRX_fQIZt-PxtO_Hg&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
         "image_kind": "article"
       }
     ],
@@ -637,7 +637,7 @@
         "title": "Analog Devices to Acquire Alif Semiconductor for $1.35 Billion",
         "url": "https://www.wsj.com/tech/analog-devices-to-acquire-alif-semiconductor-for-1-35-billion-1b31d6fe",
         "publisher": "The Wall Street Journal",
-        "date": "2026-09-09",
+        "date": "2026-09-10",
         "image": "",
         "image_kind": ""
       },
@@ -960,12 +960,12 @@
         "image_kind": ""
       },
       {
-        "title": "HPE shares tumble as shrinking AI margins overshadow upbeat forecast",
-        "url": "https://www.reuters.com/business/hpe-shares-fall-margin-worries-overshadow-raised-outlook-2026-11-24/",
+        "title": "Dell, HPE results to put AI demand to the test after tech rout",
+        "url": "https://www.reuters.com/business/dell-hpe-results-put-ai-demand-test-after-tech-rout-2026-11-23/",
         "publisher": "Reuters",
-        "date": "2026-11-24",
-        "image": "",
-        "image_kind": ""
+        "date": "2026-11-23",
+        "image": "https://www.bing.com/th?id=ONUT.dKpk71T-gqtYz1-1BqOqHw&pid=News&w=1200&h=675&c=14&rs=2&qlt=90",
+        "image_kind": "article"
       }
     ],
     "VRT": [
@@ -1118,7 +1118,7 @@
         "image_kind": ""
       },
       {
-        "title": "Poland Signs $300 Million Palantir Deal to Use AI for Defense",
+        "title": "Poland Signs $300 Million Palantir Deal to Use AI in Defense",
         "url": "https://www.bloomberg.com/news/articles/2026-11-27/poland-signs-300-million-palantir-deal-to-use-ai-for-defense",
         "publisher": "Bloomberg",
         "date": "2026-11-27",
